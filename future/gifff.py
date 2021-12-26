@@ -6,11 +6,6 @@ import time
 
 
 class GIFImage(object):
-    """
-        This module is used for displaying gif images.
-        filename: The filepath of the input image.
-    """
-
     def __init__(self, filename):
         self.filename = filename
         self.image = Image.open(filename)
