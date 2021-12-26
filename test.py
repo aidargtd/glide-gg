@@ -24,10 +24,10 @@ array_walls1 = [[65, 0, 0, 5, True],
                 ]
 
 for i in range(100):
-    #     if random.choice([True, False]):
-    array_walls1.append([65, -1200 - (i * 200), 0, 5, True])
-    # else:
-    #     array_walls1.append([320, -1200 - (i * 200), 0, 5, True])
+    if random.choice([True, False]):
+        array_walls1.append([65, -1200 - (i * 200), 0, 5, True])
+    else:
+        array_walls1.append([320, -1200 - (i * 200), 0, 5, True])
 
 INX_X_POS = 0
 INX_Y_POS = 1
@@ -52,6 +52,12 @@ def load_image(name, colorkey=None):
     return image
 
 
+def rotate(surface, angle, rect):
+    rotated_surface = pygame.transform.rotozoom(surface, angle, 1)
+    rotated_rect = rotated_surface.get_rect(center=rect)
+    return rotated_surface, rotated_rect
+
+
 class Wall1(pygame.sprite.Sprite):
     image = load_image("base_wall_2_1.png")
 
@@ -67,9 +73,7 @@ class Wall1(pygame.sprite.Sprite):
         self.speed_x = x_speed
         self.speed_y = y_speed
 
-    def update(self):
-        # if not pygame.sprite.collide_mask(self, mountain):
-        #     self.rect = self.rect.move(0, 1)
+    def update(self, angle=10):
         self.rect = self.rect.move(self.speed_x, self.speed_y)
 
 
@@ -156,7 +160,7 @@ while running:
         red_circle.update(0)
         blue_circle.update(0)
     screen.fill(BLACK)
-    pygame.draw.circle(screen, DEEP_GRAY, (300, 600), 100, 2)
+    pygame.draw.circle(screen, DEEP_GRAY, (300, 600), 100, 1)
     all_walls.update()
     all_walls.draw(screen)
     all_sprites.draw(screen)
