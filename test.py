@@ -14,11 +14,13 @@ SPEED_MOVEMENT_FALSE = -5
 CONVERT_ANGLE_TO_SIDE = 100
 count = 0
 
-array_walls1 = [[65, 0, 0, 2, True],
-                [65, -200, 0, 2, True],
-                [320, -400, 0, 2, True],
-                [-150, -100, 2, 3, True],
-                [1150, -1050, -2, 3, True]]
+array_walls1 = [[65, 0, 0, 5, True],
+                [65, -200, 0, 5, True],
+                [320, -400, 0, 5, True],
+                [65, -600, 0, 5, True],
+                [65, -800, 0, 5, True],
+                [320, -1000, 0, 5, True],
+                ]
 INX_X_POS = 0
 INX_Y_POS = 1
 INX_X_SPEED = 2
@@ -43,7 +45,7 @@ def load_image(name, colorkey=None):
 
 
 class Wall1(pygame.sprite.Sprite):
-    image = load_image("wall1.png")
+    image = load_image("base_wall_2_1.png")
 
     def __init__(self, arr_data):
         super().__init__(all_walls)
