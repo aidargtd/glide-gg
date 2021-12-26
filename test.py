@@ -2,6 +2,7 @@ import pygame
 import os
 import sys
 import math
+import random
 
 BLACK = 'black'
 RED = 'red'
@@ -9,8 +10,8 @@ BLUE = 'blue'
 DEEP_GRAY = (54, 54, 54)
 FPS = 60
 SIZE = WIDTH, HEIGHT = 600, 800
-SPEED_MOVEMENT_TRUE = 5
-SPEED_MOVEMENT_FALSE = -5
+SPEED_MOVEMENT_TRUE = 4.5
+SPEED_MOVEMENT_FALSE = -4.5
 CONVERT_ANGLE_TO_SIDE = 100
 count = 0
 
@@ -21,6 +22,13 @@ array_walls1 = [[65, 0, 0, 5, True],
                 [65, -800, 0, 5, True],
                 [320, -1000, 0, 5, True],
                 ]
+
+for i in range(100):
+    #     if random.choice([True, False]):
+    array_walls1.append([65, -1200 - (i * 200), 0, 5, True])
+    # else:
+    #     array_walls1.append([320, -1200 - (i * 200), 0, 5, True])
+
 INX_X_POS = 0
 INX_Y_POS = 1
 INX_X_SPEED = 2
@@ -50,6 +58,7 @@ class Wall1(pygame.sprite.Sprite):
     def __init__(self, arr_data):
         super().__init__(all_walls)
         self.image = Wall1.image
+        self.image = pygame.transform.rotate(self.image, random.randint(0,90))
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         x_pos, y_pos, x_speed, y_speed = arr_data[0], arr_data[1], arr_data[2], arr_data[3]
@@ -74,7 +83,7 @@ def create_walls(array_walls1):
     for i in range(len(array_walls1)):
         array_walls1[i][INX_Y_POS] = array_walls1[i][INX_Y_POS] + array_walls1[i][INX_Y_SPEED]
         array_walls1[i][INX_X_POS] = array_walls1[i][INX_X_POS] + array_walls1[i][INX_X_SPEED]
-        if array_walls1[i][INX_Y_POS] >= 0 and array_walls1[i][INX_INVIZ]:
+        if array_walls1[i][INX_Y_POS] >= -200 and array_walls1[i][INX_INVIZ]:
             array_walls1[i][INX_INVIZ] = False
             Wall1(array_walls1[i])
 
