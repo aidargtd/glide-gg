@@ -152,6 +152,7 @@ pygame.display.set_caption("Game")
 all_sprites = pygame.sprite.Group()
 
 fps = 60
+
 fps_clock = pygame.time.Clock()
 red_circle = RedCircle()
 blue_circle = BlueCircle()
