@@ -58,7 +58,7 @@ class Wall1(pygame.sprite.Sprite):
     def __init__(self, arr_data):
         super().__init__(all_walls)
         self.image = Wall1.image
-        self.image = pygame.transform.rotate(self.image, random.randint(0,90))
+        self.image = pygame.transform.rotate(self.image, random.randint(0, 90))
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         x_pos, y_pos, x_speed, y_speed = arr_data[0], arr_data[1], arr_data[2], arr_data[3]
