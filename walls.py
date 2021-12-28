@@ -3,7 +3,6 @@ import sys
 import pygame
 import random
 
-
 count = 0
 
 FPS = 60

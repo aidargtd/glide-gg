@@ -1,147 +1,119 @@
-import pygame
-import os
-import sys
 import math
 import random
-
-BLACK = 'black'
-RED = 'red'
-BLUE = 'blue'
-RED_TRAIL1 = (255, 55, 0)
-RED_TRAIL2 = (255, 85, 55)
-RED_TRAIL3 = (255, 40, 40)
-
-BLUE_TRAIL1 = (0, 170, 240)
-BLUE_TRAIL2 = (15, 135, 255)
-BLUE_TRAIL3 = (0, 190, 255)
-
-DEEP_GRAY = (54, 54, 54)
-FPS = 60
-SIZE = WIDTH, HEIGHT = 600, 800
-SPEED_MOVEMENT_TRUE = 5
-SPEED_MOVEMENT_FALSE = -5
-CONVERT_ANGLE_TO_SIDE = 100
+from parametres import *
+from general_functions import *
 
 
-class Particle:
+class ParticleTrace:
     def __init__(self, pos, color):
         self.x, self.y = pos
-        self.x += 10
-        self.y += 10
+        self.x += CONNECT_CIRCLE_WTH_TRC
+        self.y += CONNECT_CIRCLE_WTH_TRC
         self.color = color
-        self.vx, self.vy = random.randint(-2, 2), random.randint(-10, 0) * .1
-        self.rad = 5
+        self.change_fact_x, self.change_fact_y = \
+            random.randint(-2, 2), random.randint(-10, 0) * .1
+        self.radius = START_TRACE_RADIUS
 
     def draw(self, screen):
-        pygame.draw.circle(screen, self.color, (self.x, self.y), self.rad)
+        pygame.draw.circle(screen, self.color, (self.x, self.y), self.radius)
 
     def update(self):
-        self.x += self.vx
-        self.y += self.vy
-        if random.randint(0, 100) < 40:
-            self.rad -= 1
+        self.x += self.change_fact_x
+        self.y += self.change_fact_y
+        if random.randint(0, 100) < NUM_FOR_DECREASE_RADIUS:
+            self.radius -= DECREASE_TRACE_RADIUS
 
 
-class Dust:
+class CreateTrace:
     def __init__(self, pos, color):
         self.pos = pos
         self.color = color
         self.particles = []
-        for i in range(50):
-            self.particles.append(Particle(pos, color))
+        for _ in range(QUANTITY_TRACE_CIRCLES):
+            self.particles.append(ParticleTrace(pos, color))
 
     def draw(self, screen):
-        for i in self.particles:
-            i.draw(screen)
+        for particle in self.particles:
+            particle.draw(screen)
 
     def update(self):
-        for i in self.particles:
-            i.update()
-            if i.rad <= 0:
-                self.particles.remove(i)
+        for particle in self.particles:
+            particle.update()
+            if particle.radius <= RADIUS_FOR_DELETE_TRACE:
+                self.particles.remove(particle)
 
 
 class RedCircle(pygame.sprite.Sprite):
-    def __init__(self, speed=0):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = load_image('red_circle.png')
+        self.image = load_image(RED_CIRCLE_IMG)
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
-        self.init_red_angle = 0
-        self.rect.x = 385
-        self.rect.y = 585
+        self.init_red_angle = RED_CIRCLE_START_ANGLE
+        self.rect.x = RED_CIRCLE_START_X
+        self.rect.y = RED_CIRCLE_START_Y
 
     def update(self, speed_move):
         self.init_red_angle += speed_move
-        angle_red = self.init_red_angle * math.pi / 180
-        self.rect.x = (CONVERT_ANGLE_TO_SIDE * math.cos(angle_red)) + (HEIGHT // 2) - 115
-        self.rect.y = (CONVERT_ANGLE_TO_SIDE * math.sin(angle_red)) + HEIGHT - 215
-        dust.append(Dust((self.rect.x, self.rect.y), random.choice([RED_TRAIL1, RED_TRAIL2, RED, RED_TRAIL3])))
+        angle_red = self.init_red_angle * math.pi / ANGLE_PI
+        self.rect.x = (CONVERT_ANGLE_TO_SIDE * math.cos(angle_red)) + CHANGE_X_COORD
+        self.rect.y = (CONVERT_ANGLE_TO_SIDE * math.sin(angle_red)) + CHANGE_Y_COORD
+        if speed_move != IMPOSSIBLE_SPEED:
+            traces.append(CreateTrace((self.rect.x, self.rect.y), random.choice(
+                [RED_TRAIL_COLOR_1, RED_TRAIL_COLOR_2, RED_TRAIL_COLOR_3])))
 
 
 class BlueCircle(pygame.sprite.Sprite):
-    def __init__(self, speed=0):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = load_image('blue_circle.png')
+        self.image = load_image(BLUE_CIRCLE_IMG)
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
-        self.init_blue_angle = 180
-        self.rect.x = 185
-        self.rect.y = 585
+        self.init_blue_angle = BLUE_CIRCLE_START_ANGLE
+        self.rect.x = BLUE_CIRCLE_START_X
+        self.rect.y = BLUE_CIRCLE_START_Y
 
     def update(self, speed_move):
         self.init_blue_angle += speed_move
-        angle_blue = self.init_blue_angle * math.pi / 180
-        self.rect.x = (CONVERT_ANGLE_TO_SIDE * math.cos(angle_blue)) + (HEIGHT // 2 - 115)
-        self.rect.y = (CONVERT_ANGLE_TO_SIDE * math.sin(angle_blue)) + (HEIGHT - 215)
-        dust.append(Dust((self.rect.x, self.rect.y), random.choice([BLUE_TRAIL1, BLUE_TRAIL2, BLUE_TRAIL3])))
+        angle_blue = self.init_blue_angle * math.pi / ANGLE_PI
+        self.rect.x = (CONVERT_ANGLE_TO_SIDE * math.cos(angle_blue)) + CHANGE_X_COORD
+        self.rect.y = (CONVERT_ANGLE_TO_SIDE * math.sin(angle_blue)) + CHANGE_Y_COORD
+        if speed_move != IMPOSSIBLE_SPEED:
+            traces.append(CreateTrace((self.rect.x, self.rect.y), random.choice(
+                [BLUE_TRAIL_COLOR_1, BLUE_TRAIL_COLOR_2, BLUE_TRAIL_COLOR_3])))
 
 
-def load_image(name, colorkey=None):
-    fullname = os.path.join('data', name)
-    if not os.path.isfile(fullname):
-        print(f"Файл с изображением '{fullname}' не найден")
-        sys.exit()
-    image = pygame.image.load(fullname)
-    if colorkey is not None:
-        image = image.convert()
-        if colorkey == -1:
-            colorkey = image.get_at((0, 0))
-        image.set_colorkey(colorkey)
-    else:
-        image = image.convert_alpha()
-    return image
-
-
-pygame.init()
-screen = pygame.display.set_mode(SIZE)
-pygame.display.set_caption("Game")
-all_sprites = pygame.sprite.Group()
-
-fps = 60
-fps_clock = pygame.time.Clock()
-red_circle = RedCircle()
-blue_circle = BlueCircle()
-all_sprites.add(red_circle, blue_circle)
-running = True
-dust = []
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_RIGHT]:
-        red_circle.update(SPEED_MOVEMENT_FALSE)
-        blue_circle.update(SPEED_MOVEMENT_FALSE)
-    elif keys[pygame.K_LEFT]:
-        red_circle.update(SPEED_MOVEMENT_TRUE)
-        blue_circle.update(SPEED_MOVEMENT_TRUE)
-    screen.fill(BLACK)
-    for d in dust:
-        d.draw(screen)
-        d.update()
-    pygame.draw.circle(screen, DEEP_GRAY, (300, 600), 100, 2)
-    all_sprites.draw(screen)
-    pygame.display.update()
-    fps_clock.tick(fps)
-pygame.quit()
+traces = []
+# pygame.init()
+# screen = pygame.display.set_mode(SIZE)
+# pygame.display.set_caption(TITLE)
+# all_sprites = pygame.sprite.Group()
+#
+# fps_clock = pygame.time.Clock()
+# red_circle = RedCircle()
+# blue_circle = BlueCircle()
+# all_sprites.add(red_circle, blue_circle)
+# running = True
+# while running:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             running = False
+#     keys = pygame.key.get_pressed()
+#     if keys[pygame.K_RIGHT]:
+#         red_circle.update(SPEED_MOVEMENT_FALSE)
+#         blue_circle.update(SPEED_MOVEMENT_FALSE)
+#     elif keys[pygame.K_LEFT]:
+#         red_circle.update(SPEED_MOVEMENT_TRUE)
+#         blue_circle.update(SPEED_MOVEMENT_TRUE)
+#     screen.fill(BLACK_COLOR)
+#
+#     pygame.draw.circle(screen, DEEP_GRAY, GRAY_CIRCLE_POSITION, GRAY_CIRCLE_RADIUS, GRAY_CIRCLE_WIDTH)
+#
+#     for trace in traces:
+#         trace.draw(screen)
+#         trace.update()
+#
+#     all_sprites.draw(screen)
+#     pygame.display.update()
+#     fps_clock.tick(FPS)
+# pygame.quit()

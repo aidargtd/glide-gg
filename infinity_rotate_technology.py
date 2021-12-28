@@ -61,12 +61,12 @@ class TemporaryWalls(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
 
-class Wall1(pygame.sprite.Sprite):
+class Obstacle1(pygame.sprite.Sprite):
     image = load_image("base_wall_2_1.png")
 
     def __init__(self, arr_data):
         super().__init__(all_walls)
-        self.image = Wall1.image
+        self.image = Obstacle1.image
         self.image = pygame.transform.rotate(self.image, random.randint(0, 90))
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
@@ -91,19 +91,19 @@ class Wall1(pygame.sprite.Sprite):
         TemporaryWalls(rotated_surface, rotated_rect)
 
 
-def delete_wall(walls_list):
+def delete_obstacle(walls_list):
     for enemy in walls_list:
         if enemy.rect.y > 800:
             walls_list.remove(enemy)
 
 
-def create_walls(array_walls1):
+def create_obstacle(array_walls1):
     for i in range(len(array_walls1)):
         array_walls1[i][INX_Y_POS] = array_walls1[i][INX_Y_POS] + array_walls1[i][INX_Y_SPEED]
         array_walls1[i][INX_X_POS] = array_walls1[i][INX_X_POS] + array_walls1[i][INX_X_SPEED]
         if array_walls1[i][INX_Y_POS] >= -200 and array_walls1[i][INX_INVIZ]:
             array_walls1[i][INX_INVIZ] = False
-            Wall1(array_walls1[i])
+            Obstacle1(array_walls1[i])
 
 
 class RedCircle(pygame.sprite.Sprite):
@@ -163,8 +163,8 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    create_walls(array_walls1)
-    delete_wall(all_sprites)
+    create_obstacle(array_walls1)
+    delete_obstacle(all_sprites)
     keys = pygame.key.get_pressed()
     if keys[pygame.K_RIGHT]:
         red_circle.update(SPEED_MOVEMENT_TRUE)
