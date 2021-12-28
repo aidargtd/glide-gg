@@ -26,7 +26,7 @@ INX_INVIZ = 4
 
 
 def load_image(name, colorkey=None):
-    fullname = os.path.join('data', name)
+    fullname = os.path.join('../data', name)
     if not os.path.isfile(fullname):
         print(f"Файл с изображением '{fullname}' не найден")
         sys.exit()
