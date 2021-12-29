@@ -8,9 +8,9 @@ from general_functions import *
 pygame.init()
 
 
-# 1 - (НЕ РЕАЛИЗОВАНО) - выезд платформы по вертикали
+# 1 - LF_DOWN - выезд платформы по вертикали
 # 2 - SIDE - выезд платформы по горизонтали
-# 3 - (НЕ РЕАЛИЗОВАНО) - постоянные движения по горизонтали
+# 3 - LF_DOWN - постоянные движения по горизонтали
 # 4 - TWIST - кручение платформы
 
 
@@ -25,8 +25,9 @@ class LfDownObstacle(pygame.sprite.Sprite):
             obst_params[INX_X_POS], obst_params[INX_Y_POS], obst_params[INX_STATIC_ANGLE]
         self.speed_x, self.speed_y = obst_params[INX_X_SPEED], obst_params[INX_Y_SPEED]
         self.y_start_down, self.y_end_down, self.step_speed_down = [UNDEFINED] * 3
-        self.left_board_lf, self.right_board_lf, self.step_speed_lf = [UNDEFINED] * 3
-        self.frames = ZERO_FRAMES
+        self.left_board_lf, self.right_board_lf, self.step_speed_lf, self.frames = [UNDEFINED] * 4
+        self.load_down_move_args()
+        self.load_lf_move_args()
 
     def load_down_move_args(self):
         self.y_start_down = obst_params[INX_Y_START_DOWN]
@@ -37,6 +38,7 @@ class LfDownObstacle(pygame.sprite.Sprite):
         self.left_board_lf = obst_params[INX_LEFT_BOARD_LF]
         self.right_board_lf = obst_params[INX_RIGHT_BOARD_LF]
         self.step_speed_lf = obst_params[INX_STEP_SPEED_LF]
+        self.frames = ZERO_FRAMES
 
     def update(self):
         self.update_move_x()
@@ -72,8 +74,13 @@ class SlideSideObstacle(pygame.sprite.Sprite):
         self.rect.x, self.rect.y, self.angle = \
             obst_params[INX_X_POS], obst_params[INX_Y_POS], obst_params[INX_ANGLE]
         self.speed_x, self.speed_y = obst_params[INX_X_SPEED], obst_params[INX_Y_SPEED]
-        self.y_start_side, self.y_end_side, self.step_speed_side = \
-            obst_params[INX_Y_START_SIDE], obst_params[INX_Y_END_SIDE], obst_params[INX_STEP_SPEED_SIDE]
+        self.y_start_side, self.y_end_side, self.step_speed_side = [UNDEFINED] * 3
+        self.load_side_move_args()
+
+    def load_side_move_args(self):
+        self.y_start_side = obst_params[INX_Y_START_SIDE]
+        self.y_end_side = obst_params[INX_Y_END_SIDE]
+        self.step_speed_side = obst_params[INX_STEP_SPEED_SIDE]
 
     def update(self):
         if self.y_start_side <= self.rect.y <= self.y_end_side:
