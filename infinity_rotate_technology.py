@@ -3,6 +3,9 @@ import os
 import sys
 import math
 import random
+from parametres import *
+from general_functions import *
+
 
 BLACK = 'black'
 RED = 'red'
@@ -39,20 +42,6 @@ all_walls = pygame.sprite.Group()
 temporary_walls = pygame.sprite.Group()
 
 
-def load_image(name, colorkey=None):
-    fullname = os.path.join('data', name)
-    if not os.path.isfile(fullname):
-        print(f"Файл с изображением '{fullname}' не найден")
-        sys.exit()
-    image = pygame.image.load(fullname)
-    if colorkey is not None:
-        image = image.convert()
-        if colorkey == -1:
-            colorkey = image.get_at((0, 0))
-        image.set_colorkey(colorkey)
-    return image
-
-
 class TemporaryWalls(pygame.sprite.Sprite):
     def __init__(self, img, rect):
         super().__init__(temporary_walls)
@@ -87,7 +76,6 @@ class Obstacle1(pygame.sprite.Sprite):
         self.rect = self.rect.move(self.speed_x, self.speed_y)
         rotated_surface = pygame.transform.rotate(self.image, self.angle)
         rotated_rect = rotated_surface.get_rect(center=(self.rect.x, self.rect.y))
-        # rotated_obstacle, rotated_obst_rect = self.rotate(self.angle, (self.rect.x, self.rect.y))
         TemporaryWalls(rotated_surface, rotated_rect)
 
 
@@ -97,13 +85,13 @@ def delete_obstacle(walls_list):
             walls_list.remove(enemy)
 
 
-def create_obstacle(array_walls1):
-    for i in range(len(array_walls1)):
-        array_walls1[i][INX_Y_POS] = array_walls1[i][INX_Y_POS] + array_walls1[i][INX_Y_SPEED]
-        array_walls1[i][INX_X_POS] = array_walls1[i][INX_X_POS] + array_walls1[i][INX_X_SPEED]
-        if array_walls1[i][INX_Y_POS] >= -200 and array_walls1[i][INX_INVIZ]:
-            array_walls1[i][INX_INVIZ] = False
-            Obstacle1(array_walls1[i])
+def create_obstacle(array_walls_loc):
+    for i in range(len(array_walls_loc)):
+        array_walls_loc[i][INX_Y_POS] = array_walls_loc[i][INX_Y_POS] + array_walls_loc[i][INX_Y_SPEED]
+        array_walls_loc[i][INX_X_POS] = array_walls_loc[i][INX_X_POS] + array_walls_loc[i][INX_X_SPEED]
+        if array_walls_loc[i][INX_Y_POS] >= -200 and array_walls_loc[i][INX_INVIZ]:
+            array_walls_loc[i][INX_INVIZ] = False
+            Obstacle1(array_walls_loc[i])
 
 
 class RedCircle(pygame.sprite.Sprite):
