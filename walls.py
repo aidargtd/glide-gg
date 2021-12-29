@@ -12,8 +12,6 @@ pygame.init()
 # 2 - SIDE - выезд платформы по горизонтали
 # 3 - LF_DOWN - постоянные движения по горизонтали
 # 4 - TWIST - кручение платформы
-
-
 class LfDownObstacle(pygame.sprite.Sprite):
     def __init__(self, *obst_params):
         super().__init__(all_sprites)
@@ -124,43 +122,3 @@ class ShowObstacle(pygame.sprite.Sprite):
         self.image = img
         self.rect = rect
         self.mask = pygame.mask.from_surface(self.image)
-
-# def delete_wall(walls_list):
-#     for enemy in walls_list:
-#         if enemy.rect.y > 900:
-#             walls_list.remove(enemy)
-#
-#
-# def create_walls(array_walls1):
-#     for i in range(len(array_walls1)):
-#         array_walls1[i][INX_Y_POS] = array_walls1[i][INX_Y_POS] + array_walls1[i][INX_Y_SPEED]
-#         array_walls1[i][INX_X_POS] = array_walls1[i][INX_X_POS] + array_walls1[i][INX_X_SPEED]
-#         if array_walls1[i][INX_Y_POS] >= 0 and array_walls1[i][INX_INVIZ]:
-#             array_walls1[i][INX_INVIZ] = False
-#             Wall1(array_walls1[i])
-#
-#
-# size = width, height = WIDTH, HIGHT
-# screen = pygame.display.set_mode(size)
-#
-# clock = pygame.time.Clock()
-# running = True
-#
-# while running:
-#     for event in pygame.event.get():
-#         if event.type == pygame.QUIT:
-#             running = False
-#
-#     create_walls(array_walls1)
-#     count += 1
-#     print(count, len(all_sprites))
-#
-#     delete_wall(all_sprites)
-#
-#     all_sprites.update()
-#     screen.fill('black')
-#     all_sprites.draw(screen)
-#     pygame.display.flip()
-#
-#     clock.tick(FPS)
-# pygame.quit()
