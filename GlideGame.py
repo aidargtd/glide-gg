@@ -1,6 +1,8 @@
 import pygame
 from parametres import *
 import circle_movement
+from general_functions import *
+from Button import *
 import time
 
 pygame.init()
@@ -18,10 +20,10 @@ fps_clock = pygame.time.Clock()
 red_circle = circle_movement.RedCircle()
 blue_circle = circle_movement.BlueCircle()
 all_circles.add(red_circle, blue_circle)
+
+
 # scores = 0
-
-
-def run_game():
+def game_cycle():
     # global scores
     game = True
     while game:
@@ -68,7 +70,7 @@ def pause():
                 pygame.quit()
                 quit()
 
-        print_text('Paused. Press enter to continue', 30, 300)
+        print_text(screen, 'Paused. Press enter to continue', 30, 300)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN]:
             paused = False
@@ -83,7 +85,7 @@ def game_over():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-        print_text('Game over. Press Enter to play again, Esc to exit', 20, 300, 20)
+        print_text(screen, 'Game over. Press Enter to play again, Esc to exit', 20, 300, 20)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN]:
             return True
@@ -94,13 +96,36 @@ def game_over():
         fps_clock.tick(15)
 
 
+def show_menu():
+    menu_background = load_image('menu.png')
+    start_btn = Button(screen, 300, 70)
+    quit_btn = Button(screen, 300, 70)
+    showing = True
+    while showing:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        screen.blit(menu_background, (0, 0))
+        start_btn.draw(150, 200, 'Start game', start_game, 40)
+        quit_btn.draw(150, 300, 'Quit game', quit, 40)
+        pygame.display.update()
+        fps_clock.tick(60)
+
+
+def start_game():
+    # global scores
+    while game_cycle():
+        pass
+
+
+def end_game():
+    pass
+
+
 # def count_scores(scores):
 #     time.sleep(0.5)
 #     scores += 1
 #     return scores
 
-
-while run_game():
-    pass
-pygame.quit()
-quit()
+show_menu()

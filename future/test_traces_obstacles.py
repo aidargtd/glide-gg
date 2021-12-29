@@ -3,8 +3,6 @@ import sys
 import pygame
 import random
 
-
-
 count = 0
 
 FPS = 60
@@ -58,6 +56,7 @@ all_sprites = pygame.sprite.Group()
 
 class Wall1(pygame.sprite.Sprite):
     image = load_image("shadow_base_wall.png")
+
     def __init__(self, arr_data, img):
         super().__init__(all_sprites)
         self.image = load_image(img)
@@ -103,7 +102,6 @@ def create_walls(array_walls_loc):
                     n = 4
                 for _ in range(n):
                     Wall1(temp, "shadow_base_wall_2_2.png")
-
 
 
 size = width, height = WIDTH, HIGHT
