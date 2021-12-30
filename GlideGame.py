@@ -56,12 +56,6 @@ def game_cycle():
     return game_over()
 
 
-def print_text(message, x, y, font_size=30, font_color=WHITE_COLOR, font_type='font/VeraBI.ttf'):
-    font_type = pygame.font.Font(font_type, font_size)
-    text = font_type.render(message, True, font_color)
-    screen.blit(text, (x, y))
-
-
 def pause():
     paused = True
     while paused:
