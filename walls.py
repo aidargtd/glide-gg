@@ -1,115 +1,124 @@
-import os
-import sys
-import pygame
-import random
-
-count = 0
-
-FPS = 60
-WIDTH = 700
-HIGHT = 900
+# import os
+# import sys
+# import pygame
+# import random
+# from parametres import *
+from general_functions import *
 
 pygame.init()
 
-array_walls1 = [[50, 0, 0, 2, True],
-                [50, -200, 0, 2, True],
-                [435, -400, 0, 2, True],
-                [-200, -150, 2, 3, True],
-                [1150, -1050, -2, 3, True]]
-INX_X_POS = 0
-INX_Y_POS = 1
-INX_X_SPEED = 2
-INX_Y_SPEED = 3
-INX_INVIZ = 4
 
-
-def load_image(name, colorkey=None):
-    fullname = os.path.join('data', name)
-    if not os.path.isfile(fullname):
-        print(f"Файл с изображением '{fullname}' не найден")
-        sys.exit()
-    image = pygame.image.load(fullname)
-    if colorkey is not None:
-        image = image.convert()
-        if colorkey == -1:
-            colorkey = image.get_at((0, 0))
-        image.set_colorkey(colorkey)
-    return image
-
-
-all_sprites = pygame.sprite.Group()
-
-
-# class Mountain(pygame.sprite.Sprite):
-#     image = load_image("mountains.png")
-#
-#     def __init__(self):
-#         super().__init__(all_sprites)
-#         self.image = Mountain.image
-#         self.rect = self.image.get_rect()
-#         self.mask = pygame.mask.from_surface(self.image)
-#         self.rect.bottom = HIGHT
-#
-#
-# mountain = Mountain()
-
-
-class Wall1(pygame.sprite.Sprite):
-    image = load_image("wall1.png")
-
-    def __init__(self, arr_data):
-        super().__init__(all_sprites)
-        self.image = Wall1.image
+# 1 - LF_DOWN - выезд платформы по вертикали
+# 2 - SIDE - выезд платформы по горизонтали
+# 3 - LF_DOWN - постоянные движения по горизонтали
+# 4 - TWIST - кручение платформы
+class LfDownObstacle(pygame.sprite.Sprite):
+    def __init__(self, *args):
+        pygame.sprite.Sprite.__init__(self)
+        self.x_move, self.y_move = BASE_X_MOVE, BASE_Y_MOVE
+        self.image = load_image(args[INX_IMG_NAME])
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
-        x_pos, y_pos, x_speed, y_speed = arr_data[0], arr_data[1], arr_data[2], arr_data[3]
-        self.rect.x = x_pos
-        self.rect.y = y_pos
-        self.speed_x = x_speed
-        self.speed_y = y_speed
+        self.rect.x, self.rect.y, self.angle = \
+            args[INX_X_POS], args[INX_Y_POS], args[INX_STATIC_ANGLE]
+        self.speed_x, self.speed_y = args[INX_X_SPEED], args[INX_Y_SPEED]
+        self.y_start_down, self.y_end_down, self.step_speed_down = [UNDEFINED] * 3
+        self.left_board_lf, self.right_board_lf, self.step_speed_lf, self.frames = [UNDEFINED] * 4
+        self.load_down_move_args(args)
+        self.load_lf_move_args(args)
+
+    def load_down_move_args(self, move_inf):
+        self.y_start_down = move_inf[INX_Y_START_DOWN]
+        self.y_end_down = move_inf[INX_Y_END_DOWN]
+        self.step_speed_down = move_inf[INX_STEP_SPEED_DOWN]
+
+    def load_lf_move_args(self, move_inf):
+        self.left_board_lf = move_inf[INX_LEFT_BOARD_LF]
+        self.right_board_lf = move_inf[INX_RIGHT_BOARD_LF]
+        self.step_speed_lf = move_inf[INX_STEP_SPEED_LF]
+        self.frames = ZERO_FRAMES
 
     def update(self):
-        # if not pygame.sprite.collide_mask(self, mountain):
-        #     self.rect = self.rect.move(0, 1)
+        self.update_move_x()
+        self.update_move_y()
+        self.rect = self.rect.move(self.x_move, self.y_move)
+
+    def update_move_x(self):
+        if self.left_board_lf < self.rect.x < self.right_board_lf:
+            if self.frames == SIXTY_FRAMES:
+                self.x_move = self.speed_x + self.step_speed_lf
+            if self.frames == ZERO_FRAMES:
+                self.x_move = self.speed_x - self.step_speed_lf
+        else:
+            if self.left_board_lf == self.rect.x:
+                self.frames += STEP_FRAME
+            else:
+                self.frames -= STEP_FRAME
+
+    def update_move_y(self):
+        if self.y_end_down <= self.rect.y <= self.y_end_down:
+            self.y_move = self.step_speed_down + self.speed_y
+        else:
+            self.y_move = self.speed_y
+
+
+class SlideSideObstacle(pygame.sprite.Sprite):
+    def __init__(self, *obs_args):
+        pygame.sprite.Sprite.__init__(self)
+        self.obs_args = obs_args
+        self.x_move, self.y_move = BASE_X_MOVE, BASE_Y_MOVE
+        self.image = load_image(obs_args[INX_IMG_NAME])
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x, self.rect.y, self.angle = \
+            obs_args[INX_X_POS], obs_args[INX_Y_POS], obs_args[INX_STATIC_ANGLE]
+        self.speed_x, self.speed_y = obs_args[INX_X_SPEED], obs_args[INX_Y_SPEED]
+        self.y_start_side, self.y_end_side, self.step_speed_side = [UNDEFINED] * 3
+        self.load_side_move_args()
+
+    def load_side_move_args(self):
+        self.y_start_side = self.obs_args[INX_Y_START_SIDE]
+        self.y_end_side = self.obs_args[INX_Y_END_SIDE]
+        self.step_speed_side = self.obs_args[INX_STEP_SPEED_SIDE]
+
+    def update(self):
+        if self.y_start_side <= self.rect.y <= self.y_end_side:
+            self.x_move = self.step_speed_side + self.speed_x
+            self.y_move = self.speed_x
+        else:
+            self.y_move = self.speed_x
+            self.x_move = self.speed_x
+
+        self.rect = self.rect.move(self.x_move, self.y_move)
+
+
+class TwistObstacle(pygame.sprite.Sprite):
+    def __init__(self, *args):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = load_image(args[INX_IMG_NAME])
+        self.rect = self.image.get_rect()
+        self.rect.x, self.rect.y = args[INX_X_POS], args[INX_Y_POS]
+        self.speed_x, self.speed_y = args[INX_X_SPEED], args[INX_Y_SPEED]
+        self.rotated_surface, self.rotated_rect = UNDEFINED, UNDEFINED
+        self.step_angle, self.start_angle = \
+            args[INX_STEP_ANG_TWIST], args[INX_BASE_ANG_TWIST]
+
+    def update(self):
+        if self.start_angle > 0:
+            self.start_angle -= self.step_angle
+        else:
+            self.start_angle = 0
         self.rect = self.rect.move(self.speed_x, self.speed_y)
+        self.rotated_surface.transform.rotate(self.image, self.start_angle)
+        self.rotated_rect = self.rotated_surface.get_rect(center=(self.rect.x, self.rect.y))
+
+    def get_surf_rect(self):
+        return self.rotated_surface, self.rotated_rect
 
 
-def delete_wall(walls_list):
-    for enemy in walls_list:
-        if enemy.rect.y > 900:
-            walls_list.remove(enemy)
-
-
-def create_walls(array_walls1):
-    for i in range(len(array_walls1)):
-        array_walls1[i][INX_Y_POS] = array_walls1[i][INX_Y_POS] + array_walls1[i][INX_Y_SPEED]
-        array_walls1[i][INX_X_POS] = array_walls1[i][INX_X_POS] + array_walls1[i][INX_X_SPEED]
-        if array_walls1[i][INX_Y_POS] >= 0 and array_walls1[i][INX_INVIZ]:
-            array_walls1[i][INX_INVIZ] = False
-            Wall1(array_walls1[i])
-
-
-size = width, height = WIDTH, HIGHT
-screen = pygame.display.set_mode(size)
-
-clock = pygame.time.Clock()
-running = True
-
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    create_walls(array_walls1)
-    count += 1
-    print(count, len(all_sprites))
-
-    delete_wall(all_sprites)
-
-    all_sprites.update()
-    screen.fill('black')
-    all_sprites.draw(screen)
-    pygame.display.flip()
-
-    clock.tick(FPS)
-pygame.quit()
+class ShowObstacle(pygame.sprite.Sprite):
+    def __init__(self, img, rect):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = img
+        self.rect = rect
+        self.mask = pygame.mask.from_surface(self.image)
