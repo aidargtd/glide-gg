@@ -1,11 +1,12 @@
 from pygame import Surface
+from parametres import *
+from general_functions import *
 
 
 class MenuPage:
-    def __init__(self, screen, bg_color=(0, 0, 0)) -> None:
+    def __init__(self, screen) -> None:
         self.screen = screen
         self.items = []
-        self.bg_color = bg_color
         self.bottom_margin = 100  # расстояние от первого пункта меню до низа экрана
         self.between_items_margin = 50  # расстояние между пунктами меню
 
@@ -17,8 +18,9 @@ class MenuPage:
         return rect.w, rect.h
 
     def render(self):
+        menu_background = load_image(MENU_IMG)
         surface = Surface(self.screen_size())
-        surface.fill(self.bg_color)
+        surface.blit(menu_background, (0, 0))
         self.render_items(surface)
         self.screen.blit(surface, (0, 0))
 

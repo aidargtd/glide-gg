@@ -4,6 +4,8 @@ import pygame
 from db_functions import *
 from parametres import *
 
+fps_clock = pygame.time.Clock()
+
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('pictures', name)
@@ -17,6 +19,11 @@ def load_image(name, colorkey=None):
             colorkey = image.get_at(START_OF_SCREEN)
         image.set_colorkey(colorkey)
     return image
+
+
+def quit():
+    pygame.quit()
+    sys.exit()
 
 
 def print_text(screen, message, x, y, font_size=30, font_color=WHITE_COLOR, font_type='font/VeraBI.ttf'):
@@ -45,8 +52,6 @@ def get_obstacles(id_level, obst_type):
     for i in correct_obst_arr(obstacles):
         res.append([HIDDEN_OBSTACLE, i])
     return res
-
-
 
 # def get_side_obstacles(id_level):
 #     obstacles = select_all_with_aspect(SIDE_OBSTACLES,

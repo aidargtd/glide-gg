@@ -7,6 +7,11 @@ DB_PATH = 'data/glide_db.db'
 # TITLE OF GAME
 TITLE = 'Glide game'
 
+# FONTS
+FONT_ROB_LIGHT = 'font/Roboto-Light.ttf'
+# CONST (NAMES BALLS)
+RED = 'red'
+BLUE = 'blue'
 # COLORS (RGB)
 BLACK_COLOR = (0, 0, 0)
 RED_COLOR = (255, 0, 0)
@@ -24,6 +29,7 @@ BLUE_TRAIL_COLOR_3 = (0, 190, 255)
 RED_CIRCLE_IMG = 'red_circle.png'
 BLUE_CIRCLE_IMG = 'blue_circle.png'
 BASE_WALL_IMG = "base_wall_2_1.png"
+MENU_IMG = "menu.png"
 
 # CONSTS FOR SCREEN
 SIZE = WIDTH, HEIGHT = 600, 800
