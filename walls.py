@@ -39,21 +39,32 @@ class LfDownObstacle(pygame.sprite.Sprite):
         self.frames = ZERO_FRAMES
 
     def update(self):
+        print(self.rect.x, self.rect.y, self.frames)
         self.update_move_x()
         self.update_move_y()
         self.rect = self.rect.move(self.x_move, self.y_move)
 
     def update_move_x(self):
-        if self.left_board_lf < self.rect.x < self.right_board_lf:
-            if self.frames == SIXTY_FRAMES:
-                self.x_move = self.speed_x + self.step_speed_lf
-            if self.frames == ZERO_FRAMES:
-                self.x_move = self.speed_x - self.step_speed_lf
-        else:
-            if self.left_board_lf == self.rect.x:
-                self.frames += STEP_FRAME
+        if self.step_speed_lf != 0:
+            if self.left_board_lf < self.rect.x < self.right_board_lf:
+                if self.frames == TEN_FRAMES:
+                    self.x_move = self.speed_x + self.step_speed_lf
+                if self.frames == ZERO_FRAMES:
+                    self.x_move = self.speed_x - self.step_speed_lf
             else:
-                self.frames -= STEP_FRAME
+                if self.left_board_lf >= self.rect.x:
+                    if self.frames == TEN_FRAMES:
+                        self.x_move = self.step_speed_lf + self.speed_x
+                    else:
+                        self.frames += STEP_FRAME
+
+                elif self.right_board_lf <= self.rect.x:
+                    if self.frames == ZERO_FRAMES:
+                        self.x_move = - self.step_speed_lf + self.speed_x
+                    else:
+                        self.frames -= STEP_FRAME
+        else:
+            self.x_move = self.speed_x
 
     def update_move_y(self):
         if self.y_end_down <= self.rect.y <= self.y_end_down:

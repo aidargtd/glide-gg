@@ -99,6 +99,7 @@ INX_STEP_SPEED_LF = 11
 
 # ARGS OF FRAMES FOR LEFT RIGHT MOVING
 SIXTY_FRAMES = 60
+TEN_FRAMES = 10
 ZERO_FRAMES = 0
 STEP_FRAME = 1
 
@@ -142,7 +143,7 @@ TABLES = {
 
     LF_DOWN_OBSTACLES: [ID_LEVEL, ID_IMAGE,
                         X_POS, Y_POS,
-                        X_SPEED, Y_SPEED,
+                        X_SPEED, Y_SPEED, ANGLE_STATIC,
                         Y_START_DOWN,
                         Y_END_DOWN,
                         SPEED_STEP_DOWN,
@@ -168,3 +169,7 @@ TABLES = {
 # INDEXES FOR GET LEVEL'S OBSTACLES
 INX_ID_LEVEL = 0
 HIDDEN_OBSTACLE = True
+
+# INDEXES FOR CREATING WALLS
+INX_INVIZ = 0
+INX_INFO_ARRAY = 1

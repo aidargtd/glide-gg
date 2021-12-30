@@ -3,6 +3,7 @@ from parametres import *
 import circle_movement
 from general_functions import *
 from Button import *
+from walls import *
 import time
 
 pygame.init()
@@ -20,6 +21,32 @@ fps_clock = pygame.time.Clock()
 red_circle = circle_movement.RedCircle()
 blue_circle = circle_movement.BlueCircle()
 all_circles.add(red_circle, blue_circle)
+
+level_id = 1
+
+lf_down_walls = pygame.sprite.Group()
+
+all_walls = get_obstacles(level_id, LF_DOWN_OBSTACLES)
+# print(all_walls)
+
+
+def create_obstacle(ws_arr):
+    for i in range(len(ws_arr)):
+        # print(ws_arr[i])
+        # print(ws_arr[i][1])
+        ws_arr[i][1][INX_Y_POS] = ws_arr[i][1][INX_Y_POS] + ws_arr[i][1][INX_Y_SPEED]
+        ws_arr[i][1][INX_X_POS] = ws_arr[i][1][INX_X_POS] + ws_arr[i][1][INX_X_SPEED]
+        if ws_arr[i][1][INX_Y_POS] >= -200 and ws_arr[i][INX_INVIZ]:
+            ws_arr[i][INX_INVIZ] = False
+            # print(*ws_arr[i][1])
+            wall = LfDownObstacle(*ws_arr[i][1])
+            wall.add(lf_down_walls)
+
+
+def delete_obstacle(walls_list):
+    for enemy in walls_list:
+        if enemy.rect.y > 800:
+            walls_list.remove(enemy)
 
 
 # scores = 0
@@ -44,6 +71,10 @@ def game_cycle():
         screen.fill(BLACK_COLOR)
         # print_text(f'Scores: {scores}', 10, 10, 20)
         # scores = count_scores(scores)
+
+        create_obstacle(all_walls)
+        delete_obstacle(lf_down_walls)
+
         pygame.draw.circle(screen, DEEP_GRAY, GRAY_CIRCLE_POSITION,
                            GRAY_CIRCLE_RADIUS, GRAY_CIRCLE_WIDTH)
         for trace in circle_movement.traces:
@@ -51,6 +82,10 @@ def game_cycle():
             trace.update()
 
         all_circles.draw(screen)
+
+        lf_down_walls.update()
+        lf_down_walls.draw(screen)
+
         pygame.display.update()
         fps_clock.tick(FPS)
     return game_over()
