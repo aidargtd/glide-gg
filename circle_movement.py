@@ -3,7 +3,6 @@ import random
 from parametres import *
 from general_functions import *
 
-
 class ParticleTrace:
     def __init__(self, pos, color):
         self.x, self.y = pos
@@ -67,10 +66,11 @@ class Circles(pygame.sprite.Sprite):
                 traces.append(CreateTrace((self.rect.x, self.rect.y), random.choice(
                     [BLUE_TRAIL_COLOR_1, BLUE_TRAIL_COLOR_2, BLUE_TRAIL_COLOR_3])))
 
-    def check_collision(self, arr_with_sprites):
+    def check_collision(self, screen, arr_with_sprites):
         for i in arr_with_sprites:
             if pygame.sprite.collide_mask(self, i):
-                exit()
+                game_over(screen)
+
 
 
 traces = []

@@ -16,19 +16,19 @@ pygame.display.set_caption(TITLE)
 
 all_circles = pygame.sprite.Group()
 all_obstacles = pygame.sprite.Group()
-
 fps_clock = pygame.time.Clock()
 
-red_circle = circle_movement.Circles(RED_CIRCLE_IMG, RED_CIRCLE_START_ANGLE, RED_CIRCLE_START_X,
-                                     RED_CIRCLE_START_Y, RED)
-blue_circle = circle_movement.Circles(BLUE_CIRCLE_IMG, BLUE_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_X,
-                                      BLUE_CIRCLE_START_Y, BLUE)
+red_circle = circle_movement.Circles(
+    RED_CIRCLE_IMG, RED_CIRCLE_START_ANGLE, RED_CIRCLE_START_X, RED_CIRCLE_START_Y, RED)
+blue_circle = circle_movement.Circles(
+    BLUE_CIRCLE_IMG, BLUE_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_X, BLUE_CIRCLE_START_Y, BLUE)
+
 all_circles.add(red_circle, blue_circle)
 
 level_id = 1
+scores = 0
 
 lf_down_walls = pygame.sprite.Group()
-
 all_walls = get_obstacles(level_id, LF_DOWN_OBSTACLES)
 
 
@@ -47,15 +47,17 @@ def create_obstacle(ws_arr):
 
 
 def delete_obstacle(walls_list):
+    global scores
     for enemy in walls_list:
         if enemy.rect.y > 800:
             walls_list.remove(enemy)
+            scores += 1
 
 
 def press_key():
     keys = pygame.key.get_pressed()
     if keys[pygame.K_ESCAPE]:
-        pause()
+        pause(screen)
     if keys[pygame.K_RIGHT]:
         red_circle.update(SPEED_MOVEMENT_FALSE)
         blue_circle.update(SPEED_MOVEMENT_FALSE)
@@ -64,7 +66,6 @@ def press_key():
         blue_circle.update(SPEED_MOVEMENT_TRUE)
 
 
-# scores = 0
 def game_cycle():
     # global scores
     game = True
@@ -73,13 +74,12 @@ def game_cycle():
             if event.type == pygame.QUIT:
                 game = False
         press_key()
-        # red_circle.update(0, all_walls)
-        # blue_circle.update(0, all_walls)
-        red_circle.check_collision(all_walls)
-        blue_circle.check_collision(all_walls)
+        red_circle.update(0)
+        blue_circle.update(0)
+        red_circle.check_collision(screen, lf_down_walls)
+        blue_circle.check_collision(screen, lf_down_walls)
         screen.fill(BLACK_COLOR)
-        # print_text(f'Scores: {scores}', 10, 10, 20)
-        # scores = count_scores(scores)
+        print_text(screen, f'Dodged: {scores}', 10, 10, 20)
 
         create_obstacle(all_walls)
         delete_obstacle(lf_down_walls)
@@ -97,41 +97,7 @@ def game_cycle():
 
         pygame.display.update()
         fps_clock.tick(FPS)
-    return game_over()
-
-
-def pause():
-    paused = True
-    while paused:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-
-        print_text(screen, 'Paused. Press enter to continue', 30, 300)
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_RETURN]:
-            paused = False
-        pygame.display.update()
-        fps_clock.tick(15)
-
-
-def game_over():
-    stopped = True
-    while stopped:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-        print_text(screen, 'Game over. Press Enter to play again, Esc to exit', 20, 300, 20)
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_RETURN]:
-            return True
-        if keys[pygame.K_ESCAPE]:
-            return False
-
-        pygame.display.update()
-        fps_clock.tick(15)
+    return game_over(screen)
 
 
 def show_menu():
