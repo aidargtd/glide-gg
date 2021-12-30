@@ -7,6 +7,9 @@ DB_PATH = 'data/glide_db.db'
 # TITLE OF GAME
 TITLE = 'Glide game'
 
+# CONST (NAMES BALLS)
+RED = 'red'
+BLUE = 'blue'
 # COLORS (RGB)
 BLACK_COLOR = (0, 0, 0)
 RED_COLOR = (255, 0, 0)

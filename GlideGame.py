@@ -5,6 +5,7 @@ from general_functions import *
 from Button import *
 from walls import *
 import time
+from menu import *
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
@@ -18,8 +19,10 @@ all_obstacles = pygame.sprite.Group()
 
 fps_clock = pygame.time.Clock()
 
-red_circle = circle_movement.RedCircle()
-blue_circle = circle_movement.BlueCircle()
+red_circle = circle_movement.Circles(RED_CIRCLE_IMG, RED_CIRCLE_START_ANGLE, RED_CIRCLE_START_X,
+                                     RED_CIRCLE_START_Y, RED)
+blue_circle = circle_movement.Circles(BLUE_CIRCLE_IMG, BLUE_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_X,
+                                      BLUE_CIRCLE_START_Y, BLUE)
 all_circles.add(red_circle, blue_circle)
 
 level_id = 1
@@ -27,13 +30,13 @@ level_id = 1
 lf_down_walls = pygame.sprite.Group()
 
 all_walls = get_obstacles(level_id, LF_DOWN_OBSTACLES)
+
+
 # print(all_walls)
 
 
 def create_obstacle(ws_arr):
     for i in range(len(ws_arr)):
-        # print(ws_arr[i])
-        # print(ws_arr[i][1])
         ws_arr[i][1][INX_Y_POS] = ws_arr[i][1][INX_Y_POS] + ws_arr[i][1][INX_Y_SPEED]
         ws_arr[i][1][INX_X_POS] = ws_arr[i][1][INX_X_POS] + ws_arr[i][1][INX_X_SPEED]
         if ws_arr[i][1][INX_Y_POS] >= -200 and ws_arr[i][INX_INVIZ]:
@@ -49,6 +52,18 @@ def delete_obstacle(walls_list):
             walls_list.remove(enemy)
 
 
+def press_key():
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_ESCAPE]:
+        pause()
+    if keys[pygame.K_RIGHT]:
+        red_circle.update(SPEED_MOVEMENT_FALSE)
+        blue_circle.update(SPEED_MOVEMENT_FALSE)
+    if keys[pygame.K_LEFT]:
+        red_circle.update(SPEED_MOVEMENT_TRUE)
+        blue_circle.update(SPEED_MOVEMENT_TRUE)
+
+
 # scores = 0
 def game_cycle():
     # global scores
@@ -57,17 +72,11 @@ def game_cycle():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game = False
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE]:
-            pause()
-        if keys[pygame.K_RIGHT]:
-            red_circle.update(SPEED_MOVEMENT_FALSE)
-            blue_circle.update(SPEED_MOVEMENT_FALSE)
-        if keys[pygame.K_LEFT]:
-            red_circle.update(SPEED_MOVEMENT_TRUE)
-            blue_circle.update(SPEED_MOVEMENT_TRUE)
-        red_circle.update(0)
-        blue_circle.update(0)
+        press_key()
+        # red_circle.update(0, all_walls)
+        # blue_circle.update(0, all_walls)
+        red_circle.check_collision(all_walls)
+        blue_circle.check_collision(all_walls)
         screen.fill(BLACK_COLOR)
         # print_text(f'Scores: {scores}', 10, 10, 20)
         # scores = count_scores(scores)
@@ -157,4 +166,5 @@ def end_game():
 #     scores += 1
 #     return scores
 
+# menu = Menu((600, 800))
 show_menu()
