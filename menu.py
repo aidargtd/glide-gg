@@ -26,7 +26,6 @@ class Menu():
         self.menu.add_item(MenuItem('назад', self.main_menu))
 
     def event_loop(self):
-        menu_background = load_image('menu.png')
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -34,12 +33,7 @@ class Menu():
                 elif event.type == pygame.MOUSEMOTION:
                     self.menu.hover(*event.pos)
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    self.menu.click(*event.pos) \
-                        # self.screen.blit(menu_background, (0, 0))
+                    self.menu.click(*event.pos)
             self.menu.render()
-            # self.screen.blit(menu_background, (0, 0))
+
             pygame.display.update()
-
-
-# if __name__ == '__main__':
-#     Menu((600, 800))

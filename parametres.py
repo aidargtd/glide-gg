@@ -29,6 +29,7 @@ BLUE_TRAIL_COLOR_3 = (0, 190, 255)
 RED_CIRCLE_IMG = 'red_circle.png'
 BLUE_CIRCLE_IMG = 'blue_circle.png'
 BASE_WALL_IMG = "base_wall_2_1.png"
+MENU_IMG = "menu.png"
 
 # CONSTS FOR SCREEN
 SIZE = WIDTH, HEIGHT = 600, 800
