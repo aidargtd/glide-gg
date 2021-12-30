@@ -9,6 +9,12 @@ count = 0
 
 arr_obstacles = []
 
+INX_X_POS = 0
+INX_Y_POS = 1
+INX_X_SPEED = 2
+INX_Y_SPEED = 3
+INX_INVIZ = 4
+
 for i in range(100):
     if random.choice([True, False]):
         arr_obstacles.append([65, 0 - (i * 185), 0, 5, True])
