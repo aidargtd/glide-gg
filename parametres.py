@@ -7,6 +7,8 @@ DB_PATH = 'data/glide_db.db'
 # TITLE OF GAME
 TITLE = 'Glide game'
 
+# FONTS
+FONT_ROB_LIGHT = 'font/Roboto-Light.ttf'
 # CONST (NAMES BALLS)
 RED = 'red'
 BLUE = 'blue'

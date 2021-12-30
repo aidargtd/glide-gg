@@ -11,8 +11,8 @@ pygame.init()
 screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption(TITLE)
 
-# icon = pygame.image_load('icon.png')
-# pygame.display.set_icon(icon)
+icon = load_image('icon.png')
+pygame.display.set_icon(icon)
 
 all_circles = pygame.sprite.Group()
 all_obstacles = pygame.sprite.Group()
@@ -33,6 +33,39 @@ all_walls = get_obstacles(level_id, LF_DOWN_OBSTACLES)
 
 
 # print(all_walls)
+
+def game_over():
+    global scores
+    stopped = True
+    while stopped:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                quit()
+        print_text(screen, 'Game over. Press Enter to play again, Esc to return to the menu', 20, 300, 15)
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN]:
+            return True
+        if keys[pygame.K_ESCAPE]:
+            return False
+        scores = 0
+
+        pygame.display.update()
+        fps_clock.tick(15)
+
+
+def pause():
+    paused = True
+    while paused:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                quit()
+
+        print_text(screen, 'Paused. Press enter to continue', 30, 300)
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN]:
+            paused = False
+        pygame.display.update()
+        fps_clock.tick(15)
 
 
 def create_obstacle(ws_arr):
@@ -57,7 +90,7 @@ def delete_obstacle(walls_list):
 def press_key():
     keys = pygame.key.get_pressed()
     if keys[pygame.K_ESCAPE]:
-        pause(screen)
+        pause()
     if keys[pygame.K_RIGHT]:
         red_circle.update(SPEED_MOVEMENT_FALSE)
         blue_circle.update(SPEED_MOVEMENT_FALSE)
@@ -67,17 +100,16 @@ def press_key():
 
 
 def game_cycle():
-    # global scores
     game = True
     while game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game = False
         press_key()
-        red_circle.update(0)
-        blue_circle.update(0)
-        red_circle.check_collision(screen, lf_down_walls)
-        blue_circle.check_collision(screen, lf_down_walls)
+
+        if any([red_circle.check_collision(screen, lf_down_walls), blue_circle.check_collision(screen, lf_down_walls)]):
+            return game_over()
+
         screen.fill(BLACK_COLOR)
         print_text(screen, f'Dodged: {scores}', 10, 10, 20)
 
@@ -97,24 +129,24 @@ def game_cycle():
 
         pygame.display.update()
         fps_clock.tick(FPS)
-    return game_over(screen)
+    return game_over()
 
 
-def show_menu():
-    menu_background = load_image('menu.png')
-    start_btn = Button(screen, 300, 70)
-    quit_btn = Button(screen, 300, 70)
-    showing = True
-    while showing:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-        screen.blit(menu_background, (0, 0))
-        start_btn.draw(150, 200, 'Start game', start_game, 40)
-        quit_btn.draw(150, 300, 'Quit game', quit, 40)
-        pygame.display.update()
-        fps_clock.tick(60)
+# def show_menu():
+#     menu_background = load_image('menu.png')
+#     start_btn = Button(screen, 300, 70)
+#     quit_btn = Button(screen, 300, 70)
+#     showing = True
+#     while showing:
+#         for event in pygame.event.get():
+#             if event.type == pygame.QUIT:
+#                 pygame.quit()
+#                 quit()
+#         screen.blit(menu_background, (0, 0))
+#         start_btn.draw(150, 200, 'Start game', start_game, 40)
+#         quit_btn.draw(150, 300, 'Quit game', quit, 40)
+#         pygame.display.update()
+#         fps_clock.tick(60)
 
 
 def start_game():
@@ -123,14 +155,4 @@ def start_game():
         pass
 
 
-def end_game():
-    pass
-
-
-# def count_scores(scores):
-#     time.sleep(0.5)
-#     scores += 1
-#     return scores
-
-# menu = Menu((600, 800))
-show_menu()
+menu = Menu((600, 800), game_cycle)

@@ -7,40 +7,6 @@ from parametres import *
 fps_clock = pygame.time.Clock()
 
 
-def game_over(screen):
-    stopped = True
-    while stopped:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-        print_text(screen, 'Game over. Press Enter to play again, Esc to exit', 20, 300, 20)
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_RETURN]:
-            return True
-        if keys[pygame.K_ESCAPE]:
-            return False
-
-        pygame.display.update()
-        fps_clock.tick(15)
-
-
-def pause(screen):
-    paused = True
-    while paused:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-
-        print_text(screen, 'Paused. Press enter to continue', 30, 300)
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_RETURN]:
-            paused = False
-        pygame.display.update()
-        fps_clock.tick(15)
-
-
 def load_image(name, colorkey=None):
     fullname = os.path.join('pictures', name)
     if not os.path.isfile(fullname):
@@ -53,6 +19,11 @@ def load_image(name, colorkey=None):
             colorkey = image.get_at(START_OF_SCREEN)
         image.set_colorkey(colorkey)
     return image
+
+
+def quit():
+    pygame.quit()
+    sys.exit()
 
 
 def print_text(screen, message, x, y, font_size=30, font_color=WHITE_COLOR, font_type='font/VeraBI.ttf'):

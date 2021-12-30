@@ -1,17 +1,18 @@
 from pygame.font import Font, match_font
 from pygame.draw import lines
+from parametres import *
 
 
 class MenuItem:
     def __init__(self, label, onclick=None):
         self.label = label
         self.padding = 20  # расстояние от текста до рамки
-        self.font_name = 'font/Roboto-Light.ttf'
-        self.font_size = 70
-        self.text_color = (255, 255, 255)
-        self.border_color = (255, 0, 0)
-        self.border_width = 8
-        self.border_length = 20
+        self.font_name = FONT_ROB_LIGHT
+        self.font_size = 50
+        self.text_color = WHITE_COLOR
+        self.border_color = WHITE_COLOR
+        self.border_width = 4
+        self.border_length = 8
         self.onclick = onclick
         self.active = False
         self.rect = None  # координаты углов, включая рамку
