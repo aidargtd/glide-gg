@@ -24,8 +24,8 @@ def get_pict_name_by_id(id):
 
 
 def correct_obst_arr(arr):
-    for i in range(len(obsts)):
-        arr[i] = list(obsts[i][INX_ID_LEVEL + 1:])
+    for i in range(len(arr)):
+        arr[i] = list(arr[i][INX_ID_LEVEL + 1:])
         image_id = arr[i][INX_IMG_NAME]
         arr[i][INX_IMG_NAME] = get_pict_name_by_id(image_id)
     return arr
