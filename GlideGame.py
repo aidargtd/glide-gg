@@ -132,6 +132,7 @@ def game_cycle():
     return game_over()
 
 
+# СТАРОЕ МЕНЮ
 # def show_menu():
 #     menu_background = load_image('menu.png')
 #     start_btn = Button(screen, 300, 70)
@@ -156,3 +157,6 @@ def start_game():
 
 
 menu = Menu((600, 800), game_cycle)
+
+# Вызов старого меню
+# show_menu()
