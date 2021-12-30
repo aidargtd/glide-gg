@@ -1,10 +1,10 @@
-import pygame
-from parametres import *
+# import pygame
+# from parametres import *
 import circle_movement
-from general_functions import *
-from Button import *
+# from general_functions import *
+# from Button import *
 from walls import *
-import time
+# import time
 from menu import *
 
 pygame.init()
@@ -29,7 +29,8 @@ level_id = 1
 scores = 0
 
 lf_down_walls = pygame.sprite.Group()
-all_walls = get_obstacles(level_id, LF_DOWN_OBSTACLES)
+# all_walls = get_obstacles(level_id, LF_DOWN_OBSTACLES)
+all_walls = get_obstacles(level_id, SIDE_OBSTACLES)
 
 
 # print(all_walls)
@@ -75,7 +76,8 @@ def create_obstacle(ws_arr):
         if ws_arr[i][1][INX_Y_POS] >= -200 and ws_arr[i][INX_INVIZ]:
             ws_arr[i][INX_INVIZ] = False
             # print(*ws_arr[i][1])
-            wall = LfDownObstacle(*ws_arr[i][1])
+            # wall = LfDownObstacle(*ws_arr[i][1])
+            wall = SlideSideObstacle(*ws_arr[i][1])
             wall.add(lf_down_walls)
 
 
