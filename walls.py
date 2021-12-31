@@ -160,3 +160,4 @@ class ShowObstacle(pygame.sprite.Sprite):
         self.image = img
         self.rect = rect
         self.mask = pygame.mask.from_surface(self.image)
+
