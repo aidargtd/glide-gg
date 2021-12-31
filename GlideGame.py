@@ -30,7 +30,8 @@ scores = 0
 
 lf_down_walls = pygame.sprite.Group()
 # all_walls = get_obstacles(level_id, LF_DOWN_OBSTACLES)
-all_walls = get_obstacles(level_id, SIDE_OBSTACLES)
+# all_walls = get_obstacles(level_id, SIDE_OBSTACLES)
+all_walls = get_obstacles(level_id, TWIST_OBSTACLES)
 
 
 # print(all_walls)
@@ -71,15 +72,20 @@ def pause():
 
 def create_obstacle(ws_arr):
     for i in range(len(ws_arr)):
-        ws_arr[i][1][INX_Y_POS] = ws_arr[i][1][INX_Y_POS] + ws_arr[i][1][INX_Y_SPEED]
-        ws_arr[i][1][INX_X_POS] = ws_arr[i][1][INX_X_POS] + ws_arr[i][1][INX_X_SPEED]
-        if ws_arr[i][1][INX_Y_POS] >= -200 and ws_arr[i][INX_INVIZ]:
-            ws_arr[i][INX_INVIZ] = False
-            # print(*ws_arr[i][1])
-            # wall = LfDownObstacle(*ws_arr[i][1])
-            wall = SlideSideObstacle(*ws_arr[i][1])
-            wall.add(lf_down_walls)
+        wall = TwistObstacle(*ws_arr[i][1])
+        wall.add(lf_down_walls)
+        # ws_arr[i][1][INX_Y_POS] = ws_arr[i][1][INX_Y_POS] + ws_arr[i][1][INX_Y_SPEED]
+        # ws_arr[i][1][INX_X_POS] = ws_arr[i][1][INX_X_POS] + ws_arr[i][1][INX_X_SPEED]
+        # if ws_arr[i][1][INX_Y_POS] >= -200 and ws_arr[i][INX_INVIZ]:
+        #     ws_arr[i][INX_INVIZ] = False
+        #     # print(*ws_arr[i][1])
+        #     # wall = LfDownObstacle(*ws_arr[i][1])
+        #     # wall = SlideSideObstacle(*ws_arr[i][1])
+        #     print(*ws_arr[i][1])
+        #     wall = TwistObstacle(*ws_arr[i][1])
+        #     wall.add(lf_down_walls)
 
+create_obstacle(all_walls)
 
 def delete_obstacle(walls_list):
     global scores
@@ -100,7 +106,6 @@ def press_key():
         red_circle.update(SPEED_MOVEMENT_TRUE)
         blue_circle.update(SPEED_MOVEMENT_TRUE)
 
-
 def game_cycle():
     game = True
     while game:
@@ -115,8 +120,8 @@ def game_cycle():
         screen.fill(BLACK_COLOR)
         print_text(screen, f'Dodged: {scores}', 10, 10, 20)
 
-        create_obstacle(all_walls)
-        delete_obstacle(lf_down_walls)
+        # create_obstacle(all_walls)
+        # delete_obstacle(lf_down_walls)
 
         pygame.draw.circle(screen, DEEP_GRAY, GRAY_CIRCLE_POSITION,
                            GRAY_CIRCLE_RADIUS, GRAY_CIRCLE_WIDTH)
