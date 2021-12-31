@@ -51,20 +51,7 @@ def get_obstacles(id_level, obst_type):
     obstacles = select_all_with_aspect(obst_type,
                                        ID_LEVEL, id_level, *TABLES[obst_type])
     res = []
-    # print(correct_obst_arr(obstacles))
     for i in correct_obst_arr(obstacles):
         res.append([HIDDEN_OBSTACLE, i])
     return res
 
-# def get_side_obstacles(id_level):
-#     obstacles = select_all_with_aspect(SIDE_OBSTACLES,
-#                                        ID_LEVEL, id_level, *TABLES[SIDE_OBSTACLES])
-#
-#     return HIDDEN_OBSTACLE, correct_obst_arr(obstacles)
-#
-#
-# def get_twist_obstacles(id_level):
-#     obstacles = select_all_with_aspect(TWIST_OBSTACLES,
-#                                        ID_LEVEL, id_level, *TABLES[TWIST_OBSTACLES])
-#
-#     return HIDDEN_OBSTACLE, correct_obst_arr(obstacles)
