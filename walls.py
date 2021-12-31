@@ -1,8 +1,8 @@
-# import os
-# import sys
-# import pygame
-# import random
-# from parametres import *
+import os
+import sys
+import pygame
+import random
+from parametres import *
 from general_functions import *
 
 pygame.init()
@@ -117,32 +117,41 @@ class SlideSideObstacle(pygame.sprite.Sprite):
 
         self.rect = self.rect.move(self.x_move, self.y_move)
 
-
     def get_surf_rect(self):
         return self.image, self.rect
+
 
 class TwistObstacle(pygame.sprite.Sprite):
     def __init__(self, *args):
         pygame.sprite.Sprite.__init__(self)
-        self.image = load_image(args[INX_IMG_NAME])
-        self.rect = self.image.get_rect()
+        self.image = self.deep_image_copy = load_image(args[INX_IMG_NAME])
+        self.rect = self.deep_rect_copy = self.image.get_rect()
         self.rect.x, self.rect.y = args[INX_X_POS], args[INX_Y_POS]
+        self.deep_rect_copy.x, self.deep_rect_copy.y = args[INX_X_POS], args[INX_Y_POS]
         self.speed_x, self.speed_y = args[INX_X_SPEED], args[INX_Y_SPEED]
-        self.rotated_surface, self.rotated_rect = UNDEFINED, UNDEFINED
         self.step_angle, self.start_angle = \
             args[INX_STEP_ANG_TWIST], args[INX_BASE_ANG_TWIST]
+        self.angle = BASE_STATIC_ANGLE
+        self.counter = 0
 
     def update(self):
-        if self.start_angle > 0:
-            self.start_angle -= self.step_angle
-        else:
-            self.start_angle = 0
-        self.rect = self.rect.move(self.speed_x, self.speed_y)
-        self.rotated_surface.transform.rotate(self.image, self.start_angle)
-        self.rotated_rect = self.rotated_surface.get_rect(center=(self.rect.x, self.rect.y))
+        if -200 <= self.deep_rect_copy.y <= 900:
+            if self.start_angle > 0:
+                if self.counter % 15 == 0:
+                    self.start_angle -= self.step_angle
+            else:
+                self.start_angle = 0
+            self.counter += 1
 
-    def get_surf_rect(self):
-        return self.rotated_surface, self.rotated_rect
+            self.angle += self.start_angle
+
+        self.deep_rect_copy = self.deep_rect_copy.move(self.speed_x, self.speed_y)
+        if -200 <= self.deep_rect_copy.y <= 900:
+            self.image = pygame.transform.rotate(self.deep_image_copy, self.angle)
+            self.rect = self.image.get_rect(center=(self.deep_rect_copy.x, self.deep_rect_copy.y))
+
+    # def get_surf_rect(self):
+    #     return self.rotated_surface, self.rotated_rect
 
 
 class ShowObstacle(pygame.sprite.Sprite):
