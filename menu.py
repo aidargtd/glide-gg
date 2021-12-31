@@ -1,8 +1,7 @@
-import sys
 import pygame
 from menu_page import MenuPage
-from menu_item import MenuItem
-from Button import *
+from menu_settings_page import MenuSettingsPage
+from parametres import TITLE
 
 
 class Menu():
@@ -17,13 +16,13 @@ class Menu():
 
     def main_menu(self):
         self.menu = MenuPage(self.screen)
-        self.menu.add_item(MenuItem('выход', quit))
-        self.menu.add_item(MenuItem('настройки', self.settings_menu))
-        self.menu.add_item(MenuItem('играть', self.action))
+        self.menu.add_item('выход', (100, -100), quit)
+        self.menu.add_item('настройки', (100, -200), self.settings_menu)
+        self.menu.add_item('играть', (100, 300), self.action)
 
     def settings_menu(self):
-        self.menu = MenuPage(self.screen)
-        self.menu.add_item(MenuItem('назад', self.main_menu))
+        self.menu = MenuSettingsPage(self.screen)
+        self.menu.add_item('назад', (100, -100), self.main_menu)
 
     def event_loop(self):
         while True:
@@ -34,6 +33,6 @@ class Menu():
                     self.menu.hover(*event.pos)
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.menu.click(*event.pos)
-            self.menu.render()
 
+            self.menu.render()
             pygame.display.update()

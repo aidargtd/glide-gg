@@ -1,6 +1,8 @@
 import os
 import sys
 import pygame
+from pygame.font import match_font
+
 from db_functions import *
 from parametres import *
 
@@ -27,9 +29,10 @@ def quit():
 
 
 def print_text(screen, message, x, y, font_size=30, font_color=WHITE_COLOR, font_type='font/VeraBI.ttf'):
-    font_type = pygame.font.Font(font_type, font_size)
+    font_type = pygame.font.Font(match_font(font_type), font_size)
     text = font_type.render(message, True, font_color)
     screen.blit(text, (x, y))
+    return text.get_rect()
 
 
 def get_pict_name_by_id(id):

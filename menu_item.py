@@ -1,10 +1,12 @@
 from pygame.font import Font, match_font
 from pygame.draw import lines
+
+from general_functions import print_text
 from parametres import *
 
 
 class MenuItem:
-    def __init__(self, label, onclick=None):
+    def __init__(self, label, left_top, onclick=None):
         self.label = label
         self.padding = 20  # расстояние от текста до рамки
         self.font_name = FONT_ROB_LIGHT
@@ -16,15 +18,7 @@ class MenuItem:
         self.onclick = onclick
         self.active = False
         self.rect = None  # координаты углов, включая рамку
-
-    def render_text(self, surface, screen_w, bottom_h):
-        font = Font(match_font(self.font_name), self.font_size)
-        text = font.render(self.label, True, self.text_color)
-        rect = text.get_rect()
-        left = (screen_w - rect.w) // 2 - self.padding
-        top = bottom_h - rect.h - self.padding
-        surface.blit(text, (left, top))
-        return left, top, rect.w, rect.h
+        self.left_top = left_top # координаты (x, y) левого верхнего угла
 
     def render_border(self, surface, left, top, right, bottom):
         if not self.active:
@@ -78,11 +72,16 @@ class MenuItem:
             self.border_width
         )
 
-    def render(self, surface, screen_w, bottom_h):
-        left, top, w, h = self.render_text(surface, screen_w, bottom_h)
-        self.rect = (left - self.padding, top - self.padding, left + w + self.padding, bottom_h)
+    def render(self, surface):
+        text_rect = print_text(surface, self.label, *self.left_top)
+        left, top = self.left_top
+        self.rect = (
+            left - self.padding,
+            top - self.padding,
+            left + text_rect.w + self.padding,
+            top + text_rect.h + self.padding
+        )
         self.render_border(surface, *self.rect)
-        return top
 
     def hover(self, x, y):
         if self.rect is None:
