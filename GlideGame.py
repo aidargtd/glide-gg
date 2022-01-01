@@ -99,7 +99,7 @@ def press_key():
         blue_circle.update(SPEED_MOVEMENT_TRUE)
 
 
-def game_cycle(l_id=1):
+def game_cycle(l_id):
     game = True
     walls_group = create_obst_group(l_id)
     traces_wall = []

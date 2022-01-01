@@ -12,7 +12,7 @@ class Button:
         self.border_color = WHITE_COLOR
         self.screen = screen
 
-    def draw(self, x, y, message, action=None, font_size=30, id=1):
+    def draw(self, x, y, message, action=None, font_size=30, id=None):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         if x < mouse[0] < x + self.width and y < mouse[1] < y + self.height:
@@ -25,6 +25,8 @@ class Button:
                     if action == quit:
                         pygame.quit()
                         quit()
+                    elif id is not None:
+                        action(id)
                     else:
                         action()
         else:
