@@ -1,6 +1,9 @@
 from pygame import Surface
 from menu_files.menu_item import MenuItem
 from general_functions import *
+from load_m_bg import kosmo_imgs
+
+img_counter = 0
 
 
 class MenuPage:
@@ -36,9 +39,15 @@ class MenuPage:
     def render_extra(self, surface):
         pass
 
-    def render_background(self, surface):
+    def render_background(self, screen):
+        global img_counter
+        screen.fill(BLACK_COLOR)
         menu_background = load_image(MENU_IMG)
-        surface.blit(menu_background, (0, 0))
+        # surface.blit(menu_background, (0, 0))
+        if img_counter == 78:
+            img_counter = 0
+        screen.blit(kosmo_imgs[img_counter // 2], (0, 0))
+        img_counter += 1
 
     def render_items(self, surface):
         for item in self.items:
