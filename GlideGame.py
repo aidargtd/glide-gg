@@ -107,7 +107,7 @@ def game_cycle():
         for wall in walls_group:
             if check_sane_y_cord(wall.rect.y):
                 wall.add(loc_walls_group)
-        pygame.mouse.set_visible(False)
+        # pygame.mouse.set_visible(False)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game = False
