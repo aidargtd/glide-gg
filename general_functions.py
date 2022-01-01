@@ -38,7 +38,6 @@ def print_text(screen, message, x, y, font_size=30, font_color=WHITE_COLOR, font
 
 
 def get_num(number):
-    print(number)
     return number
 
 

@@ -164,6 +164,17 @@ class TwistObstacle(pygame.sprite.Sprite):
         rect = self.deep_image_copy.get_rect()
         return [self.rect.x, self.rect.y, rect.width, rect.height, self.static_angle]
 
+class TraceObstacle:
+    def __init__(self, x, y, width, hieght, angle):
+        # self.rect = rect
+        print(angle)
+        self.color_rgb = [80, 80, 80]
+        self.angle = angle
+        self.step = 10
+        self.counter = 0
+        self.x = x
+        self.y = y
+        self.width, self.hieght = width, hieght
 
 class TraceObstacle:
     def __init__(self, x, y, width, hieght, angle):

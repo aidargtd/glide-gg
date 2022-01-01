@@ -11,7 +11,7 @@ pygame.init()
 screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption(TITLE)
 
-icon = load_image('icon.png')
+icon = load_image('icon.jpg')
 pygame.display.set_icon(icon)
 
 all_circles = pygame.sprite.Group()
@@ -124,13 +124,8 @@ def game_cycle():
 
         if any([red_circle.check_collision(screen, walls_group), blue_circle.check_collision(screen, walls_group)]):
             return game_over()
-        #
         screen.fill(BLACK_COLOR)
-        # screen.fill(WHITE_COLOR)
         print_text(screen, f'Dodged: {scores}', 10, 10, 20)
-
-        # create_obstacle(all_walls)
-        # delete_obstacle(lf_down_walls)
 
         pygame.draw.circle(screen, DEEP_GRAY, GRAY_CIRCLE_POSITION,
                            GRAY_CIRCLE_RADIUS, GRAY_CIRCLE_WIDTH)
@@ -151,12 +146,10 @@ def game_cycle():
 
 
 def start_game():
-    # global scores
+    Menu(SIZE)
     while game_cycle():
         pass
 
 
-menu = Menu((600, 800), game_cycle)
-
-# Вызов старого меню
-# show_menu()
+if __name__ == '__main__':
+    start_game()
