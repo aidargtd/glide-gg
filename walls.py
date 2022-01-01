@@ -51,9 +51,6 @@ class LfDownObstacle(pygame.sprite.Sprite):
         self.frames = ZERO_FRAMES
 
     def update(self):
-        if self.rect.y > 1000:
-            self.speed_y = - self.speed_y
-        # print(self.rect.x, self.rect.y, self.frames)
         self.update_move_x()
         self.update_move_y()
         self.rect = self.rect.move(self.x_move, self.y_move)
@@ -121,8 +118,6 @@ class SlideSideObstacle(pygame.sprite.Sprite):
         self.step_speed_side = move_inf[INX_STEP_SPEED_SIDE]
 
     def update(self):
-        if self.rect.y > 1000:
-            self.speed_y = - self.speed_y
         if self.y_start_side <= self.rect.y <= self.y_end_side and check_sane_y_cord(self.rect.y):
             self.x_move = self.step_speed_side + self.speed_x
         else:
@@ -150,8 +145,6 @@ class TwistObstacle(pygame.sprite.Sprite):
         self.counter = 0
 
     def update(self):
-        if self.rect.y > 1000:
-            self.speed_y = - self.speed_y
         if check_sane_y_cord(self.deep_rect_copy.y):
             if self.start_angle > 0:
                 if self.counter % 15 == 0:
@@ -170,6 +163,7 @@ class TwistObstacle(pygame.sprite.Sprite):
     def get_trace_inf(self):
         rect = self.deep_image_copy.get_rect()
         return [self.rect.x, self.rect.y, rect.width, rect.height, self.static_angle]
+
 
 class TraceObstacle:
     def __init__(self, x, y, width, hieght, angle):
