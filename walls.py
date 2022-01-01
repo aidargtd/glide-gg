@@ -134,15 +134,24 @@ class SlideSideObstacle(pygame.sprite.Sprite):
 class TwistObstacle(pygame.sprite.Sprite):
     def __init__(self, *args):
         pygame.sprite.Sprite.__init__(self)
+
+        self.x_move, self.y_move = BASE_X_MOVE, BASE_Y_MOVE
+        # 1. Загрузка базовой информации о препятствии
+        self.image, self.deep_image_copy, self.rect, self.deep_rect_copy = [UNDEFINED] * 4
+        self.speed_x, self.speed_y, self.static_angle, self.mask = [UNDEFINED] * 4
+        self.load_base_obst_args(args)
+        # 2. Загрузка информации препятствия о вращении
+        self.step_angle, self.start_angle = args[INX_STEP_ANG_TWIST], args[INX_BASE_ANG_TWIST]
+        self.static_angle = BASE_STATIC_ANGLE
+        self.mask = pygame.mask.from_surface(self.image)
+        self.counter = 0
+
+    def load_base_obst_args(self, args):
         self.image = self.deep_image_copy = load_image(args[INX_IMG_NAME])
         self.rect = self.deep_rect_copy = self.image.get_rect()
         self.rect.x, self.rect.y = args[INX_X_POS], args[INX_Y_POS]
         self.deep_rect_copy.x, self.deep_rect_copy.y = args[INX_X_POS], args[INX_Y_POS]
         self.speed_x, self.speed_y = args[INX_X_SPEED], args[INX_Y_SPEED]
-        self.step_angle, self.start_angle = args[INX_STEP_ANG_TWIST], args[INX_BASE_ANG_TWIST]
-        self.static_angle = BASE_STATIC_ANGLE
-        self.mask = pygame.mask.from_surface(self.image)
-        self.counter = 0
 
     def update(self):
         if check_sane_y_cord(self.deep_rect_copy.y):
