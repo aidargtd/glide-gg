@@ -15,58 +15,6 @@ class Button:
         # self.border_length = 8
         # self.active = False
 
-    # def render_border(self, surface, left, top, right, bottom):
-    #     if not self.active:
-    #         return
-    #     # левый верхний
-    #     lines(
-    #         surface,
-    #         self.border_color,
-    #         False,
-    #         [
-    #             (left, top + self.border_length),
-    #             (left, top),
-    #             (left + self.border_length, top)
-    #         ],
-    #         self.border_width
-    #     )
-    #     # правый верхний
-    #     lines(
-    #         surface,
-    #         self.border_color,
-    #         False,
-    #         [
-    #             (right - self.border_length, top),
-    #             (right, top),
-    #             (right, top + self.border_length)
-    #         ],
-    #         self.border_width
-    #     )
-    #     # правый нижний
-    #     lines(
-    #         surface,
-    #         self.border_color,
-    #         False,
-    #         [
-    #             (right, bottom - self.border_length),
-    #             (right, bottom),
-    #             (right - self.border_length, bottom)
-    #         ],
-    #         self.border_width
-    #     )
-    #     # левый нижний
-    #     lines(
-    #         surface,
-    #         self.border_color,
-    #         False,
-    #         [
-    #             (left, bottom - self.border_length),
-    #             (left, bottom),
-    #             (left + self.border_length, bottom)
-    #         ],
-    #         self.border_width
-    #     )
-
     def draw(self, x, y, message, action=None, font_size=30):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()

@@ -85,7 +85,9 @@ def create_obstacle(ws_arr):
         #     wall = TwistObstacle(*ws_arr[i][1])
         #     wall.add(lf_down_walls)
 
+
 create_obstacle(all_walls)
+
 
 def delete_obstacle(walls_list):
     global scores
@@ -105,6 +107,7 @@ def press_key():
     if keys[pygame.K_LEFT]:
         red_circle.update(SPEED_MOVEMENT_TRUE)
         blue_circle.update(SPEED_MOVEMENT_TRUE)
+
 
 def game_cycle():
     game = True

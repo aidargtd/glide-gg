@@ -18,7 +18,7 @@ class MenuItem:
         self.onclick = onclick
         self.active = False
         self.rect = None  # координаты углов, включая рамку
-        self.left_top = left_top # координаты (x, y) левого верхнего угла
+        self.left_top = left_top  # координаты (x, y) левого верхнего угла
 
     def render_border(self, surface, left, top, right, bottom):
         if not self.active:
