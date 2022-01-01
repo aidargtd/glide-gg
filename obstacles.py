@@ -39,6 +39,7 @@ class Obstacle1(pygame.sprite.Sprite):
         self.speed_y = y_speed
 
     def update(self, angle=10):
+        print(self.rect.x, self.rect.y)
         self.rect = self.rect.move(self.speed_x, self.speed_y)
 
 
