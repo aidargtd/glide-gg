@@ -7,10 +7,11 @@ class MenuPage:
     def __init__(self, screen) -> None:
         self.screen = screen
         self.items = []
+        self.items_for_change = []
 
     # если числа в left_top отрицательные, то это отступы от правого и нижнего края экрана
-    def add_item(self, label, left_top, onclick=None):
-        self.items.append(MenuItem(label, self.convert_coords(left_top), onclick))
+    def add_item(self, label, left_top, onclick=None, color=WHITE_COLOR):
+        self.items.append(MenuItem(label, self.convert_coords(left_top), onclick, color))
 
     def convert_coords(self, left_top):
         left, top = left_top

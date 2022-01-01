@@ -4,7 +4,9 @@ from menu_settings_page import MenuSettingsPage
 from menu_plots_page import MenuPlotsPage
 from menu_shop_page import MenuShopPage
 from menu_sound_settings import MenuSoundPage
-from parametres import TITLE
+from parametres import *
+
+dict_changing_values = {'music': True, 'voice': True, 'sound_effects': True, 'effects': True}
 
 
 class Menu():
@@ -42,12 +44,28 @@ class Menu():
 
     def sound_condition(self):
         self.menu = MenuSoundPage(self.screen)
+        self.menu.add_item('вкл', (110, 100), self.check_on_music, BLUE_TRAIL_COLOR_3)
+        self.menu.add_item('вкл', (80, 200), self.check_on_voice, BLUE_TRAIL_COLOR_3)
+        self.menu.add_item('вкл', (230, 300), self.check_on_sounds_eff, BLUE_TRAIL_COLOR_3)
         self.menu.add_item('назад', (100, -100), self.settings_menu)
+
+    def check_on_music(self):
+        dict_changing_values['music'] = not dict_changing_values['music']
+
+    def check_on_voice(self):
+        dict_changing_values['voice'] = not dict_changing_values['voice']
+
+    def check_on_sounds_eff(self):
+        dict_changing_values['sounds_effects'] = not dict_changing_values['sounds_effects']
+
+    def check_on_eff(self):
+        dict_changing_values['effects'] = not dict_changing_values['effects']
 
     def settings_menu(self):
         self.menu = MenuSettingsPage(self.screen)
         self.menu.add_item('звук', (50, 300), self.sound_condition)
         self.menu.add_item('назад', (100, -100), self.main_menu)
+        self.menu.add_item('вкл', (50, 450), self.check_on_eff, BLUE_TRAIL_COLOR_3)
 
     def event_loop(self):
         while True:
