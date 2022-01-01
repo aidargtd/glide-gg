@@ -6,11 +6,11 @@ from parametres import *
 
 
 class MenuItem:
-    def __init__(self, label, left_top, onclick=None):
+    def __init__(self, label, left_top, onclick=None, font_size=50):
         self.label = label
         self.padding = 20  # расстояние от текста до рамки
         self.font_name = FONT_ROB_LIGHT
-        self.font_size = 50
+        self.font_size = font_size
         self.text_color = WHITE_COLOR
         self.border_color = WHITE_COLOR
         self.border_width = 4

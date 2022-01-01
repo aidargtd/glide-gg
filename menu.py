@@ -21,7 +21,7 @@ class Menu():
         self.menu.add_item('выход', (50, -100), quit)
         self.menu.add_item('настройки', (50, -200), self.settings_menu)
         self.menu.add_item('магазин', (50, -300), self.shop_menu)
-        self.menu.add_item('играть', (50, -400), self.plots_menu)
+        self.menu.add_item('играть', (50, -400), self.action)
 
     def plots_menu(self):
         self.menu = MenuPlotsPage(self.screen)
@@ -33,6 +33,7 @@ class Menu():
 
     def settings_menu(self):
         self.menu = MenuSettingsPage(self.screen)
+        self.menu.add_item('звук', (50, 300), self.main_menu)
         self.menu.add_item('назад', (100, -100), self.main_menu)
 
     def event_loop(self):

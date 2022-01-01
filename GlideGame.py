@@ -6,6 +6,7 @@ import circle_movement
 from walls import *
 # import time
 from menu import *
+from mouse_cursor import *
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
@@ -17,14 +18,15 @@ pygame.display.set_icon(icon)
 all_circles = pygame.sprite.Group()
 all_obstacles = pygame.sprite.Group()
 fps_clock = pygame.time.Clock()
-
+all_sprites = pygame.sprite.Group()
 red_circle = circle_movement.Circles(
     RED_CIRCLE_IMG, RED_CIRCLE_START_ANGLE, RED_CIRCLE_START_X, RED_CIRCLE_START_Y, RED)
 blue_circle = circle_movement.Circles(
     BLUE_CIRCLE_IMG, BLUE_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_X, BLUE_CIRCLE_START_Y, BLUE)
 
 all_circles.add(red_circle, blue_circle)
-
+mouse = Mouse()
+all_sprites.add(mouse)
 level_id = 1
 scores = 0
 
@@ -112,9 +114,14 @@ def press_key():
 def game_cycle():
     game = True
     while game:
+        pygame.mouse.set_visible(False)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game = False
+            # if event.type == pygame.MOUSEMOTION:
+            #     if pygame.mouse.get_focused():
+            #         x, y = event.pos[0], event.pos[1]
+            #         mouse.update((x, y))
         press_key()
 
         if any([red_circle.check_collision(screen, lf_down_walls), blue_circle.check_collision(screen, lf_down_walls)]):
