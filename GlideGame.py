@@ -1,8 +1,8 @@
-# import pygame
-# from parametres import *
+import pygame
+from parametres import *
 import circle_movement
-# from general_functions import *
-# from Button import *
+from general_functions import *
+from Button import *
 from walls import *
 from menu import *
 from mouse_cursor import *
@@ -26,27 +26,12 @@ blue_circle = circle_movement.Circles(
 all_circles.add(red_circle, blue_circle)
 mouse = Mouse()
 all_sprites.add(mouse)
-level_id = 1
 scores = 0
+sound_collision = pygame.mixer.Sound('Samples/3816133910831170.ogg')
 
 
-def game_over():
-    global scores
-    stopped = True
-    while stopped:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                quit()
-        print_text(screen, 'Game over. Press Enter to play again, Esc to return to the menu', 20, 300, 15)
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_RETURN]:
-            return True
-        if keys[pygame.K_ESCAPE]:
-            return False
-        scores = 0
-
-        pygame.display.update()
-        fps_clock.tick(15)
+def game_over(l_id):
+    game_cycle(l_id)
 
 
 def pause():
@@ -84,9 +69,6 @@ def create_obst_group(lev_id):
     return group
 
 
-# walls_group = create_obst_group(level_id)
-
-
 def press_key():
     keys = pygame.key.get_pressed()
     if keys[pygame.K_ESCAPE]:
@@ -108,23 +90,23 @@ def game_cycle(l_id):
         for wall in walls_group:
             if check_sane_y_cord(wall.rect.y):
                 wall.add(loc_walls_group)
-
         for wall in loc_walls_group:
             traces_wall.append(TraceObstacle(*wall.get_trace_inf()))
 
         for i in range(len(traces_wall) - 1, -1, -1):
             if traces_wall[i].color_rgb == [50, 50, 50]:
                 traces_wall.pop(i)
-                print('gay')
 
         # pygame.mouse.set_visible(False)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game = False
+                quit()
         press_key()
 
         if any([red_circle.check_collision(screen, walls_group), blue_circle.check_collision(screen, walls_group)]):
-            return game_over()
+            pygame.mixer.Sound.play(sound_collision)
+            return game_over(l_id)
         screen.fill(BLACK_COLOR)
         print_text(screen, f'Dodged: {scores}', 10, 10, 20)
 
@@ -143,13 +125,10 @@ def game_cycle(l_id):
 
         pygame.display.update()
         fps_clock.tick(FPS)
-    return game_over()
 
 
 def start_game():
     Menu(SIZE)
-    # while game_cycle():
-    #     pass
 
 
 if __name__ == '__main__':

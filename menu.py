@@ -98,7 +98,3 @@ class Menu():
 
             self.menu.render()
             pygame.display.update()
-
-
-if __name__ == '__main__':
-    menu = Menu((600, 800))

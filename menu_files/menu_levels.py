@@ -13,16 +13,16 @@ class MenuLevelsPage(MenuPage):
         btn_first_lvl.draw(50, 150, ' I ', game_cycle, 50, 1)
 
         btn_sec_lvl = Button(surface, 50, 50)
-        btn_sec_lvl.draw(110, 150, 'II', None, 50)
+        btn_sec_lvl.draw(110, 150, 'II', game_cycle, 50, 2)
 
         btn_third_lvl = Button(surface, 50, 50)
-        btn_third_lvl.draw(170, 150, 'III', None, 50)
+        btn_third_lvl.draw(170, 150, 'III', game_cycle, 50, 3)
 
         btn_fourth_lvl = Button(surface, 50, 50)
-        btn_fourth_lvl.draw(50, 210, 'IV', None, 50)
+        btn_fourth_lvl.draw(50, 210, 'IV', game_cycle, 50, 4)
 
         btn_five_lvl = Button(surface, 50, 50)
-        btn_five_lvl.draw(110, 210, 'V', None, 50)
+        btn_five_lvl.draw(110, 210, 'V', game_cycle, 50, 5)
 
         btn_six_lvl = Button(surface, 50, 50)
-        btn_six_lvl.draw(170, 210, 'VI', None, 50)
+        btn_six_lvl.draw(170, 210, 'VI', game_cycle, 50, 6)

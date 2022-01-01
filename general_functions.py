@@ -30,7 +30,7 @@ def quit():
     sys.exit()
 
 
-def print_text(screen, message, x, y, font_size=30, font_color=WHITE_COLOR, font_type='font/VeraBI.ttf'):
+def print_text(screen, message, x, y, font_size=30, font_color=WHITE_COLOR, font_type='font/Roboto-Light.ttf'):
     font_type = pygame.font.Font(match_font(font_type), font_size)
     text = font_type.render(message, True, font_color)
     screen.blit(text, (x, y))
