@@ -1,5 +1,5 @@
 from general_functions import print_text
-from menu_page import MenuPage
+from menu_files.menu_page import MenuPage
 
 
 class MenuShopPage(MenuPage):

@@ -4,7 +4,6 @@ import circle_movement
 # from general_functions import *
 # from Button import *
 from walls import *
-# import time
 from menu import *
 from mouse_cursor import *
 

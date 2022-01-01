@@ -1,6 +1,5 @@
 from general_functions import print_text
-from menu_page import MenuPage
-from CheckBox import Checkbox
+from menu_files.menu_page import MenuPage
 
 
 class MenuSettingsPage(MenuPage):

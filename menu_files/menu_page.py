@@ -1,5 +1,5 @@
 from pygame import Surface
-from menu_item import MenuItem
+from menu_files.menu_item import MenuItem
 from general_functions import *
 
 
