@@ -74,11 +74,11 @@ def press_key():
     if keys[pygame.K_ESCAPE]:
         pause()
     if keys[pygame.K_RIGHT]:
-        red_circle.update(SPEED_MOVEMENT_FALSE)
-        blue_circle.update(SPEED_MOVEMENT_FALSE)
-    if keys[pygame.K_LEFT]:
         red_circle.update(SPEED_MOVEMENT_TRUE)
         blue_circle.update(SPEED_MOVEMENT_TRUE)
+    if keys[pygame.K_LEFT]:
+        red_circle.update(SPEED_MOVEMENT_FALSE)
+        blue_circle.update(SPEED_MOVEMENT_FALSE)
 
 
 def game_cycle(l_id):
