@@ -30,13 +30,6 @@ all_sprites.add(mouse)
 level_id = 1
 scores = 0
 
-lf_down_walls = pygame.sprite.Group()
-# all_walls = get_obstacles(level_id, LF_DOWN_OBSTACLES)
-# all_walls = get_obstacles(level_id, SIDE_OBSTACLES)
-all_walls = get_obstacles(level_id, TWIST_OBSTACLES)
-
-
-# print(all_walls)
 
 def game_over():
     global scores
@@ -72,31 +65,27 @@ def pause():
         fps_clock.tick(15)
 
 
-def create_obstacle(ws_arr):
-    for i in range(len(ws_arr)):
-        wall = TwistObstacle(*ws_arr[i][1])
-        wall.add(lf_down_walls)
-        # ws_arr[i][1][INX_Y_POS] = ws_arr[i][1][INX_Y_POS] + ws_arr[i][1][INX_Y_SPEED]
-        # ws_arr[i][1][INX_X_POS] = ws_arr[i][1][INX_X_POS] + ws_arr[i][1][INX_X_SPEED]
-        # if ws_arr[i][1][INX_Y_POS] >= -200 and ws_arr[i][INX_INVIZ]:
-        #     ws_arr[i][INX_INVIZ] = False
-        #     # print(*ws_arr[i][1])
-        #     # wall = LfDownObstacle(*ws_arr[i][1])
-        #     # wall = SlideSideObstacle(*ws_arr[i][1])
-        #     print(*ws_arr[i][1])
-        #     wall = TwistObstacle(*ws_arr[i][1])
-        #     wall.add(lf_down_walls)
+def create_obst_group(lev_id):
+    group = pygame.sprite.Group()
+
+    twist_walls = get_obstacles(lev_id, TWIST_OBSTACLES)
+    for wall in twist_walls:
+        wall_sprite = TwistObstacle(*wall)
+        wall_sprite.add(group)
+
+    lf_walls = get_obstacles(lev_id, LF_DOWN_OBSTACLES)
+    for wall in lf_walls:
+        wall_sprite = LfDownObstacle(*wall)
+        wall_sprite.add(group)
+
+    side_walls = get_obstacles(lev_id, SIDE_OBSTACLES)
+    for wall in side_walls:
+        wall_sprite = SlideSideObstacle(*wall)
+        wall_sprite.add(group)
+    return group
 
 
-create_obstacle(all_walls)
-
-
-def delete_obstacle(walls_list):
-    global scores
-    for enemy in walls_list:
-        if enemy.rect.y > 800:
-            walls_list.remove(enemy)
-            scores += 1
+walls_group = create_obst_group(level_id)
 
 
 def press_key():
@@ -114,6 +103,10 @@ def press_key():
 def game_cycle():
     game = True
     while game:
+        loc_walls_group = pygame.sprite.Group()
+        for wall in walls_group:
+            if check_sane_y_cord(wall.rect.y):
+                wall.add(loc_walls_group)
         pygame.mouse.set_visible(False)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -124,7 +117,7 @@ def game_cycle():
             #         mouse.update((x, y))
         press_key()
 
-        if any([red_circle.check_collision(screen, lf_down_walls), blue_circle.check_collision(screen, lf_down_walls)]):
+        if any([red_circle.check_collision(screen, walls_group), blue_circle.check_collision(screen, walls_group)]):
             return game_over()
 
         screen.fill(BLACK_COLOR)
@@ -141,8 +134,8 @@ def game_cycle():
 
         all_circles.draw(screen)
 
-        lf_down_walls.update()
-        lf_down_walls.draw(screen)
+        walls_group.update()
+        loc_walls_group.draw(screen)
 
         pygame.display.update()
         fps_clock.tick(FPS)
