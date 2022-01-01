@@ -102,11 +102,21 @@ def press_key():
 
 def game_cycle():
     game = True
+    traces_wall = []
     while game:
         loc_walls_group = pygame.sprite.Group()
         for wall in walls_group:
             if check_sane_y_cord(wall.rect.y):
                 wall.add(loc_walls_group)
+
+        for wall in loc_walls_group:
+            traces_wall.append(TraceObstacle(*wall.get_trace_inf()))
+
+        for i in range(len(traces_wall) - 1, -1, -1):
+            if traces_wall[i].color_rgb == [50, 50, 50]:
+                traces_wall.pop(i)
+                print('gay')
+
         # pygame.mouse.set_visible(False)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -119,8 +129,9 @@ def game_cycle():
 
         if any([red_circle.check_collision(screen, walls_group), blue_circle.check_collision(screen, walls_group)]):
             return game_over()
-
+        #
         screen.fill(BLACK_COLOR)
+        # screen.fill(WHITE_COLOR)
         print_text(screen, f'Dodged: {scores}', 10, 10, 20)
 
         # create_obstacle(all_walls)
@@ -133,7 +144,9 @@ def game_cycle():
             trace.update()
 
         all_circles.draw(screen)
-
+        for i in range(len(traces_wall)):
+            traces_wall[i].update_color()
+            traces_wall[i].draw_trace(screen)
         walls_group.update()
         loc_walls_group.draw(screen)
 

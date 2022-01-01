@@ -18,7 +18,8 @@ class LfDownObstacle(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.x_move, self.y_move = BASE_X_MOVE, BASE_Y_MOVE
         # 1. Загрузка базовой информации о препятствии
-        self.image, self.rect, self.mask, self.speed_x, self.speed_y = [UNDEFINED] * 5
+        self.image, self.deep_image, self.rect, self.mask = [UNDEFINED] * 4
+        self.speed_x, self.speed_y, self.static_angle = [UNDEFINED] * 3
         self.load_base_obst_args(args)
         # 2. Загрузка информации о движении вниз
         self.y_start_down, self.y_end_down, self.step_speed_down = [UNDEFINED] * 3
@@ -28,8 +29,9 @@ class LfDownObstacle(pygame.sprite.Sprite):
         self.load_lf_move_args(args)
 
     def load_base_obst_args(self, move_inf):
-        self.image = load_image(move_inf[INX_IMG_NAME])
-        self.image = pygame.transform.rotate(self.image, move_inf[INX_STATIC_ANGLE])
+        self.image = self.deep_image = load_image(move_inf[INX_IMG_NAME])
+        self.static_angle = move_inf[INX_STATIC_ANGLE]
+        self.image = pygame.transform.rotate(self.image, self.static_angle)
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = move_inf[INX_X_POS]
@@ -56,8 +58,10 @@ class LfDownObstacle(pygame.sprite.Sprite):
         self.update_move_y()
         self.rect = self.rect.move(self.x_move, self.y_move)
 
-    # Левое положение: от 0 -> 10
-    # Правое положение: от 10 -> 0
+    def get_trace_inf(self):
+        rect = self.deep_image.get_rect()
+        return [self.rect.x, self.rect.y, rect.width, rect.height, self.static_angle]
+
     def update_move_x(self):
         self.x_move = self.speed_x
         if self.step_speed_lf != 0 and check_sane_y_cord(self.rect.y):
@@ -84,21 +88,26 @@ class LfDownObstacle(pygame.sprite.Sprite):
         else:
             self.y_move = self.speed_y
 
+    def get_angle(self):
+        return self.static_angle
+
 
 class SlideSideObstacle(pygame.sprite.Sprite):
     def __init__(self, *args):
         pygame.sprite.Sprite.__init__(self)
         self.x_move, self.y_move = BASE_X_MOVE, BASE_Y_MOVE
         # 1. Загрузка базовой информации о препятствии
-        self.image, self.rect, self.mask, self.speed_x, self.speed_y = [UNDEFINED] * 5
+        self.image, self.deep_image, self.rect, self.mask = [UNDEFINED] * 4
+        self.speed_x, self.speed_y, self.static_angle = [UNDEFINED] * 3
         self.load_base_obst_args(args)
         # 2. Загрузка информации о выезде вбок
         self.y_start_side, self.y_end_side, self.step_speed_side = [UNDEFINED] * 3
         self.load_side_move_args(args)
 
     def load_base_obst_args(self, move_inf):
-        self.image = load_image(move_inf[INX_IMG_NAME])
-        self.image = pygame.transform.rotate(self.image, move_inf[INX_STATIC_ANGLE])
+        self.image = self.deep_image = load_image(move_inf[INX_IMG_NAME])
+        self.static_angle = move_inf[INX_STATIC_ANGLE]
+        self.image = pygame.transform.rotate(self.image, self.static_angle)
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = move_inf[INX_X_POS]
@@ -122,8 +131,9 @@ class SlideSideObstacle(pygame.sprite.Sprite):
 
         self.rect = self.rect.move(self.x_move, self.y_move)
 
-    def get_surf_rect(self):
-        return self.image, self.rect
+    def get_trace_inf(self):
+        rect = self.deep_image.get_rect()
+        return [self.rect.x, self.rect.y, rect.width, rect.height, self.static_angle]
 
 
 class TwistObstacle(pygame.sprite.Sprite):
@@ -135,7 +145,8 @@ class TwistObstacle(pygame.sprite.Sprite):
         self.deep_rect_copy.x, self.deep_rect_copy.y = args[INX_X_POS], args[INX_Y_POS]
         self.speed_x, self.speed_y = args[INX_X_SPEED], args[INX_Y_SPEED]
         self.step_angle, self.start_angle = args[INX_STEP_ANG_TWIST], args[INX_BASE_ANG_TWIST]
-        self.angle = BASE_STATIC_ANGLE
+        self.static_angle = BASE_STATIC_ANGLE
+        self.mask = pygame.mask.from_surface(self.image)
         self.counter = 0
 
     def update(self):
@@ -149,20 +160,37 @@ class TwistObstacle(pygame.sprite.Sprite):
                 self.start_angle = 0
             self.counter += 1
 
-            self.angle += self.start_angle
+            self.static_angle += self.start_angle
 
-            self.image = pygame.transform.rotate(self.deep_image_copy, self.angle)
+            self.image = pygame.transform.rotate(self.deep_image_copy, self.static_angle)
             self.rect = self.image.get_rect(center=(self.deep_rect_copy.x, self.deep_rect_copy.y))
-
+        self.mask = pygame.mask.from_surface(self.image)
         self.deep_rect_copy = self.deep_rect_copy.move(self.speed_x, self.speed_y)
 
-    # def get_surf_rect(self):
-    #     return self.rotated_surface, self.rotated_rect
+    def get_trace_inf(self):
+        rect = self.deep_image_copy.get_rect()
+        return [self.rect.x, self.rect.y, rect.width, rect.height, self.static_angle]
 
+class TraceObstacle:
+    def __init__(self, x, y, width, hieght, angle):
+        # self.rect = rect
+        print(angle)
+        self.color_rgb = [80, 80, 80]
+        self.angle = angle
+        self.step = 10
+        self.counter = 0
+        self.x = x
+        self.y = y
+        self.width, self.hieght = width, hieght
 
-class ShowObstacle(pygame.sprite.Sprite):
-    def __init__(self, img, rect):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = img
-        self.rect = rect
-        self.mask = pygame.mask.from_surface(self.image)
+    def draw_trace(self, sc):
+        image = pygame.Surface([self.width, self.hieght])
+        image.fill((self.color_rgb[0], self.color_rgb[1], self.color_rgb[2]))
+        image = pygame.transform.rotozoom(image, self.angle, 1)
+        image = image.convert()
+        image.set_colorkey(BLACK_COLOR)
+        sc.blit(image, (self.x, self.y))
+
+    def update_color(self):
+        for i in range(len(self.color_rgb)):
+            self.color_rgb[i] = self.color_rgb[i] - self.step
