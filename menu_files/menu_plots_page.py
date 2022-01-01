@@ -3,5 +3,5 @@ from general_functions import *
 
 
 class MenuPlotsPage(MenuPage):
-    def render_extra(self, surface):
+    def render_extra(self, screen):
         pass

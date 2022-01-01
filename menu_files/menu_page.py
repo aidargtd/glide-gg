@@ -43,11 +43,12 @@ class MenuPage:
         global img_counter
         screen.fill(BLACK_COLOR)
         menu_background = load_image(MENU_IMG)
-        # surface.blit(menu_background, (0, 0))
         if img_counter == 78:
             img_counter = 0
         screen.blit(kosmo_imgs[img_counter // 2], (0, 0))
         img_counter += 1
+        print_text(screen, 'GLADE', 150, 50, font_color=WHITE_COLOR, font_type='font/DroidSansFallback.ttf',
+                   font_size=120)
 
     def render_items(self, surface):
         for item in self.items:
