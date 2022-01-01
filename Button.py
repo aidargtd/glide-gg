@@ -3,17 +3,14 @@ from pygame.draw import lines
 
 
 class Button:
-    def __init__(self, screen, width, height):
+    def __init__(self, screen, width, height, inactive_col=BLACK_COLOR, active_col=DEEP_GRAY):
         self.width = width
         self.height = height
         self.inactive_col = BLACK_COLOR
-        self.active_col = (25, 205, 60)
+        self.active_col = DEEP_GRAY
         self.text_color = WHITE_COLOR
         self.border_color = WHITE_COLOR
         self.screen = screen
-        # self.border_width = 4
-        # self.border_length = 8
-        # self.active = False
 
     def draw(self, x, y, message, action=None, font_size=30):
         mouse = pygame.mouse.get_pos()

@@ -4,7 +4,9 @@ from menu_files.menu_settings_page import MenuSettingsPage
 from menu_files.menu_plots_page import MenuPlotsPage
 from menu_files.menu_shop_page import MenuShopPage
 from menu_files.menu_sound_settings import MenuSoundPage
+from menu_files.menu_levels import MenuLevelsPage
 from parametres import *
+from Button import Button
 
 dict_changing_values = {'music': True, 'voice': True, 'sound_effects': True, 'effects': True}
 
@@ -40,7 +42,8 @@ class Menu():
         pass
 
     def open_plots_levels(self):
-        pass
+        self.menu = MenuLevelsPage(self.screen)
+        self.menu.add_item('назад', (50, 300), self.main_menu)
 
     def sound_condition(self):
         self.menu = MenuSoundPage(self.screen)

@@ -1,5 +1,7 @@
 from menu_files.menu_page import MenuPage
+from general_functions import *
 
 
 class MenuPlotsPage(MenuPage):
-    pass
+    def render_extra(self, surface):
+        pass

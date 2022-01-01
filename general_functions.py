@@ -37,6 +37,11 @@ def print_text(screen, message, x, y, font_size=30, font_color=WHITE_COLOR, font
     return text.get_rect()
 
 
+def get_num(number):
+    print(number)
+    return number
+
+
 def correct_obst_arr(arr):
     for i in range(len(arr)):
         arr[i] = list(arr[i][1:])
