@@ -84,7 +84,7 @@ def create_obst_group(lev_id):
     return group
 
 
-walls_group = create_obst_group(level_id)
+# walls_group = create_obst_group(level_id)
 
 
 def press_key():
@@ -99,8 +99,9 @@ def press_key():
         blue_circle.update(SPEED_MOVEMENT_TRUE)
 
 
-def game_cycle():
+def game_cycle(l_id=1):
     game = True
+    walls_group = create_obst_group(l_id)
     traces_wall = []
     while game:
         loc_walls_group = pygame.sprite.Group()
@@ -147,8 +148,8 @@ def game_cycle():
 
 def start_game():
     Menu(SIZE)
-    while game_cycle():
-        pass
+    # while game_cycle():
+    #     pass
 
 
 if __name__ == '__main__':

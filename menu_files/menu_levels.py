@@ -1,6 +1,7 @@
 from menu_files.menu_page import MenuPage
 from general_functions import *
 from Button import Button
+from GlideGame import game_cycle
 
 
 class MenuLevelsPage(MenuPage):
@@ -9,7 +10,7 @@ class MenuLevelsPage(MenuPage):
         print_text(surface, 'незнание', 50, 100, 40, font_type='Roboto-Thin.ttf', font_color=DEEP_GRAY)
         # КНОПКИ УРОВНЕЙ ПЕРВОГО СЮЖЕТА
         btn_first_lvl = Button(surface, 50, 50)
-        btn_first_lvl.draw(50, 150, ' I ', None, 50)
+        btn_first_lvl.draw(50, 150, ' I ', game_cycle, 50)
 
         btn_sec_lvl = Button(surface, 50, 50)
         btn_sec_lvl.draw(110, 150, 'II', None, 50)
