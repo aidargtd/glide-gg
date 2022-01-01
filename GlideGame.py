@@ -111,10 +111,6 @@ def game_cycle():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game = False
-            # if event.type == pygame.MOUSEMOTION:
-            #     if pygame.mouse.get_focused():
-            #         x, y = event.pos[0], event.pos[1]
-            #         mouse.update((x, y))
         press_key()
 
         if any([red_circle.check_collision(screen, walls_group), blue_circle.check_collision(screen, walls_group)]):
@@ -140,24 +136,6 @@ def game_cycle():
         pygame.display.update()
         fps_clock.tick(FPS)
     return game_over()
-
-
-# СТАРОЕ МЕНЮ
-# def show_menu():
-#     menu_background = load_image('menu.png')
-#     start_btn = Button(screen, 300, 70)
-#     quit_btn = Button(screen, 300, 70)
-#     showing = True
-#     while showing:
-#         for event in pygame.event.get():
-#             if event.type == pygame.QUIT:
-#                 pygame.quit()
-#                 quit()
-#         screen.blit(menu_background, (0, 0))
-#         start_btn.draw(150, 200, 'Start game', start_game, 40)
-#         quit_btn.draw(150, 300, 'Quit game', quit, 40)
-#         pygame.display.update()
-#         fps_clock.tick(60)
 
 
 def start_game():

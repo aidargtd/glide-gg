@@ -1,5 +1,6 @@
 import pygame
 from parametres import *
+
 pygame.font.init()
 
 
@@ -32,7 +33,7 @@ class Checkbox:
 
     def _draw_button_text(self):
         self.font = pygame.font.SysFont(self.ft, self.fs)
-        self.font_surf = self.font.render(self.caption, True, self.fc)
+        self.font_surf = self.font.render(self.caption, False, self.fc)
         w, h = self.font.size(self.caption)
         self.font_pos = (self.x + self.to[0], self.y + 12 / 2 - h / 2 +
                          self.to[1])

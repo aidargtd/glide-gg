@@ -1,5 +1,6 @@
 from general_functions import print_text
 from menu_page import MenuPage
+from CheckBox import Checkbox
 
 
 class MenuSettingsPage(MenuPage):
@@ -16,3 +17,4 @@ class MenuSettingsPage(MenuPage):
             print_text(surface, label, x_label, y)
             print_text(surface, key, x_key, y)
             y += gap
+        print_text(surface, 'эффекты', x, 400, 30, font_type='Roboto-Thin.ttf')
