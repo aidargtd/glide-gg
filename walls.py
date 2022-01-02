@@ -174,8 +174,6 @@ class TwistObstacle(pygame.sprite.Sprite):
 
 class TraceObstacle:
     def __init__(self, x, y, width, hieght, angle):
-        # self.rect = rect
-        print(angle)
         self.color_rgb = [80, 80, 80]
         self.angle = angle
         self.step = 10
