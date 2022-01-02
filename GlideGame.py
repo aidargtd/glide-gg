@@ -111,6 +111,7 @@ def game_cycle(l_id):
     while game:
         loc_walls_group = get_loc_walls_gr(walls_group)
         traces_wall = get_traces_arr(loc_walls_group, traces_wall)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game = False
