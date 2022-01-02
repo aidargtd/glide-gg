@@ -122,12 +122,10 @@ def game_cycle(l_id):
             return game_over(l_id)
         screen.fill(BLACK_COLOR)
         print_text(screen, f'Dodged: {scores}', 10, 10, 20)
-
-        pygame.draw.circle(screen, DEEP_GRAY, GRAY_CIRCLE_POSITION,
-                           GRAY_CIRCLE_RADIUS, GRAY_CIRCLE_WIDTH)
-
         btn_pause = Button(screen, 30, 30)
         btn_pause.draw(560, 0, 'II', pause, 30)
+        pygame.draw.circle(screen, DEEP_GRAY, GRAY_CIRCLE_POSITION,
+                           GRAY_CIRCLE_RADIUS, GRAY_CIRCLE_WIDTH)
 
         for trace in circle_movement.traces:
             trace.draw(screen)
