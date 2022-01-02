@@ -81,6 +81,16 @@ def create_obst_group(lev_id):
     return group
 
 
+def get_traces_arr(loc_walls_gr, res):
+    for wall in loc_walls_gr:
+        res.append(TraceObstacle(*wall.get_trace_inf()))
+
+        for i in range(len(res) - 1, -1, -1):
+            if res[i].color_rgb == DELETE_WALL_TRACE_COLOR:
+                res.pop(i)
+    return res
+
+
 def press_key():
     keys = pygame.key.get_pressed()
     if keys[pygame.K_ESCAPE]:
@@ -99,18 +109,8 @@ def game_cycle(l_id):
     walls_group = create_obst_group(l_id)
     traces_wall = []
     while game:
-        loc_walls_group = pygame.sprite.Group()
-        for wall in walls_group:
-            if check_sane_y_cord(wall.rect.y):
-                wall.add(loc_walls_group)
-        for wall in loc_walls_group:
-            traces_wall.append(TraceObstacle(*wall.get_trace_inf()))
-
-        for i in range(len(traces_wall) - 1, -1, -1):
-            if traces_wall[i].color_rgb == [50, 50, 50]:
-                traces_wall.pop(i)
-
-        # pygame.mouse.set_visible(False)
+        loc_walls_group = get_loc_walls_gr(walls_group)
+        traces_wall = get_traces_arr(loc_walls_group, traces_wall)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game = False
@@ -132,9 +132,9 @@ def game_cycle(l_id):
             trace.update()
 
         all_circles.draw(screen)
-        for i in range(len(traces_wall)):
-            traces_wall[i].update_color()
-            traces_wall[i].draw_trace(screen)
+
+        for w_trace in traces_wall:
+            w_trace.draw_trace(screen)
         walls_group.update()
         loc_walls_group.draw(screen)
 
