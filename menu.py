@@ -19,15 +19,18 @@ class Menu():
         self.action = action
         self.screen = pygame.display.set_mode(screen_size)
         self.menu = None
+        # render music
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.3)
         self.main_menu()
         self.event_loop()
 
     def main_menu(self):
         self.menu = MenuMainPage(self.screen)
-        self.menu.add_item('выход', (50, -100), quit)
-        self.menu.add_item('настройки', (50, -200), self.settings_menu)
-        self.menu.add_item('магазин', (50, -300), self.shop_menu)
-        self.menu.add_item('играть', (50, -400), self.plots_menu)
+        self.menu.add_item('выход', (50, -100), quit, font_size=50)
+        self.menu.add_item('настройки', (50, -200), self.settings_menu, font_size=50)
+        self.menu.add_item('магазин', (50, -300), self.shop_menu, font_size=50)
+        self.menu.add_item('играть', (50, -400), self.plots_menu, font_size=50)
 
     def plots_menu(self):
         self.menu = MenuPlotsPage(self.screen)
@@ -52,6 +55,7 @@ class Menu():
             self.menu.add_item('вкл', (110, 100), self.check_on_music, BLUE_TRAIL_COLOR_3)
         else:
             self.menu.add_item('выкл', (110, 100), self.check_on_music, RED_TRAIL_COLOR_3)
+            pygame.mixer.music.stop()
         if dict_changing_values['voice']:
             self.menu.add_item('вкл', (80, 200), self.check_on_voice, BLUE_TRAIL_COLOR_3)
         else:
@@ -64,6 +68,8 @@ class Menu():
 
     def check_on_music(self):
         dict_changing_values['music'] = not dict_changing_values['music']
+        if dict_changing_values['music'] is True:
+            pygame.mixer.music.play()
         self.sound_condition()
 
     def check_on_voice(self):
@@ -80,12 +86,12 @@ class Menu():
 
     def settings_menu(self):
         self.menu = MenuSettingsPage(self.screen)
-        self.menu.add_item('звук', (50, 300), self.sound_condition)
+        self.menu.add_item('звук', (50, 450), self.sound_condition, color=DEEP_GRAY)
         self.menu.add_item('назад', (100, -100), self.main_menu)
         if dict_changing_values['effects']:
-            self.menu.add_item('вкл', (50, 450), self.check_on_eff, BLUE_TRAIL_COLOR_3)
+            self.menu.add_item('вкл', (50, 370), self.check_on_eff, BLUE_TRAIL_COLOR_3)
         else:
-            self.menu.add_item('выкл', (50, 450), self.check_on_eff, RED_TRAIL_COLOR_3)
+            self.menu.add_item('выкл', (50, 370), self.check_on_eff, RED_TRAIL_COLOR_3)
 
     def event_loop(self):
         while True:
@@ -96,6 +102,6 @@ class Menu():
                     self.menu.hover(*event.pos)
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.menu.click(*event.pos)
-
+            self.check_on_music
             self.menu.render()
             pygame.display.update()

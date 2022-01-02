@@ -6,6 +6,7 @@ from Button import *
 from walls import *
 from menu import *
 from mouse_cursor import *
+from load_music import *
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
@@ -27,7 +28,6 @@ all_circles.add(red_circle, blue_circle)
 mouse = Mouse()
 all_sprites.add(mouse)
 scores = 0
-sound_collision = pygame.mixer.Sound('Samples/3816133910831170.ogg')
 
 
 def game_over(l_id):
@@ -82,6 +82,7 @@ def press_key():
 
 
 def game_cycle(l_id):
+    pygame.mixer.music.stop()
     game = True
     walls_group = create_obst_group(l_id)
     traces_wall = []

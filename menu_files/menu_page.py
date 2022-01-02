@@ -2,6 +2,7 @@ from pygame import Surface
 from menu_files.menu_item import MenuItem
 from general_functions import *
 from load_m_bg import kosmo_imgs
+from load_music import *
 
 img_counter = 0
 
@@ -13,8 +14,9 @@ class MenuPage:
         self.items_for_change = []
 
     # если числа в left_top отрицательные, то это отступы от правого и нижнего края экрана
-    def add_item(self, label, left_top, onclick=None, color=WHITE_COLOR):
-        self.items.append(MenuItem(label, self.convert_coords(left_top), onclick, color))
+    def add_item(self, message, left_top, onclick=None, color=WHITE_COLOR, font_size=40,
+                 font_type='font/Roboto-Thin.ttf'):
+        self.items.append(MenuItem(message, self.convert_coords(left_top), onclick, color, font_size, font_type))
 
     def convert_coords(self, left_top):
         left, top = left_top

@@ -6,10 +6,11 @@ from parametres import *
 
 
 class MenuItem:
-    def __init__(self, label, left_top, onclick=None, text_color=WHITE_COLOR, font_size=50):
-        self.label = label
+    def __init__(self, message, left_top, onclick=None, text_color=WHITE_COLOR, font_size=40,
+                 font_name='font/Roboto-Thin.ttf'):
+        self.message = message
         self.padding = 20  # расстояние от текста до рамки
-        self.font_name = FONT_ROB_LIGHT
+        self.font_name = font_name
         self.font_size = font_size
         self.text_color = text_color
         self.border_color = WHITE_COLOR
@@ -73,7 +74,7 @@ class MenuItem:
         )
 
     def render(self, surface):
-        text_rect = print_text(surface, self.label, *self.left_top, font_color=self.text_color)
+        text_rect = print_text(surface, self.message, *self.left_top, self.font_size, self.text_color)
         left, top = self.left_top
         self.rect = (
             left - self.padding,

@@ -6,7 +6,7 @@ from parametres import *
 class MenuSettingsPage(MenuPage):
     def render_extra(self, screen):
         x = 50
-        print_text(screen, 'управление', x, 50, 30, font_type='Roboto-Thin.ttf')
+        print_text(screen, 'управление', x, 50, 50, DEEP_GRAY, font_type='Roboto-Thin.ttf')
         labels = ['влево', 'вправо']
         keys = ['LEFT', 'RIGHT']
         y = 150
@@ -17,4 +17,4 @@ class MenuSettingsPage(MenuPage):
             print_text(screen, label, x_label, y)
             print_text(screen, key, x_key, y)
             y += gap
-        print_text(screen, 'эффекты', x, 400, 30, font_type='Roboto-Thin.ttf')
+        print_text(screen, 'эффекты', x, 280, 50, DEEP_GRAY, font_type='Roboto-Thin.ttf')
