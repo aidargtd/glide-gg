@@ -28,6 +28,12 @@ all_circles.add(red_circle, blue_circle)
 mouse = Mouse()
 all_sprites.add(mouse)
 scores = 0
+paused = True
+
+
+def off_pause():
+    global paused
+    paused = False
 
 
 def game_over(l_id):
@@ -35,16 +41,19 @@ def game_over(l_id):
 
 
 def pause():
+    global paused
+    btn_resume_game = Button(screen, 150, 50)
     paused = True
     while paused:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quit()
-
-        print_text(screen, 'Paused. Press enter to continue', 30, 300)
+        print_text(screen, 'пауза, нажмите Enter, чтобы', 40, 300, )
         keys = pygame.key.get_pressed()
+        btn_resume_game.draw(320, 290, 'продолжить', off_pause, 30)
         if keys[pygame.K_RETURN]:
             paused = False
+
         pygame.display.update()
         fps_clock.tick(15)
 
@@ -113,6 +122,10 @@ def game_cycle(l_id):
 
         pygame.draw.circle(screen, DEEP_GRAY, GRAY_CIRCLE_POSITION,
                            GRAY_CIRCLE_RADIUS, GRAY_CIRCLE_WIDTH)
+
+        btn_pause = Button(screen, 30, 30)
+        btn_pause.draw(560, 0, 'II', pause, 30)
+
         for trace in circle_movement.traces:
             trace.draw(screen)
             trace.update()

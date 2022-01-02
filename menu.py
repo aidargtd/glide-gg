@@ -86,7 +86,7 @@ class Menu():
 
     def settings_menu(self):
         self.menu = MenuSettingsPage(self.screen)
-        self.menu.add_item('звук', (50, 450), self.sound_condition, color=DEEP_GRAY)
+        self.menu.add_item('звук', (50, 450), self.sound_condition, color=DEEP_GRAY, font_size=50)
         self.menu.add_item('назад', (100, -100), self.main_menu)
         if dict_changing_values['effects']:
             self.menu.add_item('вкл', (50, 370), self.check_on_eff, BLUE_TRAIL_COLOR_3)
