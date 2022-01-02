@@ -7,6 +7,7 @@ from menu_files.menu_sound_settings import MenuSoundPage
 from menu_files.menu_levels import MenuLevelsPage
 from menu_files.main_menu import MenuMainPage
 from parametres import *
+from load_music import *
 from Button import Button
 
 dict_changing_values = {'music': True, 'voice': True, 'sound_effects': True, 'effects': True}
@@ -101,7 +102,12 @@ class Menu():
                 elif event.type == pygame.MOUSEMOTION:
                     self.menu.hover(*event.pos)
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    pygame.mixer.Sound.play(sound_click)
                     self.menu.click(*event.pos)
+                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
+                    print(1)
+                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 5:
+                    print(2)
             self.check_on_music
             self.menu.render()
             pygame.display.update()

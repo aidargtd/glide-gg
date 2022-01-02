@@ -173,17 +173,17 @@ class TwistObstacle(pygame.sprite.Sprite):
 
 
 class TraceObstacle:
-    def __init__(self, x, y, width, hieght, angle):
+    def __init__(self, x, y, width, height, angle):
         self.color_rgb = [80, 80, 80]
         self.angle = angle
         self.step = 10
         self.counter = 0
         self.x = x
         self.y = y
-        self.width, self.hieght = width, hieght
+        self.width, self.height = width, height
 
     def draw_trace(self, sc):
-        image = pygame.Surface([self.width, self.hieght])
+        image = pygame.Surface([self.width, self.height])
         image.fill((self.color_rgb[0], self.color_rgb[1], self.color_rgb[2]))
         image = pygame.transform.rotozoom(image, self.angle, 1)
         image = image.convert()
