@@ -47,7 +47,7 @@ class Menu():
 
     def open_plots_levels(self):
         self.menu = MenuLevelsPage(self.screen)
-        self.menu.add_item('назад', (50, 300), self.main_menu)
+        self.menu.add_item('назад', (490, 740), self.main_menu)
 
     def sound_condition(self):
         self.menu = MenuSoundPage(self.screen)

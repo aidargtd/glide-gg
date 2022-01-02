@@ -144,8 +144,8 @@ def game_cycle(l_id):
         fps_clock.tick(FPS)
 
 
-def start_game(SIZE):
-    Menu(SIZE)
+def start_game(screen_size):
+    Menu(screen_size)
 
 
 if __name__ == '__main__':
