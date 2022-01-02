@@ -6,6 +6,7 @@ from pygame.font import match_font
 from db_functions import *
 from parametres import *
 
+
 fps_clock = pygame.time.Clock()
 
 pygame.init()
@@ -39,7 +40,7 @@ def print_text(screen, message, x, y, font_size=30, font_color=WHITE_COLOR, font
 
 def correct_obst_arr(arr):
     for i in range(len(arr)):
-        arr[i] = list(arr[i][1:])
+        arr[i] = list(arr[i][INX_IMG_ID:])
         image_id = arr[i][INX_IMG_NAME]
         img_name = select_one_with_aspect(IMAGES, ID, image_id, NAME)[0]
         arr[i][INX_IMG_NAME] = img_name
@@ -53,4 +54,14 @@ def get_obstacles(id_level, obst_type):
 
 
 def check_sane_y_cord(y):
-    return -200 <= y <= 1000
+    return NOT_UPDATE_Y_CORD_1 <= y <= NOT_UPDATE_Y_CORD_2
+
+
+def get_loc_walls_gr(al_walls_gr):
+    loc_walls_group = pygame.sprite.Group()
+    for wall in al_walls_gr:
+        if check_sane_y_cord(wall.rect.y):
+            wall.add(loc_walls_group)
+    return loc_walls_group
+
+
