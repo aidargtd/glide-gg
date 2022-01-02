@@ -43,14 +43,17 @@ def game_over(l_id):
 def pause():
     global paused
     btn_resume_game = Button(screen, 150, 50)
+    btn_leave_hub = Button(screen, 150, 50)
     paused = True
     while paused:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quit()
-        print_text(screen, 'пауза, нажмите Enter, чтобы', 40, 300, )
+        print_text(screen, message='пауза, нажмите Enter, чтобы', x=40, y=300, font_type='font/DroidSansJapanese.ttf')
         keys = pygame.key.get_pressed()
-        btn_resume_game.draw(320, 290, 'продолжить', off_pause, 30)
+        btn_resume_game.draw(325, 290, 'продолжить', off_pause, 30)
+        btn_leave_hub.draw(320, 350, 'выход', start_game, 30, id=(SIZE))
+
         if keys[pygame.K_RETURN]:
             paused = False
 
@@ -141,9 +144,9 @@ def game_cycle(l_id):
         fps_clock.tick(FPS)
 
 
-def start_game():
+def start_game(SIZE):
     Menu(SIZE)
 
 
 if __name__ == '__main__':
-    start_game()
+    start_game(SIZE)
