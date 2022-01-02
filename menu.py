@@ -5,6 +5,7 @@ from menu_files.menu_plots_page import MenuPlotsPage
 from menu_files.menu_shop_page import MenuShopPage
 from menu_files.menu_sound_settings import MenuSoundPage
 from menu_files.menu_levels import MenuLevelsPage
+from menu_files.main_menu import MenuMainPage
 from parametres import *
 from Button import Button
 
@@ -22,7 +23,7 @@ class Menu():
         self.event_loop()
 
     def main_menu(self):
-        self.menu = MenuPage(self.screen)
+        self.menu = MenuMainPage(self.screen)
         self.menu.add_item('выход', (50, -100), quit)
         self.menu.add_item('настройки', (50, -200), self.settings_menu)
         self.menu.add_item('магазин', (50, -300), self.shop_menu)
