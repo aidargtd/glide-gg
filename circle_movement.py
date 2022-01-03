@@ -44,7 +44,7 @@ class CreateTrace:
 
 
 class Circles(pygame.sprite.Sprite):
-    def __init__(self, image, init_angle, start_x, start_y, color):
+    def __init__(self, image, init_angle, start_x, start_y, color, flag_traces=False):
         pygame.sprite.Sprite.__init__(self)
         self.image = load_image(image)
         self.rect = self.image.get_rect()
@@ -52,6 +52,7 @@ class Circles(pygame.sprite.Sprite):
         self.init_angle = init_angle
         self.rect.x = start_x
         self.rect.y = start_y
+        self.flag_traces = flag_traces
         self.color = color
 
     def update(self, speed_move):
@@ -59,7 +60,7 @@ class Circles(pygame.sprite.Sprite):
         angle = self.init_angle * math.pi / ANGLE_PI
         self.rect.x = (CONVERT_ANGLE_TO_SIDE * math.cos(angle)) + CHANGE_X_COORD
         self.rect.y = (CONVERT_ANGLE_TO_SIDE * math.sin(angle)) + CHANGE_Y_COORD
-        if speed_move != IMPOSSIBLE_SPEED:
+        if speed_move != IMPOSSIBLE_SPEED and self.flag_traces:
             if self.color == RED:
                 traces.append(CreateTrace((self.rect.x, self.rect.y), random.choice(
                     [RED_TRAIL_COLOR_1, RED_TRAIL_COLOR_2, RED_TRAIL_COLOR_3])))
