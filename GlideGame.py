@@ -36,7 +36,36 @@ def off_pause():
     paused = False
 
 
-def game_over(l_id):
+def game_over(walls_group, l_id):
+    game = True
+    traces_wall = []
+    while game:
+        loc_walls_group = get_loc_walls_gr(walls_group)
+        traces_wall = get_traces_arr(loc_walls_group, traces_wall)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game = False
+                quit()
+        press_key()
+        if max(list(map(lambda x: x.rect.y, walls_group))) < -350:
+            game = False
+        screen.fill(BLACK_COLOR)
+        btn_pause = Button(screen, 30, 30)
+        btn_pause.draw(560, 0, 'II', pause, 30)
+
+        for w_trace in traces_wall:
+            w_trace.draw_trace(screen)
+
+        for i in walls_group:
+            i.speed_y = -30
+
+        walls_group.update()
+        loc_walls_group.draw(screen)
+
+        pygame.display.update()
+        fps_clock.tick(FPS)
+    pygame.time.delay(1000)
     game_cycle(l_id)
 
 
@@ -120,7 +149,7 @@ def game_cycle(l_id):
 
         if any([red_circle.check_collision(screen, walls_group), blue_circle.check_collision(screen, walls_group)]):
             pygame.mixer.Sound.play(sound_collision)
-            return game_over(l_id)
+            return game_over(walls_group, l_id)
         screen.fill(BLACK_COLOR)
         print_text(screen, f'Dodged: {get_dodged(walls_group)}', 10, 10, 20)
         btn_pause = Button(screen, 30, 30)
