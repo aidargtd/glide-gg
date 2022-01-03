@@ -82,11 +82,11 @@ class Menu():
         self.sound_condition()
 
     def check_on_voice(self):
-        dict_changing_values['voice'] = not dict_changing_values['voice']
+        update_settings_value(not select_table('settings', 'voice')[0][0])
         self.sound_condition()
 
     def check_on_sounds_eff(self):
-        dict_changing_values['sound_effects'] = not dict_changing_values['sound_effects']
+        upd_settings_sound_effects(not select_table('settings', 'sound_effects')[0][0])
         self.sound_condition()
 
     def check_on_eff(self):
@@ -110,7 +110,8 @@ class Menu():
                 elif event.type == pygame.MOUSEMOTION:
                     self.menu.hover(*event.pos)
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    pygame.mixer.Sound.play(sound_click)
+                    sound_effects('Samples/zapsplat_multimedia_button_click_005_68777.mp3',
+                                  select_table('settings', 'sound_effects')[0][0])
                     self.menu.click(*event.pos)
 
             self.check_on_music

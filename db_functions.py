@@ -41,3 +41,9 @@ def upd_settings_val_effects(value):
     cur.execute(
         """UPDATE settings SET effects=?""", (value,))
     con.commit()
+
+
+def upd_settings_sound_effects(value):
+    cur.execute(
+        """UPDATE settings SET sound_effects=?""", (value,))
+    con.commit()
