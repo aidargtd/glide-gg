@@ -7,6 +7,7 @@ from walls import *
 from menu import *
 from mouse_cursor import *
 from load_music import *
+from deep_translator import GoogleTranslator
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
@@ -40,14 +41,14 @@ def changing_speed(red, blue, speed, flag, angle_stop_red=None, angle_stop_blue=
             red.update(speed)
             blue.update(speed)
     else:
-        if red.init_angle >= angle_stop_red - 5:
-            red.update(-abs(speed))
-        if red.init_angle <= angle_stop_red - 5:
-            red.update(abs(speed))
-        if blue.init_angle >= angle_stop_blue - 5:
-            blue.update(-abs(speed))
-        if blue.init_angle <= angle_stop_blue - 5:
-            blue.update(abs(speed))
+        if red.init_angle - 5 >= angle_stop_red:
+            red.update(5)
+        if red.init_angle - 5 <= angle_stop_red:
+            red.update(-5)
+        if blue.init_angle - 5 >= angle_stop_blue:
+            blue.update(5)
+        if blue.init_angle - 5 <= angle_stop_blue:
+            blue.update(-5)
 
 
 def off_pause():
@@ -69,10 +70,10 @@ def draw_gray_circle():
 def game_over(walls_group, l_id, red, blue):
     game = True
     traces_wall = []
+    sound_restart.play()
     while game:
         loc_walls_group = get_loc_walls_gr(walls_group)
         traces_wall = get_traces_arr(loc_walls_group, traces_wall)
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game = False
@@ -93,7 +94,6 @@ def game_over(walls_group, l_id, red, blue):
 
         pygame.display.update()
         fps_clock.tick(FPS)
-    sound_restart.play()
     game_cycle(l_id)
 
 
@@ -193,13 +193,14 @@ def game_cycle(l_id):
             return game_over(walls_group, l_id, red_circle, blue_circle)
         draw_pause()
         print_text(screen, f'Dodged: {get_dodged(walls_group)}', 10, 10, 20)
-        draw_gray_circle()
-        all_circles.draw(screen)
+
         # Проверка на нажатие эффектов потом
+        draw_gray_circle()
         draw_traces_for_circles(True, circle_movement.traces)
         draw_traces_obstacles(True, traces_wall)
         walls_group.update()
         loc_walls_group.draw(screen)
+        all_circles.draw(screen)
 
         pygame.display.update()
         fps_clock.tick(FPS)
