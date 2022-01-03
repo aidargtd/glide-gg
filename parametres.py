@@ -31,7 +31,6 @@ COL_STEP_WALL_TRACES = 15
 # NAMES OF IMAGES
 RED_CIRCLE_IMG = 'red_circle.png'
 BLUE_CIRCLE_IMG = 'blue_circle.png'
-BASE_WALL_IMG = "base_wall_2_1.png"
 MENU_IMG = "menu.png"
 
 # CONSTS FOR SCREEN

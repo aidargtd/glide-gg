@@ -6,6 +6,8 @@ from parametres import *
 from general_functions import *
 
 pygame.init()
+
+
 # 1 - LF_DOWN - выезд платформы по вертикали
 # 2 - SIDE - выезд платформы по горизонтали
 # 3 - LF_DOWN - постоянные движения по горизонтали
@@ -191,4 +193,3 @@ class TraceObstacle:
         image = image.convert()
         image.set_colorkey(BLACK_COLOR)
         sc.blit(image, (self.x, self.y))
-
