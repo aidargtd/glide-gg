@@ -40,13 +40,13 @@ def changing_speed(red, blue, speed, flag, angle_stop_red=None, angle_stop_blue=
             red.update(speed)
             blue.update(speed)
     else:
-        while red.init_angle >= angle_stop_red-5:
+        if red.init_angle >= angle_stop_red - 5:
             red.update(-abs(speed))
-        while red.init_angle <= angle_stop_red-5:
+        if red.init_angle <= angle_stop_red - 5:
             red.update(abs(speed))
-        while blue.init_angle >= angle_stop_blue-5:
+        if blue.init_angle >= angle_stop_blue - 5:
             blue.update(-abs(speed))
-        while blue.init_angle <= angle_stop_blue-5:
+        if blue.init_angle <= angle_stop_blue - 5:
             blue.update(abs(speed))
 
 
