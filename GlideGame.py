@@ -122,7 +122,7 @@ def game_cycle(l_id):
             pygame.mixer.Sound.play(sound_collision)
             return game_over(l_id)
         screen.fill(BLACK_COLOR)
-        print_text(screen, f'Dodged: {scores}', 10, 10, 20)
+        print_text(screen, f'Dodged: {get_dodged(walls_group)}', 10, 10, 20)
         btn_pause = Button(screen, 30, 30)
         btn_pause.draw(560, 0, 'II', pause, 30)
         pygame.draw.circle(screen, DEEP_GRAY, GRAY_CIRCLE_POSITION,

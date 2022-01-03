@@ -65,3 +65,9 @@ def get_loc_walls_gr(al_walls_gr):
     return loc_walls_group
 
 
+def get_dodged(walls_group):
+    counter = 0
+    for wall in walls_group:
+        if wall.rect.y >= DODGE_Y_CORD:
+            counter += 1
+    return counter
