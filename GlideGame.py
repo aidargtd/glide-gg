@@ -40,13 +40,13 @@ def changing_speed(red, blue, speed, flag, angle_stop_red=None, angle_stop_blue=
             red.update(speed)
             blue.update(speed)
     else:
-        while red.init_angle >= angle_stop_red:
+        while red.init_angle >= angle_stop_red-5:
             red.update(-abs(speed))
-        while red.init_angle <= angle_stop_red:
+        while red.init_angle <= angle_stop_red-5:
             red.update(abs(speed))
-        while blue.init_angle >= angle_stop_blue:
+        while blue.init_angle >= angle_stop_blue-5:
             blue.update(-abs(speed))
-        while blue.init_angle <= angle_stop_blue:
+        while blue.init_angle <= angle_stop_blue-5:
             blue.update(abs(speed))
 
 
@@ -121,7 +121,6 @@ def pause():
 
 def create_obst_group(lev_id):
     group = pygame.sprite.Group()
-
     twist_walls = get_obstacles(lev_id, TWIST_OBSTACLES)
     for wall in twist_walls:
         wall_sprite = TwistObstacle(*wall)
