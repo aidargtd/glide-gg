@@ -10,6 +10,7 @@ from menu_files.menu_next_page_levels import MenuNextLevelsPage
 from parametres import *
 from load_music import *
 from Button import Button
+from db_functions import *
 
 dict_changing_values = {'music': True, 'voice': True, 'sound_effects': True, 'effects': True}
 
@@ -23,8 +24,7 @@ class Menu():
         self.menu = None
         self.scroll_y = 0
         # render music
-        pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.3)
+        sound('Music/1679007940657971.ogg', select_table('settings', 'music')[0][0])
         self.main_menu()
         self.event_loop()
 
@@ -59,25 +59,26 @@ class Menu():
 
     def sound_condition(self):
         self.menu = MenuSoundPage(self.screen)
-        if dict_changing_values['music']:
+        if select_table('settings', 'music')[0][0]:
             self.menu.add_item('вкл', (110, 100), self.check_on_music, BLUE_TRAIL_COLOR_3)
+            sound('Music/1679007940657971.ogg', True)
         else:
             self.menu.add_item('выкл', (110, 100), self.check_on_music, RED_TRAIL_COLOR_3)
-            pygame.mixer.music.stop()
-        if dict_changing_values['voice']:
+            sound('Music/1679007940657971.ogg', False)
+
+        if select_table('settings', 'voice')[0][0]:
             self.menu.add_item('вкл', (80, 200), self.check_on_voice, BLUE_TRAIL_COLOR_3)
         else:
             self.menu.add_item('выкл', (80, 200), self.check_on_voice, RED_TRAIL_COLOR_3)
-        if dict_changing_values['sound_effects']:
+
+        if select_table('settings', 'sound_effects')[0][0]:
             self.menu.add_item('вкл', (230, 300), self.check_on_sounds_eff, BLUE_TRAIL_COLOR_3)
         else:
             self.menu.add_item('выкл', (230, 300), self.check_on_sounds_eff, RED_TRAIL_COLOR_3)
         self.menu.add_item('назад', (100, -100), self.settings_menu)
 
     def check_on_music(self):
-        dict_changing_values['music'] = not dict_changing_values['music']
-        if dict_changing_values['music'] is True:
-            pygame.mixer.music.play()
+        update_settings_value(not select_table('settings', 'music')[0][0])
         self.sound_condition()
 
     def check_on_voice(self):
@@ -89,17 +90,14 @@ class Menu():
         self.sound_condition()
 
     def check_on_eff(self):
-        dict_changing_values['effects'] = not dict_changing_values['effects']
+        upd_settings_val_effects(not select_table('settings', 'effects')[0][0])
         self.settings_menu()
-
-    def check_dict_value(self, item):
-        return dict_changing_values[item]
 
     def settings_menu(self):
         self.menu = MenuSettingsPage(self.screen)
         self.menu.add_item('звук', (50, 450), self.sound_condition, color=DEEP_GRAY, font_size=50)
         self.menu.add_item('назад', (100, -100), self.main_menu)
-        if dict_changing_values['effects']:
+        if select_table('settings', 'effects')[0][0]:
             self.menu.add_item('вкл', (50, 370), self.check_on_eff, BLUE_TRAIL_COLOR_3)
         else:
             self.menu.add_item('выкл', (50, 370), self.check_on_eff, RED_TRAIL_COLOR_3)

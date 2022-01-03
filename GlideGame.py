@@ -23,6 +23,7 @@ all_sprites = pygame.sprite.Group()
 mouse = Mouse()
 all_sprites.add(mouse)
 scores = 0
+count_play = 0
 paused = True
 
 
@@ -93,7 +94,7 @@ def game_over(walls_group, l_id, red, blue):
         draw_gray_circle()
         walls_group.update()
         all_circles.draw(screen)
-        draw_traces_for_circles(True, circle_movement.traces)
+        draw_traces_for_circles(select_table('settings', 'effects')[0][0], circle_movement.traces)
         loc_walls_group.draw(screen)
 
         pygame.display.update()
@@ -157,9 +158,9 @@ def press_key(red, blue):
     if keys[pygame.K_ESCAPE]:
         pause()
     if keys[pygame.K_RIGHT]:
-        changing_speed(red, blue, SPEED_MOVEMENT_FALSE, True)
+        changing_speed(red, blue, SPEED_MOVEMENT_TRUE, True)
     if keys[pygame.K_LEFT]:
-        changing_speed(red, blue, SPEED_MOVEMENT_TRUE, False)
+        changing_speed(red, blue, SPEED_MOVEMENT_FALSE, False)
 
 
 def draw_traces_for_circles(flag, traces):
@@ -176,9 +177,10 @@ def draw_traces_obstacles(flag, traces):
 
 
 def game_cycle(l_id):
+    sound('Music/1679007940657971.ogg', False)
+    sound(select_one_with_aspect('Levels', 'id', l_id, 'music_level')[0], True)
     all_circles.add(red_circle, blue_circle)
     all_circles.add(red_circle, blue_circle)
-    pygame.mixer.music.stop()
     game = True
     walls_group = create_obst_group(l_id)
     traces_wall = []
@@ -200,8 +202,8 @@ def game_cycle(l_id):
 
         # Проверка на нажатие эффектов потом
         draw_gray_circle()
-        draw_traces_for_circles(True, circle_movement.traces)
-        draw_traces_obstacles(True, traces_wall)
+        draw_traces_for_circles(select_table('settings', 'effects')[0][0], circle_movement.traces)
+        draw_traces_obstacles(select_table('settings', 'effects')[0][0], traces_wall)
         walls_group.update()
         loc_walls_group.draw(screen)
         all_circles.draw(screen)
