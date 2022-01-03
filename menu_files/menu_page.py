@@ -44,7 +44,6 @@ class MenuPage:
     def render_background(self, screen):
         global img_counter
         screen.fill(BLACK_COLOR)
-        menu_background = load_image(MENU_IMG)
         if img_counter == 78:
             img_counter = 0
         screen.blit(kosmo_imgs[img_counter // 2], (0, 0))

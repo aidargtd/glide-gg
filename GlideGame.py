@@ -25,7 +25,11 @@ all_sprites.add(mouse)
 scores = 0
 paused = True
 
-# ПРОВЕРКА НА СЛЕДЫ ПОТОМ
+
+def start_game(screen_size):
+    return Menu(screen_size)
+
+
 red_circle = circle_movement.Circles(
     RED_CIRCLE_IMG, RED_CIRCLE_START_ANGLE, RED_CIRCLE_START_X, RED_CIRCLE_START_Y, RED)
 blue_circle = circle_movement.Circles(
@@ -204,10 +208,6 @@ def game_cycle(l_id):
 
         pygame.display.update()
         fps_clock.tick(FPS)
-
-
-def start_game(screen_size):
-    return Menu(screen_size)
 
 
 if __name__ == '__main__':

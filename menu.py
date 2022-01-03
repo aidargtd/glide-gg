@@ -92,6 +92,9 @@ class Menu():
         dict_changing_values['effects'] = not dict_changing_values['effects']
         self.settings_menu()
 
+    def check_dict_value(self, item):
+        return dict_changing_values[item]
+
     def settings_menu(self):
         self.menu = MenuSettingsPage(self.screen)
         self.menu.add_item('звук', (50, 450), self.sound_condition, color=DEEP_GRAY, font_size=50)
