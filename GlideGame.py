@@ -24,8 +24,12 @@ all_sprites.add(mouse)
 scores = 0
 paused = True
 
-
 # ПРОВЕРКА НА СЛЕДЫ ПОТОМ
+red_circle = circle_movement.Circles(
+    RED_CIRCLE_IMG, RED_CIRCLE_START_ANGLE, RED_CIRCLE_START_X, RED_CIRCLE_START_Y, RED)
+blue_circle = circle_movement.Circles(
+    BLUE_CIRCLE_IMG, BLUE_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_X, BLUE_CIRCLE_START_Y, BLUE)
+
 
 def changing_speed(red, blue, speed, flag, angle_stop_red=None, angle_stop_blue=None):
     if angle_stop_red is None and angle_stop_blue is None:
@@ -51,6 +55,12 @@ def off_pause():
     paused = False
 
 
+def draw_pause():
+    screen.fill(BLACK_COLOR)
+    btn_pause = Button(screen, 30, 30)
+    btn_pause.draw(560, 0, 'II', pause, 30)
+
+
 def draw_gray_circle():
     pygame.draw.circle(screen, DEEP_GRAY, GRAY_CIRCLE_POSITION,
                        GRAY_CIRCLE_RADIUS, GRAY_CIRCLE_WIDTH)
@@ -70,9 +80,7 @@ def game_over(walls_group, l_id, red, blue):
                 quit()
         if max(list(map(lambda x: x.rect.y, walls_group))) < -350:
             game = False
-        screen.fill(BLACK_COLOR)
-        btn_pause = Button(screen, 30, 30)
-        btn_pause.draw(560, 0, 'II', pause, 30)
+        draw_pause()
         for w_trace in traces_wall:
             w_trace.draw_trace(screen)
         for i in walls_group:
@@ -81,6 +89,7 @@ def game_over(walls_group, l_id, red, blue):
         draw_gray_circle()
         walls_group.update()
         all_circles.draw(screen)
+        draw_traces_for_circles(True, circle_movement.traces)
         loc_walls_group.draw(screen)
 
         pygame.display.update()
@@ -150,11 +159,14 @@ def press_key(red, blue):
         changing_speed(red, blue, SPEED_MOVEMENT_TRUE, False)
 
 
+def draw_traces_for_circles(flag, traces):
+    if flag:
+        for trace in traces:
+            trace.draw(screen)
+            trace.update()
+
+
 def game_cycle(l_id):
-    red_circle = circle_movement.Circles(
-        RED_CIRCLE_IMG, RED_CIRCLE_START_ANGLE, RED_CIRCLE_START_X, RED_CIRCLE_START_Y, RED, True)
-    blue_circle = circle_movement.Circles(
-        BLUE_CIRCLE_IMG, BLUE_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_X, BLUE_CIRCLE_START_Y, BLUE, True)
     all_circles.add(red_circle, blue_circle)
 
     all_circles.add(red_circle, blue_circle)
@@ -175,14 +187,11 @@ def game_cycle(l_id):
         if any([red_circle.check_collision(screen, walls_group), blue_circle.check_collision(screen, walls_group)]):
             pygame.mixer.Sound.play(sound_collision)
             return game_over(walls_group, l_id, red_circle, blue_circle)
-        screen.fill(BLACK_COLOR)
         print_text(screen, f'Dodged: {get_dodged(walls_group)}', 10, 10, 20)
-        btn_pause = Button(screen, 30, 30)
-        btn_pause.draw(560, 0, 'II', pause, 30)
+        draw_pause()
 
-        for trace in circle_movement.traces:
-            trace.draw(screen)
-            trace.update()
+        # Проверка на нажатие эффектов потом
+        draw_traces_for_circles(True, circle_movement.traces)
         draw_gray_circle()
 
         for w_trace in traces_wall:

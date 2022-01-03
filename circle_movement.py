@@ -44,7 +44,7 @@ class CreateTrace:
 
 
 class Circles(pygame.sprite.Sprite):
-    def __init__(self, image, init_angle, start_x, start_y, color, flag_traces=False):
+    def __init__(self, image, init_angle, start_x, start_y, color, flag_traces=True):
         pygame.sprite.Sprite.__init__(self)
         self.image = load_image(image)
         self.rect = self.image.get_rect()
