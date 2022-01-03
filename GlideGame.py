@@ -58,7 +58,7 @@ def game_over(walls_group, l_id):
             w_trace.draw_trace(screen)
 
         for i in walls_group:
-            i.speed_y = -30
+            i.speed_y -= 1.5
 
         walls_group.update()
         loc_walls_group.draw(screen)
