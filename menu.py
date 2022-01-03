@@ -6,6 +6,7 @@ from menu_files.menu_shop_page import MenuShopPage
 from menu_files.menu_sound_settings import MenuSoundPage
 from menu_files.menu_levels import MenuLevelsPage
 from menu_files.main_menu import MenuMainPage
+from menu_files.menu_next_page_levels import MenuNextLevelsPage
 from parametres import *
 from load_music import *
 from Button import Button
@@ -20,6 +21,7 @@ class Menu():
         self.action = action
         self.screen = pygame.display.set_mode(screen_size)
         self.menu = None
+        self.scroll_y = 0
         # render music
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.3)
@@ -49,6 +51,11 @@ class Menu():
     def open_plots_levels(self):
         self.menu = MenuLevelsPage(self.screen)
         self.menu.add_item('назад', (490, 740), self.main_menu)
+        self.menu.add_item('следующая страница', (270, 640), self.open_next_page_levels, color=DEEP_GRAY)
+
+    def open_next_page_levels(self):
+        self.menu = MenuNextLevelsPage(self.screen)
+        self.menu.add_item('назад', (490, 740), self.open_plots_levels)
 
     def sound_condition(self):
         self.menu = MenuSoundPage(self.screen)
@@ -104,10 +111,8 @@ class Menu():
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     pygame.mixer.Sound.play(sound_click)
                     self.menu.click(*event.pos)
-                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
-                    print(1)
-                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 5:
-                    print(2)
+
             self.check_on_music
             self.menu.render()
+            pygame.display.flip()
             pygame.display.update()

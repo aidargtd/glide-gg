@@ -40,14 +40,14 @@ def changing_speed(red, blue, speed, flag, angle_stop_red=None, angle_stop_blue=
             red.update(speed)
             blue.update(speed)
     else:
-        if red.init_angle >= angle_stop_red - 5:
-            red.update(-abs(speed))
-        if red.init_angle <= angle_stop_red - 5:
-            red.update(abs(speed))
-        if blue.init_angle >= angle_stop_blue - 5:
-            blue.update(-abs(speed))
-        if blue.init_angle <= angle_stop_blue - 5:
-            blue.update(abs(speed))
+        if red.init_angle - 5 >= angle_stop_red:
+            red.update(5)
+        if red.init_angle - 5 <= angle_stop_red:
+            red.update(-5)
+        if blue.init_angle - 5 >= angle_stop_blue:
+            blue.update(5)
+        if blue.init_angle - 5 <= angle_stop_blue:
+            blue.update(-5)
 
 
 def off_pause():
@@ -165,9 +165,14 @@ def draw_traces_for_circles(flag, traces):
             trace.update()
 
 
+def draw_traces_obstacles(flag, traces):
+    if flag:
+        for w_trace in traces:
+            w_trace.draw_trace(screen)
+
+
 def game_cycle(l_id):
     all_circles.add(red_circle, blue_circle)
-
     all_circles.add(red_circle, blue_circle)
     pygame.mixer.music.stop()
     game = True
@@ -186,15 +191,14 @@ def game_cycle(l_id):
         if any([red_circle.check_collision(screen, walls_group), blue_circle.check_collision(screen, walls_group)]):
             pygame.mixer.Sound.play(sound_collision)
             return game_over(walls_group, l_id, red_circle, blue_circle)
-        print_text(screen, f'Dodged: {get_dodged(walls_group)}', 10, 10, 20)
         draw_pause()
+        print_text(screen, f'Dodged: {get_dodged(walls_group)}', 10, 10, 20)
 
         # Проверка на нажатие эффектов потом
-        draw_traces_for_circles(True, circle_movement.traces)
         draw_gray_circle()
 
-        for w_trace in traces_wall:
-            w_trace.draw_trace(screen)
+        draw_traces_for_circles(True, circle_movement.traces)
+        draw_traces_obstacles(True, traces_wall)
         walls_group.update()
         loc_walls_group.draw(screen)
         all_circles.draw(screen)
@@ -204,7 +208,7 @@ def game_cycle(l_id):
 
 
 def start_game(screen_size):
-    Menu(screen_size)
+    return Menu(screen_size)
 
 
 if __name__ == '__main__':
