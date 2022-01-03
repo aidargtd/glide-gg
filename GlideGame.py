@@ -7,7 +7,6 @@ from walls import *
 from menu import *
 from mouse_cursor import *
 from load_music import *
-from deep_translator import GoogleTranslator
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
@@ -23,7 +22,6 @@ all_sprites = pygame.sprite.Group()
 mouse = Mouse()
 all_sprites.add(mouse)
 scores = 0
-count_play = 0
 paused = True
 
 
@@ -46,14 +44,14 @@ def changing_speed(red, blue, speed, flag, angle_stop_red=None, angle_stop_blue=
             red.update(speed)
             blue.update(speed)
     else:
-        if red.init_angle - 5 >= angle_stop_red:
-            red.update(5)
-        if red.init_angle - 5 <= angle_stop_red:
-            red.update(-5)
-        if blue.init_angle - 5 >= angle_stop_blue:
-            blue.update(5)
-        if blue.init_angle - 5 <= angle_stop_blue:
-            blue.update(-5)
+        if red.init_angle >= angle_stop_red:
+            red.update(-abs(speed))
+        elif red.init_angle <= angle_stop_red:
+            red.update(abs(speed))
+        if blue.init_angle >= angle_stop_blue:
+            blue.update(-abs(speed))
+        elif blue.init_angle <= angle_stop_blue:
+            blue.update(abs(speed))
 
 
 def off_pause():
