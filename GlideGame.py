@@ -198,7 +198,6 @@ def game_cycle(l_id):
         draw_pause()
         print_text(screen, f'Dodged: {get_dodged(walls_group)}', 10, 10, 20)
 
-        # Проверка на нажатие эффектов потом
         draw_gray_circle()
         draw_traces_for_circles(select_table('settings', 'effects')[0][0], circle_movement.traces)
         draw_traces_obstacles(select_table('settings', 'effects')[0][0], traces_wall)
