@@ -25,10 +25,6 @@ scores = 0
 paused = True
 
 
-def start_game(screen_size):
-    Menu(screen_size)
-
-
 red_circle = circle_movement.Circles(
     RED_CIRCLE_IMG, RED_CIRCLE_START_ANGLE, RED_CIRCLE_START_X, RED_CIRCLE_START_Y, RED)
 blue_circle = circle_movement.Circles(
@@ -252,7 +248,3 @@ def next_level(level_id):
         pygame.display.update()
         fps_clock.tick(FPS_SIXTY)
         counter += 1
-
-
-if __name__ == '__main__':
-    start_game(SIZE)
