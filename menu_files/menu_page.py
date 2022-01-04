@@ -14,8 +14,8 @@ class MenuPage:
         self.items_for_change = []
 
     # если числа в left_top отрицательные, то это отступы от правого и нижнего края экрана
-    def add_item(self, message, left_top, onclick=None, color=WHITE_COLOR, font_size=40,
-                 font_type='font/Roboto-Thin.ttf'):
+    def add_item(self, message, left_top, onclick=None, color=WHITE_COLOR, font_size=FONT_FORTY_SIZE,
+                 font_type=FONT_ROB_THIN):
         self.items.append(MenuItem(message, self.convert_coords(left_top), onclick, color, font_size, font_type))
 
     def convert_coords(self, left_top):

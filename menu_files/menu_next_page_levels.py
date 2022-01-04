@@ -11,42 +11,42 @@ from load_music import *
 
 class MenuNextLevelsPage(MenuPage):
     def render_extra(self, screen):
-        print_text(screen, 'принятие', 50, 100, 40, font_type='Roboto-Thin.ttf', font_color=DEEP_GRAY)
-        # КНОПКИ УРОВНЕЙ ПЕРВОГО СЮЖЕТА
-        btn_first_lvl1 = Button(screen, 50, 50)
-        btn_first_lvl1.draw(50, 150, ' I ', game_cycle, 50, id=11)
+        print_text(screen, HOPE_TITLE, 50, 100, FONT_FORTY_SIZE, font_type=FONT_ROB_THIN, font_color=DEEP_GRAY)
+        # КНОПКИ УРОВНЕЙ ПЯТОГО СЮЖЕТА
+        btn_first_lvl3 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
+        btn_first_lvl3.draw(50, 150, BTN_FIRST_LEVEL, game_cycle, FONT_SIZE_FIFTY, id=51)
 
-        btn_sec_lvl1 = Button(screen, 50, 50)
-        btn_sec_lvl1.draw(110, 150, 'II', game_cycle, 50, id=12)
+        btn_sec_lvl3 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
+        btn_sec_lvl3.draw(110, 150, BTN_SECOND_LEVEL, game_cycle, FONT_SIZE_FIFTY, id=52)
 
-        btn_third_lvl1 = Button(screen, 50, 50)
-        btn_third_lvl1.draw(170, 150, 'III', game_cycle, 50, id=13)
+        btn_third_lvl3 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
+        btn_third_lvl3.draw(170, 150, BTN_THIRD_LEVEL, game_cycle, FONT_SIZE_FIFTY, id=53)
 
-        btn_fourth_lvl1 = Button(screen, 50, 50)
-        btn_fourth_lvl1.draw(50, 210, 'IV', game_cycle, 50, id=14)
+        btn_fourth_lvl4 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_X)
+        btn_fourth_lvl4.draw(50, 210, BTN_FOURTH_LEVEL, game_cycle, FONT_SIZE_FIFTY, id=54)
 
-        btn_five_lvl1 = Button(screen, 50, 50)
-        btn_five_lvl1.draw(110, 210, 'V', game_cycle, 50, id=15)
+        btn_five_lvl5 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
+        btn_five_lvl5.draw(110, 210, BTN_FIFTH_LEVEL, game_cycle, FONT_SIZE_FIFTY, id=55)
 
-        btn_six_lvl1 = Button(screen, 50, 50)
-        btn_six_lvl1.draw(170, 210, 'VI', game_cycle, 50, id=16)
+        btn_six_lvl6 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
+        btn_six_lvl6.draw(170, 210, BTN_SIXTH_LEVEL, game_cycle, FONT_SIZE_FIFTY, id=56)
 
-        print_text(screen, 'надежда', 50, 270, 40, font_type='Roboto-Thin.ttf', font_color=DEEP_GRAY)
-        # КНОПКИ УРОВНЕЙ ВТОРОГО СЮЖЕТА
-        btn_first_lvl2 = Button(screen, 50, 50)
-        btn_first_lvl2.draw(50, 320, ' I ', game_cycle, 50, id=21)
+        print_text(screen, ACCEPTANCE_TITLE, 50, 270, FONT_FORTY_SIZE, font_type=FONT_ROB_THIN, font_color=DEEP_GRAY)
+        # КНОПКИ УРОВНЕЙ ШЕСТОГО СЮЖЕТА
+        btn_first_lvl3 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
+        btn_first_lvl3.draw(50, 320, BTN_FIRST_LEVEL, game_cycle, FONT_SIZE_FIFTY, id=61)
 
-        btn_sec_lvl2 = Button(screen, 50, 50)
-        btn_sec_lvl2.draw(110, 320, 'II', game_cycle, 50, id=22)
+        btn_sec_lvl3 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
+        btn_sec_lvl3.draw(110, 320, BTN_SECOND_LEVEL, game_cycle, FONT_SIZE_FIFTY, id=62)
 
-        btn_third_lvl2 = Button(screen, 50, 50)
-        btn_third_lvl2.draw(170, 320, 'III', game_cycle, 50, id=23)
+        btn_third_lvl3 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
+        btn_third_lvl3.draw(170, 320, BTN_THIRD_LEVEL, game_cycle, FONT_SIZE_FIFTY, id=63)
 
-        btn_fourth_lvl2 = Button(screen, 50, 50)
-        btn_fourth_lvl2.draw(50, 370, 'IV', game_cycle, 50, id=14)
+        btn_fourth_lvl4 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
+        btn_fourth_lvl4.draw(50, 370, BTN_FOURTH_LEVEL, game_cycle, FONT_SIZE_FIFTY, id=64)
 
-        btn_five_lvl2 = Button(screen, 50, 50)
-        btn_five_lvl2.draw(110, 370, 'V', game_cycle, 50, id=15)
+        btn_five_lvl5 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
+        btn_five_lvl5.draw(110, 370, BTN_FIFTH_LEVEL, game_cycle, FONT_SIZE_FIFTY, id=65)
 
-        btn_six_lvl2 = Button(screen, 50, 50)
-        btn_six_lvl2.draw(170, 370, 'VI', game_cycle, 50, id=16)
+        btn_six_lvl6 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
+        btn_six_lvl6.draw(170, 370, BTN_SIXTH_LEVEL, game_cycle, FONT_SIZE_FIFTY, id=66)

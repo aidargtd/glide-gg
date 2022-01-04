@@ -21,9 +21,9 @@ class Button:
         if x < mouse[0] < x + self.width and y < mouse[1] < y + self.height:
             pygame.draw.rect(self.screen, self.active_col, (x, y, self.width, self.height))
             if click[0] == 1:
-                sound_effects('Samples/zapsplat_multimedia_button_click_005_68777.mp3',
-                              select_table('settings', 'sound_effects')[0][0])
-                pygame.time.delay(300)
+                sound_effects(SOUND_CLICK,
+                              select_table(SETTINGS, SOUND_EFFECTS)[0][0])
+                pygame.time.delay(DELAY_THREE_OO)
                 if action is not None:
                     if action == quit:
                         pygame.quit()

@@ -2,6 +2,7 @@ import pygame
 
 pygame.init()
 
+
 class AnimatedSprite(pygame.sprite.Sprite):
     def __init__(self, sheet, columns, rows, x, y):
         pygame.sprite.Sprite.__init__(self)

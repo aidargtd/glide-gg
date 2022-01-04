@@ -6,4 +6,4 @@ from parametres import *
 class MenuShopPage(MenuPage):
     def render_extra(self, screen):
         x = 50
-        print_text(screen, 'Магазин скинов', x, 50, 40, font_type='Roboto-Thin.ttf')
+        print_text(screen, 'Магазин скинов', x, 50, FONT_FORTY_SIZE, font_type=FONT_ROB_THIN)

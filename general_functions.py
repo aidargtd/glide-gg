@@ -12,7 +12,7 @@ pygame.init()
 
 
 def load_image(name, colorkey=None):
-    fullname = os.path.join('pictures', name)
+    fullname = os.path.join(PICTURES, name)
     if not os.path.isfile(fullname):
         print(f"Файл с изображением '{fullname}' не найден")
         sys.exit()
@@ -30,7 +30,7 @@ def quit():
     sys.exit()
 
 
-def print_text(screen, message, x, y, font_size=30, font_color=WHITE_COLOR, font_type='font/Roboto-Light.ttf'):
+def print_text(screen, message, x, y, font_size=30, font_color=WHITE_COLOR, font_type=FONT_ROB_LIGHT):
     font_type = pygame.font.Font(match_font(font_type), font_size)
     text = font_type.render(message, True, font_color)
     screen.blit(text, (x, y))
@@ -73,11 +73,11 @@ def get_dodged(walls_group):
 
 
 def check_level_complited(walls_group):
-    f = True
+    flag = True
     for wall in walls_group:
-        if wall.rect.y < 1000:
-            f = False
-    return f
+        if wall.rect.y < MAX_RECT_Y_IN_LEVEL:
+            flag = False
+    return flag
 
 
 def get_bank(l_id):

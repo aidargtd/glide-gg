@@ -8,7 +8,17 @@ DB_PATH = 'data/glide_db.db'
 TITLE = 'Glide game'
 
 # FONTS
+FONT_DROID = 'font/DroidSansJapanese.ttf'
 FONT_ROB_LIGHT = 'font/Roboto-Light.ttf'
+FONT_ROB_THIN = 'Roboto-Thin.ttf'
+
+# FONT_SIZE
+FONT_TWENTY_SIZE = 20
+FONT_THIRTY_SIZE = 30
+FONT_FORTY_SIZE = 40
+FONT_SIZE_FIFTY = 50
+FONT_SIZE_ONE_H_TWENTY = 120
+
 # CONST (NAMES BALLS)
 RED = 'red'
 BLUE = 'blue'
@@ -29,15 +39,50 @@ START_WALL_TRACE_COLOR = [90, 90, 90]
 COL_STEP_WALL_TRACES = 15
 
 # NAMES OF IMAGES
+ICON_IMG = 'icon.jpg'
 RED_CIRCLE_IMG = 'red_circle.png'
 BLUE_CIRCLE_IMG = 'blue_circle.png'
 COINS_SHEET = "animation-coins.png"
 MENU_IMG = "menu.png"
+MOUSE_PNG = 'mouse.png'
+# IMAGES FORMATS
+PNG = '.png'
 
+# FOR BACKGROUND
+KOSMO_BGD = 'bg_kosmo/kosmo'
+FIRST_FRAME = 1
+LAST_FRAME = 40
+
+# MUSIC LINKS
+MENU_MUSIC = '1679007940657971.ogg'
+SOUND_COLLUSION = 'Samples/3816133910831170.ogg'
+SOUND_CLICK = 'Samples/zapsplat_multimedia_button_click_005_68777.mp3'
+SAME_LINK_FOR_QUOTES = 'Quotes/quote'
+PATH_FOR_CREATE_QUOTES = 'Music/Quotes/quote'
+PATH_FOR_SOUND_IN_LEVELS = 'Music/Music for levels/'
+SOUND_RESTART = 'Samples/8476647490550829.ogg'
+PATH_MUSIC = 'Music/'
+
+# MUSIC PARAMETRES
+USING_VOLUME = 0.2
+FORMAT_OGG = '.ogg'
+INFINITY_PLAYBACK = -1
+
+# PARSE LINKS
+URL_FOR_QUOTE = 'https://api.quotable.io/random'
+GET_QUOTE = 'content'
+
+# LANGUAGE FOR TRANSLATE
+RU = 'ru'
+EN = 'en'
+
+# DELAY VAlUES
+DELAY_THREE_OO = 300
 # CONSTS FOR SCREEN
 SIZE = WIDTH, HEIGHT = 600, 800
 START_OF_SCREEN = (0, 0)
-FPS = 60
+FPS_SIXTY = 60
+FPS_FIFTEEN = 15
 NOT_UPDATE_Y_CORD_1 = -400
 NOT_UPDATE_Y_CORD_2 = 1000
 DODGE_Y_CORD = 600
@@ -116,6 +161,9 @@ LIMIT_FRAME = 20
 ZERO_FRAMES = 0
 STEP_FRAME = 1
 
+# CHECK LEVEL COMPLETE
+MAX_RECT_Y_IN_LEVEL = 1000
+
 # VALUES FOR DATABASE
 USERS = 'Users'
 IMAGES = 'Images'
@@ -153,6 +201,14 @@ MUS_LEVEL = 'music level'
 SPEED = 'speed'
 COINS = 'coins'
 COINS_AMOUNT = 'coins_amount'
+
+SETTINGS = 'settings'
+EFFECTS = 'effects'
+MUSIC = 'music'
+MUSIC_LEVEL = 'music_level'
+VOICE = 'voice'
+SOUND_EFFECTS = 'sound_effects'
+PICTURES = 'pictures'
 
 TABLES = {
     IMAGES: [ID,
@@ -204,6 +260,62 @@ for i in range(1, 7):
     for j in range(1, 7):
         ALL_LEVELS.append(int(str(i) + str(j)))
 
-
 # MESSAGES
 LEVEL_COMPLITED = 'Уровень пройден!'
+PAUSE_ACTIONS = 'пауза, нажмите Enter, чтобы'
+BANK_MESSAGE = 'Вы получаете:'
+COIN_MESSAGE = 'монет'
+DODGED_MESS = 'Dodged:'
+TITLE = 'GLADE'
+PLOT_TITLE = 'сюжет'
+IGNORANCE_TITLE = 'незнание'
+DENIAL_TITLE = 'отрицание'
+ANGER_TITLE = 'гнев'
+CONVERSATION_TITLE = 'переговоры'
+HOPE_TITLE = 'надежда'
+ACCEPTANCE_TITLE = 'принятие'
+LEFT_KEY_NAME = 'LEFT'
+RIGHT_KEY_NAME = 'RIGHT'
+MANAGEMENT_TITLE = 'Управление'
+EFFECTS_TITLE = 'эффекты'
+RIGHT_TITLE = 'вправо'
+LEFT_TITLE = 'влево'
+ITEM_SHOP_TITLE = 'Магазин скинов'
+MUSIC_SETTINGS = 'музыка - '
+VOICE_SETTINGS = 'речь - '
+SOUND_EFF_SETTINGS = 'звуковые эффекты - '
+# BUTTONS SIZE
+BTN_RESUME_X = 150
+BTN_RESUME_Y = 50
+BTN_LEAVE_HUB_X = 150
+BTN_LEAVE_HUB_Y = 50
+BTN_LEVELS_X = 50
+BTN_LEVELS_Y = 50
+
+# BUTTONS TEXT
+BTN_CONTINUE_TEXT = 'продолжить'
+BTN_LEAVE_TEXT = 'выход'
+PAUSE_BTN_TEXT = 'II'
+BTN_SOUND_TEXT = 'звук'
+BTN_BACK_TEXT = 'назад'
+BTN_ON_TEXT = 'вкл'
+BTN_OFF_TEXT = 'выкл'
+BTN_NEXT_PAGE_TEXT = 'следующая страница'
+BTN_SETTINGS_TEXT = 'настройки'
+BTN_PLAY_TEXT = 'играть'
+BTN_ITEM_SHOP_TEXT = 'магазин'
+BTN_RACE_TEXT = 'гонка'
+BTN_PLOT_TEXT = 'сюжет'
+
+# BUTTONS LEVELS
+BTN_FIRST_LEVEL = ' I '
+BTN_SECOND_LEVEL = 'II'
+BTN_THIRD_LEVEL = 'III'
+BTN_FOURTH_LEVEL = 'IV'
+BTN_FIFTH_LEVEL = 'V'
+BTN_SIXTH_LEVEL = 'VI'
+
+# CONSTS FOR RENDER BORDERS
+PADDING_DIST = 20
+BORDER_WIDTH = 4
+BORDER_LENGTH = 8

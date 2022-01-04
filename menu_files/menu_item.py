@@ -9,13 +9,13 @@ class MenuItem:
     def __init__(self, message, left_top, onclick=None, text_color=WHITE_COLOR, font_size=40,
                  font_name='font/Roboto-Thin.ttf'):
         self.message = message
-        self.padding = 20  # расстояние от текста до рамки
+        self.padding = PADDING_DIST  # расстояние от текста до рамки
         self.font_name = font_name
         self.font_size = font_size
         self.text_color = text_color
         self.border_color = WHITE_COLOR
-        self.border_width = 4
-        self.border_length = 8
+        self.border_width = BORDER_WIDTH
+        self.border_length = BORDER_LENGTH
         self.onclick = onclick
         self.active = False
         self.rect = None  # координаты углов, включая рамку

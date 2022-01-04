@@ -4,7 +4,7 @@ import circle_movement
 from general_functions import *
 from Button import *
 from walls import *
-from menu import *
+from menu_for_all import *
 from mouse_cursor import *
 from load_music import *
 from cut_sheet import *
@@ -13,9 +13,8 @@ pygame.init()
 screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption(TITLE)
 
-icon = load_image('icon.jpg')
+icon = load_image(ICON_IMG)
 pygame.display.set_icon(icon)
-
 all_circles = pygame.sprite.Group()
 all_obstacles = pygame.sprite.Group()
 fps_clock = pygame.time.Clock()
@@ -27,13 +26,60 @@ paused = True
 
 
 def start_game(screen_size):
-    return Menu(screen_size)
+    Menu(screen_size)
 
 
 red_circle = circle_movement.Circles(
     RED_CIRCLE_IMG, RED_CIRCLE_START_ANGLE, RED_CIRCLE_START_X, RED_CIRCLE_START_Y, RED)
 blue_circle = circle_movement.Circles(
     BLUE_CIRCLE_IMG, BLUE_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_X, BLUE_CIRCLE_START_Y, BLUE)
+
+
+def off_pause():
+    global paused
+    paused = False
+
+
+def draw_pause():
+    screen.fill(BLACK_COLOR)
+    btn_pause = Button(screen, 30, 30)
+    btn_pause.draw(560, 0, PAUSE_BTN_TEXT, pause, 30)
+
+
+def draw_gray_circle():
+    pygame.draw.circle(screen, DEEP_GRAY, GRAY_CIRCLE_POSITION,
+                       GRAY_CIRCLE_RADIUS, GRAY_CIRCLE_WIDTH)
+
+
+def game_over(walls_group, l_id, red, blue, speed=None):
+    game = True
+    traces_wall = []
+    sound_effects(SOUND_RESTART,
+                  select_table(SETTINGS, SOUND_EFFECTS)[0][0])
+    while game:
+        loc_walls_group = get_loc_walls_gr(walls_group)
+        traces_wall = get_traces_arr(loc_walls_group, traces_wall)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game = False
+                quit()
+        if max(list(map(lambda x: x.rect.y, walls_group))) < -350:
+            game = False
+        draw_pause()
+        for w_trace in traces_wall:
+            w_trace.draw_trace(screen)
+        for i in walls_group:
+            i.speed_y -= 1.5
+        changing_speed(red, blue, speed, True, RED_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_ANGLE)
+        draw_gray_circle()
+        walls_group.update()
+        all_circles.draw(screen)
+        draw_traces_for_circles(select_table(SETTINGS, EFFECTS)[0][0], circle_movement.traces)
+        loc_walls_group.draw(screen)
+
+        pygame.display.update()
+        fps_clock.tick(FPS_SIXTY)
+    game_cycle(l_id)
 
 
 def changing_speed(red, blue, speed, flag, angle_stop_red=None, angle_stop_blue=None):
@@ -55,73 +101,26 @@ def changing_speed(red, blue, speed, flag, angle_stop_red=None, angle_stop_blue=
             blue.update(abs(speed))
 
 
-def off_pause():
-    global paused
-    paused = False
-
-
-def draw_pause():
-    screen.fill(BLACK_COLOR)
-    btn_pause = Button(screen, 30, 30)
-    btn_pause.draw(560, 0, 'II', pause, 30)
-
-
-def draw_gray_circle():
-    pygame.draw.circle(screen, DEEP_GRAY, GRAY_CIRCLE_POSITION,
-                       GRAY_CIRCLE_RADIUS, GRAY_CIRCLE_WIDTH)
-
-
-def game_over(walls_group, l_id, red, blue, speed=None):
-    game = True
-    traces_wall = []
-    sound_effects('Samples/8476647490550829.ogg',
-                  select_table('settings', 'sound_effects')[0][0])
-    while game:
-        loc_walls_group = get_loc_walls_gr(walls_group)
-        traces_wall = get_traces_arr(loc_walls_group, traces_wall)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                game = False
-                quit()
-        if max(list(map(lambda x: x.rect.y, walls_group))) < -350:
-            game = False
-        draw_pause()
-        for w_trace in traces_wall:
-            w_trace.draw_trace(screen)
-        for i in walls_group:
-            i.speed_y -= 1.5
-        changing_speed(red, blue, speed, True, RED_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_ANGLE)
-        draw_gray_circle()
-        walls_group.update()
-        all_circles.draw(screen)
-        draw_traces_for_circles(select_table('settings', 'effects')[0][0], circle_movement.traces)
-        loc_walls_group.draw(screen)
-
-        pygame.display.update()
-        fps_clock.tick(FPS)
-    game_cycle(l_id)
-
-
 def pause():
     global paused
-    btn_resume_game = Button(screen, 150, 50)
-    btn_leave_hub = Button(screen, 150, 50)
+    btn_resume_game = Button(screen, BTN_RESUME_X, BTN_RESUME_Y)
+    btn_leave_hub = Button(screen, BTN_LEAVE_HUB_X, BTN_LEAVE_HUB_Y)
     paused = True
     while paused:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quit()
         screen.fill(BLACK_COLOR)
-        print_text(screen, message='пауза, нажмите Enter, чтобы', x=40, y=300, font_type='font/DroidSansJapanese.ttf')
+        print_text(screen, message=PAUSE_ACTIONS, x=40, y=300, font_type=FONT_DROID)
         keys = pygame.key.get_pressed()
-        btn_resume_game.draw(325, 290, 'продолжить', off_pause, 30)
-        btn_leave_hub.draw(320, 350, 'выход', start_game, 30, id=SIZE)
+        btn_resume_game.draw(325, 290, BTN_CONTINUE_TEXT, off_pause, FONT_THIRTY_SIZE)
+        btn_leave_hub.draw(320, 350, BTN_LEAVE_TEXT, start_game, FONT_THIRTY_SIZE, id=SIZE)
 
         if keys[pygame.K_RETURN]:
             paused = False
 
         pygame.display.update()
-        fps_clock.tick(15)
+        fps_clock.tick(FPS_FIFTEEN)
 
 
 def create_obst_group(lev_id):
@@ -146,7 +145,6 @@ def create_obst_group(lev_id):
 def get_traces_arr(loc_walls_gr, res):
     for wall in loc_walls_gr:
         res.append(TraceObstacle(*wall.get_trace_inf()))
-
         for i in range(len(res) - 1, -1, -1):
             if res[i].color_rgb == DELETE_WALL_TRACE_COLOR:
                 res.pop(i)
@@ -177,10 +175,10 @@ def draw_traces_obstacles(flag, traces):
 
 
 def game_cycle(l_id):
-    sound_effects(f'Quotes/quote{l_id}.ogg', True)
-    sound('1679007940657971.ogg', select_table('settings', 'music')[0][0])
-    sound(select_one_with_aspect('Levels', 'id', l_id, 'music_level')[0],
-          select_table('settings', 'music')[0][0])
+    sound_effects(f'{SAME_LINK_FOR_QUOTES}{l_id}{FORMAT_OGG}', select_table(SETTINGS, VOICE)[0][0])
+    sound(MENU_MUSIC, select_table(SETTINGS, MUSIC)[0][0])
+    sound(select_one_with_aspect(LEVELS, ID, l_id, MUSIC_LEVEL)[0],
+          select_table(SETTINGS, MUSIC)[0][0])
     all_circles.add(red_circle, blue_circle)
     all_circles.add(red_circle, blue_circle)
     game = True
@@ -199,23 +197,23 @@ def game_cycle(l_id):
         press_key(red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
 
         if any([red_circle.check_collision(screen, walls_group), blue_circle.check_collision(screen, walls_group)]):
-            sound_effects('Samples/3816133910831170.ogg',
-                          select_table('settings', 'sound_effects')[0][0])
+            sound_effects(SOUND_COLLUSION,
+                          select_table(SETTINGS, SOUND_EFFECTS)[0][0])
             return game_over(walls_group, l_id, red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
         draw_pause()
-        print_text(screen, f'Dodged: {get_dodged(walls_group)}', 10, 10, 20)
-        print_text(screen, f'Банк: {bank_amount} монет', 10, 30, 20)
+        print_text(screen, f'{DODGED_MESS} {get_dodged(walls_group)}', 10, 10, FONT_TWENTY_SIZE)
+        print_text(screen, f'{BANK_MESSAGE} {bank_amount} {COIN_MESSAGE}', 10, 30, FONT_TWENTY_SIZE)
         print_level_number(screen, l_id)
 
         draw_gray_circle()
-        draw_traces_for_circles(select_table('settings', 'effects')[0][0], circle_movement.traces)
-        draw_traces_obstacles(select_table('settings', 'effects')[0][0], traces_wall)
+        draw_traces_for_circles(select_table(SETTINGS, EFFECTS)[0][0], circle_movement.traces)
+        draw_traces_obstacles(select_table(SETTINGS, EFFECTS)[0][0], traces_wall)
         walls_group.update()
         loc_walls_group.draw(screen)
         all_circles.draw(screen)
 
         pygame.display.update()
-        fps_clock.tick(FPS)
+        fps_clock.tick(FPS_SIXTY)
         if check_level_complited(walls_group):
             next_level(l_id)
 
@@ -239,11 +237,11 @@ def next_level(level_id):
         coin_group.update()
         screen.fill(BLACK_COLOR)
 
-        print_text(screen, LEVEL_COMPLITED, 150, 270, 40)
-        print_text(screen, f'Вы получаете: {coins_amount} монет', 110, 350, 40)
+        print_text(screen, LEVEL_COMPLITED, 150, 270, FONT_FORTY_SIZE)
+        print_text(screen, f'{BANK_MESSAGE} {coins_amount} {COIN_MESSAGE}', 110, 350, FONT_FORTY_SIZE)
         draw_gray_circle()
         coin_group.draw(screen)
-        draw_traces_for_circles(select_table('settings', 'effects')[0][0], circle_movement.traces)
+        draw_traces_for_circles(select_table(SETTINGS, EFFECTS)[0][0], circle_movement.traces)
         all_circles.draw(screen)
 
         if counter >= 250:
@@ -252,7 +250,7 @@ def next_level(level_id):
             game_cycle(ALL_LEVELS[ALL_LEVELS.index(level_id) + 1])
 
         pygame.display.update()
-        fps_clock.tick(FPS)
+        fps_clock.tick(FPS_SIXTY)
         counter += 1
 
 

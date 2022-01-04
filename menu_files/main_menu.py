@@ -5,5 +5,5 @@ from parametres import *
 
 class MenuMainPage(MenuPage):
     def render_extra(self, screen):
-        print_text(screen, 'GLADE', 150, 50, font_color=WHITE_COLOR, font_type='font/DroidSansFallback.ttf',
-                   font_size=120)
+        print_text(screen, TITLE, 150, 50, font_color=WHITE_COLOR, font_type=FONT_DROID,
+                   font_size=FONT_SIZE_ONE_H_TWENTY)
