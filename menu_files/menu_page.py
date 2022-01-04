@@ -64,3 +64,6 @@ class MenuPage:
             if item.active and item.onclick is not None:
                 item.onclick()
                 return
+
+    def extra_event_handler(self, event):
+        pass

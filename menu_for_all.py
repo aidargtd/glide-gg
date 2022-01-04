@@ -112,10 +112,8 @@ class Menu():
                     sound_effects(SOUND_CLICK,
                                   select_table(SETTINGS, SOUND_EFFECTS)[0][0])
                     self.menu.click(*event.pos)
-                BeforeInfinityLevel.player_name_input.handle_event(event)
-            BeforeInfinityLevel.player_name_input.update()
+                self.menu.extra_event_handler(event)
             self.check_on_music
             self.menu.render()
-            BeforeInfinityLevel.player_name_input.draw(self.screen)
             pygame.display.flip()
             pygame.display.update()

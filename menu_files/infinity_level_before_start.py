@@ -22,3 +22,8 @@ class BeforeInfinityLevel(MenuPage):
 
         print_text(screen, MESSAGE_BEFORE_START_GAME, 20, 130, FONT_FORTY_SIZE, DEEP_GRAY,
                    font_type=FONT_ROB_THIN)
+        self.player_name_input.update()
+        self.player_name_input.draw(screen)
+
+    def extra_event_handler(self, event):
+        self.player_name_input.handle_event(event)

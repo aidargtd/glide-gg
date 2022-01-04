@@ -1,5 +1,5 @@
 import pygame
-import pyttsx3
+# import pyttsx3
 from deep_translator import GoogleTranslator
 import requests
 from gtts import gTTS
