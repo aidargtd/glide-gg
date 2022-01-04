@@ -9,7 +9,7 @@ pg.init()
 
 
 class BeforeInfinityLevel(MenuPage):
-    player_name_input = InputBox(100, 100, 140, 32)
+    player_name_input = InputBox(20, 200, 140, 35)
 
     def render_extra(self, screen):
         x = 10
