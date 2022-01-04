@@ -49,7 +49,7 @@ MOUSE_PNG = 'mouse.png'
 PNG = '.png'
 
 # FOR BACKGROUND
-KOSMO_BGD = 'bg_kosmo/kosmo'
+KOSMO_BGD = 'Pictures/bg_kosmo/kosmo'
 FIRST_FRAME = 1
 LAST_FRAME = 40
 
