@@ -8,6 +8,7 @@ from menu_for_all import *
 from mouse_cursor import *
 from load_music import *
 from cut_sheet import *
+from main import start_game
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
@@ -23,7 +24,6 @@ mouse = Mouse()
 all_sprites.add(mouse)
 scores = 0
 paused = True
-
 
 red_circle = circle_movement.Circles(
     RED_CIRCLE_IMG, RED_CIRCLE_START_ANGLE, RED_CIRCLE_START_X, RED_CIRCLE_START_Y, RED)

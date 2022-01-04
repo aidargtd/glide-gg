@@ -1,7 +1,7 @@
 from menu_files.menu_page import MenuPage
 from general_functions import *
 from Button import Button
-from GlideGame import game_cycle
+from gaming_cycle import game_cycle
 from load_music import *
 
 """

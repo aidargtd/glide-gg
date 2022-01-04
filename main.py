@@ -1,4 +1,5 @@
 from menu_for_all import *
+from parametres import *
 
 
 def start_game(screen_size=SIZE):
