@@ -6,6 +6,8 @@ from load_music import *
 
 img_counter = 0
 
+import pygame as pg
+
 
 class MenuPage:
     def __init__(self, screen) -> None:

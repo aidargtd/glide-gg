@@ -7,6 +7,7 @@ from menu_files.menu_sound_settings import MenuSoundPage
 from menu_files.menu_levels import MenuLevelsPage
 from menu_files.main_menu import MenuMainPage
 from menu_files.menu_next_page_levels import MenuNextLevelsPage
+from menu_files.infinity_level_before_start import *
 from parametres import *
 from load_music import *
 from Button import Button
@@ -43,11 +44,12 @@ class Menu():
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.main_menu)
 
     def infinity_game(self):
-        pass
+        self.menu = BeforeInfinityLevel(self.screen)
+        self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.plots_menu)
 
     def open_plots_levels(self):
         self.menu = MenuLevelsPage(self.screen)
-        self.menu.add_item(BTN_BACK_TEXT, (490, 740), self.main_menu)
+        self.menu.add_item(BTN_BACK_TEXT, (490, 740), self.plots_menu)
         self.menu.add_item(BTN_NEXT_PAGE_TEXT, (270, 640), self.open_next_page_levels, color=DEEP_GRAY)
 
     def open_next_page_levels(self):
@@ -110,8 +112,10 @@ class Menu():
                     sound_effects(SOUND_CLICK,
                                   select_table(SETTINGS, SOUND_EFFECTS)[0][0])
                     self.menu.click(*event.pos)
-
+                BeforeInfinityLevel.player_name_input.handle_event(event)
+            BeforeInfinityLevel.player_name_input.update()
             self.check_on_music
             self.menu.render()
+            BeforeInfinityLevel.player_name_input.draw(self.screen)
             pygame.display.flip()
             pygame.display.update()

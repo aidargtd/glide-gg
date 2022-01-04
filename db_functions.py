@@ -44,6 +44,11 @@ def upd_settings_voice(value):
     con.commit()
 
 
+def select_max_elem(field):
+    value = f"""SELECT MAX({field}) FROM Infinity_level_scores"""
+    return cur.execute(value).fetchone()
+
+
 def update_aspect(table_name, field, value_field, parametr, value_parametr):
     value = f'''UPDATE {table_name} SET {field}=? WHERE {parametr} = ?'''
     cur.execute(value, (value_field, value_parametr,))

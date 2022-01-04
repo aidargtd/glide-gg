@@ -209,6 +209,9 @@ MUSIC_LEVEL = 'music_level'
 VOICE = 'voice'
 SOUND_EFFECTS = 'sound_effects'
 PICTURES = 'pictures'
+INF_LEVELS = 'Infinity_level_scores'
+SCORE = 'score'
+NAME_PLAYER = 'name_player'
 
 TABLES = {
     IMAGES: [ID,
@@ -284,6 +287,8 @@ ITEM_SHOP_TITLE = 'Магазин скинов'
 MUSIC_SETTINGS = 'музыка - '
 VOICE_SETTINGS = 'речь - '
 SOUND_EFF_SETTINGS = 'звуковые эффекты - '
+MESSAGE_BEFORE_START_GAME = f'Введите свое имя, чтобы начать игру'
+TOP_PLAYER = 'Топ игрок(результат): '
 # BUTTONS SIZE
 BTN_RESUME_X = 150
 BTN_RESUME_Y = 50
@@ -319,3 +324,5 @@ BTN_SIXTH_LEVEL = 'VI'
 PADDING_DIST = 20
 BORDER_WIDTH = 4
 BORDER_LENGTH = 8
+
+# CONSTS FOR INPUT PLAYER NAME
