@@ -31,6 +31,7 @@ COL_STEP_WALL_TRACES = 15
 # NAMES OF IMAGES
 RED_CIRCLE_IMG = 'red_circle.png'
 BLUE_CIRCLE_IMG = 'blue_circle.png'
+COINS_SHEET = "animation-coins.png"
 MENU_IMG = "menu.png"
 
 # CONSTS FOR SCREEN
@@ -116,6 +117,7 @@ ZERO_FRAMES = 0
 STEP_FRAME = 1
 
 # VALUES FOR DATABASE
+USERS = 'Users'
 IMAGES = 'Images'
 LEVELS = 'Levels'
 LF_DOWN_OBSTACLES = 'LfDownObstacles'
@@ -147,11 +149,16 @@ SPEED_STEP_SIDE = 'speed_step_side'
 ANGLE_STEP = 'angle_step'
 ANGLE_MOVE = 'angle_move'
 
+MUS_LEVEL = 'music level'
+SPEED = 'speed'
+COINS = 'coins'
+COINS_AMOUNT = 'coins_amount'
+
 TABLES = {
     IMAGES: [ID,
              NAME],
-
-    LEVELS: [ID],
+    USERS: [ID, COINS_AMOUNT],
+    LEVELS: [ID, MUS_LEVEL, SPEED, COINS],
 
     LF_DOWN_OBSTACLES: [ID_LEVEL, ID_IMAGE,
                         X_POS, Y_POS,
@@ -176,6 +183,7 @@ TABLES = {
                       X_SPEED, Y_SPEED,
                       ANGLE_STEP,
                       ANGLE_MOVE]
+
 }
 
 # INDEXES FOR GET LEVEL'S OBSTACLES
@@ -183,8 +191,19 @@ INX_ID_LEVEL = 0
 HIDDEN_OBSTACLE = True
 INX_IMG_ID = 1
 
-
 # INDEXES FOR CREATING WALLS
 INX_INVIZ = 0
 INX_INFO_ARRAY = 1
 BASE_STATIC_ANGLE = 0
+
+# LEVELS
+ZERO_COINS = 0
+
+ALL_LEVELS = []
+for i in range(1, 7):
+    for j in range(1, 7):
+        ALL_LEVELS.append(int(str(i) + str(j)))
+
+
+# MESSAGES
+LEVEL_COMPLITED = 'Уровень пройден!'

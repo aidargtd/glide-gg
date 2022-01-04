@@ -188,7 +188,9 @@ class TraceObstacle:
         for i in range(len(self.color_rgb)):
             self.color_rgb[i] = self.color_rgb[i] - self.step
         image = pygame.Surface([self.width, self.height])
-        image.fill((self.color_rgb[0], self.color_rgb[1], self.color_rgb[2]))
+        cols = (self.color_rgb[0], self.color_rgb[1], self.color_rgb[2])
+        if all(list(map(lambda x: x >= 0, list(cols)))):
+            image.fill(cols)
         image = pygame.transform.rotozoom(image, self.angle, 1)
         image = image.convert()
         image.set_colorkey(BLACK_COLOR)

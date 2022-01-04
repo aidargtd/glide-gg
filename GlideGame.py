@@ -7,6 +7,7 @@ from walls import *
 from menu import *
 from mouse_cursor import *
 from load_music import *
+from cut_sheet import *
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
@@ -182,6 +183,8 @@ def game_cycle(l_id):
     game = True
     walls_group = create_obst_group(l_id)
     traces_wall = []
+    bank_amount = get_bank(l_id)
+
     while game:
         loc_walls_group = get_loc_walls_gr(walls_group)
         traces_wall = get_traces_arr(loc_walls_group, traces_wall)
@@ -197,6 +200,8 @@ def game_cycle(l_id):
             return game_over(walls_group, l_id, red_circle, blue_circle)
         draw_pause()
         print_text(screen, f'Dodged: {get_dodged(walls_group)}', 10, 10, 20)
+        print_text(screen, f'Банк: {bank_amount} монет', 10, 30, 20)
+        print_level_number(screen, l_id)
 
         draw_gray_circle()
         draw_traces_for_circles(select_table('settings', 'effects')[0][0], circle_movement.traces)
@@ -207,7 +212,47 @@ def game_cycle(l_id):
 
         pygame.display.update()
         fps_clock.tick(FPS)
+        if check_level_complited(walls_group):
+            next_level(l_id)
 
+
+def next_level(level_id):
+    game = True
+
+    coins_amount = get_bank(level_id)
+    nullify_coins(level_id)
+    pay_coins(coins_amount)
+
+    coin_group = pygame.sprite.Group()
+    coin = AnimatedSprite(load_image(COINS_SHEET), 10, 1, 437, 338)
+    coin.add(coin_group)
+
+    counter = 0
+
+    while game:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game = False
+                quit()
+        press_key(red_circle, blue_circle)
+        coin_group.update()
+        screen.fill(BLACK_COLOR)
+
+        print_text(screen, LEVEL_COMPLITED, 150, 270, 40)
+        print_text(screen, f'Вы получаете: {coins_amount} монет', 110, 350, 40)
+        draw_gray_circle()
+        coin_group.draw(screen)
+        draw_traces_for_circles(select_table('settings', 'effects')[0][0], circle_movement.traces)
+        all_circles.draw(screen)
+
+        if counter >= 250:
+            screen.fill(BLACK_COLOR)
+        if counter == 300:
+            game_cycle(ALL_LEVELS[ALL_LEVELS.index(level_id) + 1])
+
+        pygame.display.update()
+        fps_clock.tick(FPS)
+        counter += 1
 
 if __name__ == '__main__':
     start_game(SIZE)

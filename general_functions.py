@@ -6,7 +6,6 @@ from pygame.font import match_font
 from db_functions import *
 from parametres import *
 
-
 fps_clock = pygame.time.Clock()
 
 pygame.init()
@@ -71,3 +70,30 @@ def get_dodged(walls_group):
         if wall.rect.y >= DODGE_Y_CORD:
             counter += 1
     return counter
+
+
+def check_level_complited(walls_group):
+    f = True
+    for wall in walls_group:
+        if wall.rect.y < 1000:
+            f = False
+    return f
+
+
+def get_bank(l_id):
+    coins_amount = select_one_with_aspect(LEVELS, ID, l_id, COINS)[0]
+    return coins_amount
+
+
+def nullify_coins(l_id):
+    update_aspect(LEVELS, COINS, ZERO_COINS, ID, l_id)
+
+
+def pay_coins(coins, user_id=1):
+    cash = select_one_with_aspect(USERS,ID, user_id, COINS_AMOUNT)[0]
+    update_aspect(USERS, COINS_AMOUNT, coins + cash, ID, user_id)
+
+
+def print_level_number(sc, l_id):
+    print_text(sc, f'Сюжет:  {l_id // 10}', 490, 10, 20)
+    print_text(sc, f'Уровень: {l_id % 10}', 490, 25, 20)
