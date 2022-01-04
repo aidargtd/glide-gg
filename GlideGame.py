@@ -237,7 +237,7 @@ def next_level(level_id):
             if event.type == pygame.QUIT:
                 game = False
                 quit()
-        press_key(red_circle, blue_circle)
+        press_key(red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
         coin_group.update()
         screen.fill(BLACK_COLOR)
 
