@@ -1,6 +1,9 @@
 from general_functions import *
 from pygame.draw import lines
 from load_music import *
+from load_music import *
+import db_functions
+
 
 class Button:
     def __init__(self, screen, width, height, inactive_col=BLACK_COLOR, active_col=DEEP_GRAY):
@@ -18,7 +21,8 @@ class Button:
         if x < mouse[0] < x + self.width and y < mouse[1] < y + self.height:
             pygame.draw.rect(self.screen, self.active_col, (x, y, self.width, self.height))
             if click[0] == 1:
-                pygame.mixer.Sound.play(sound_click)
+                sound_effects('Samples/zapsplat_multimedia_button_click_005_68777.mp3',
+                              select_table('settings', 'sound_effects')[0][0])
                 pygame.time.delay(300)
                 if action is not None:
                     if action == quit:

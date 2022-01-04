@@ -43,7 +43,7 @@ def upd_settings_val_effects(value):
     con.commit()
 
 
-def update_aspect(table_name, field, value_field, parametr, value_parametr):
-    value = f'''UPDATE {table_name} SET {field}=? WHERE {parametr} = ?'''
-    cur.execute(value, (value_field, value_parametr,))
+def upd_settings_sound_effects(value):
+    cur.execute(
+        """UPDATE settings SET sound_effects=?""", (value,))
     con.commit()

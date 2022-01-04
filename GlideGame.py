@@ -71,10 +71,11 @@ def draw_gray_circle():
                        GRAY_CIRCLE_RADIUS, GRAY_CIRCLE_WIDTH)
 
 
-def game_over(walls_group, l_id, red, blue):
+def game_over(walls_group, l_id, red, blue, speed=None):
     game = True
     traces_wall = []
-    sound_restart.play()
+    sound_effects('Samples/8476647490550829.ogg',
+                  select_table('settings', 'sound_effects')[0][0])
     while game:
         loc_walls_group = get_loc_walls_gr(walls_group)
         traces_wall = get_traces_arr(loc_walls_group, traces_wall)
@@ -89,7 +90,7 @@ def game_over(walls_group, l_id, red, blue):
             w_trace.draw_trace(screen)
         for i in walls_group:
             i.speed_y -= 1.5
-        changing_speed(red, blue, 10, True, RED_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_ANGLE)
+        changing_speed(red, blue, speed, True, RED_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_ANGLE)
         draw_gray_circle()
         walls_group.update()
         all_circles.draw(screen)
@@ -152,14 +153,14 @@ def get_traces_arr(loc_walls_gr, res):
     return res
 
 
-def press_key(red, blue):
+def press_key(red, blue, speed):
     keys = pygame.key.get_pressed()
     if keys[pygame.K_ESCAPE]:
         pause()
     if keys[pygame.K_RIGHT]:
-        changing_speed(red, blue, SPEED_MOVEMENT_TRUE, True)
+        changing_speed(red, blue, speed, True)
     if keys[pygame.K_LEFT]:
-        changing_speed(red, blue, SPEED_MOVEMENT_FALSE, False)
+        changing_speed(red, blue, -speed, False)
 
 
 def draw_traces_for_circles(flag, traces):
@@ -176,8 +177,9 @@ def draw_traces_obstacles(flag, traces):
 
 
 def game_cycle(l_id):
-    sound('Music/1679007940657971.ogg', False)
-    sound(select_one_with_aspect('Levels', 'id', l_id, 'music_level')[0], True)
+    sound('Music/1679007940657971.ogg', select_table('settings', 'music')[0][0])
+    sound(select_one_with_aspect('Levels', 'id', l_id, 'music_level')[0],
+          select_table('settings', 'music')[0][0])
     all_circles.add(red_circle, blue_circle)
     all_circles.add(red_circle, blue_circle)
     game = True
@@ -193,11 +195,12 @@ def game_cycle(l_id):
             if event.type == pygame.QUIT:
                 game = False
                 quit()
-        press_key(red_circle, blue_circle)
+        press_key(red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
 
         if any([red_circle.check_collision(screen, walls_group), blue_circle.check_collision(screen, walls_group)]):
-            pygame.mixer.Sound.play(sound_collision)
-            return game_over(walls_group, l_id, red_circle, blue_circle)
+            sound_effects('Samples/3816133910831170.ogg',
+                          select_table('settings', 'sound_effects')[0][0])
+            return game_over(walls_group, l_id, red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
         draw_pause()
         print_text(screen, f'Dodged: {get_dodged(walls_group)}', 10, 10, 20)
         print_text(screen, f'Банк: {bank_amount} монет', 10, 30, 20)
