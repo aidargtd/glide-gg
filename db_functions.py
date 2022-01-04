@@ -20,17 +20,6 @@ def select_all_with_aspect(table_name, field, field_value, *fields):
     return cur.execute(value, (field_value,)).fetchall()
 
 
-def select_all_with_two_aspects(table_name, field1, field_value1, field2, field_value2, *fields):
-    value = f"""SELECT {', '.join(fields)} FROM {table_name} WHERE {field1}=? AND {field2}=?"""
-    return cur.execute(value, (field_value1, field_value2,)).fetchall()
-
-
-def select_all_with_three_aspects(table_name, field1, field_value1,
-                                  field2, field_value2, field3, field_value3, *fields):
-    value = f"""SELECT {', '.join(fields)} FROM {table_name} WHERE {field1}=? AND {field2}=? AND {field3}=?"""
-    return cur.execute(value, (field_value1, field_value2, field_value3,)).fetchall()
-
-
 def update_settings_value(value):
     cur.execute(
         """UPDATE settings SET music=?""", (value,))
@@ -46,6 +35,12 @@ def upd_settings_val_effects(value):
 def upd_settings_sound_effects(value):
     cur.execute(
         """UPDATE settings SET sound_effects=?""", (value,))
+    con.commit()
+
+
+def upd_settings_voice(value):
+    cur.execute(
+        """UPDATE settings SET voice=?""", (value,))
     con.commit()
 
 

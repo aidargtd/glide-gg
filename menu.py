@@ -24,7 +24,7 @@ class Menu():
         self.menu = None
         self.scroll_y = 0
         # render music
-        sound('Music/1679007940657971.ogg', select_table('settings', 'music')[0][0])
+        sound('1679007940657971.ogg', select_table('settings', 'music')[0][0])
         self.main_menu()
         self.event_loop()
 
@@ -61,10 +61,10 @@ class Menu():
         self.menu = MenuSoundPage(self.screen)
         if select_table('settings', 'music')[0][0]:
             self.menu.add_item('вкл', (110, 100), self.check_on_music, BLUE_TRAIL_COLOR_3)
-            sound('Music/1679007940657971.ogg', True)
+            sound('1679007940657971.ogg', True)
         else:
             self.menu.add_item('выкл', (110, 100), self.check_on_music, RED_TRAIL_COLOR_3)
-            sound('Music/1679007940657971.ogg', False)
+            sound('1679007940657971.ogg', False)
 
         if select_table('settings', 'voice')[0][0]:
             self.menu.add_item('вкл', (80, 200), self.check_on_voice, BLUE_TRAIL_COLOR_3)
@@ -82,7 +82,7 @@ class Menu():
         self.sound_condition()
 
     def check_on_voice(self):
-        update_settings_value(not select_table('settings', 'voice')[0][0])
+        upd_settings_voice(not select_table('settings', 'voice')[0][0])
         self.sound_condition()
 
     def check_on_sounds_eff(self):

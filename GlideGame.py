@@ -178,7 +178,7 @@ def draw_traces_obstacles(flag, traces):
 
 def game_cycle(l_id):
     sound_effects(f'Quotes/quote{l_id}.ogg', True)
-    sound('Music/1679007940657971.ogg', select_table('settings', 'music')[0][0])
+    sound('1679007940657971.ogg', select_table('settings', 'music')[0][0])
     sound(select_one_with_aspect('Levels', 'id', l_id, 'music_level')[0],
           select_table('settings', 'music')[0][0])
     all_circles.add(red_circle, blue_circle)

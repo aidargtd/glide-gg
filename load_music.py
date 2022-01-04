@@ -18,9 +18,8 @@ def quote_to_speech():
     playsound("Music/Quotes/quote38.ogg")
 
 
-
 def sound(name, on):
-    pygame.mixer.music.load(name)
+    pygame.mixer.music.load(f'Music/Music for levels/{name}')
     pygame.mixer.music.set_volume(0.2)
     if on:
         pygame.mixer.music.play(-1)
