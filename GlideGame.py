@@ -241,6 +241,7 @@ def next_level(level_id):
         coin_group.update()
         screen.fill(BLACK_COLOR)
 
+
         print_text(screen, LEVEL_COMPLITED, 150, 270, 40)
         print_text(screen, f'Вы получаете: {coins_amount} монет', 110, 350, 40)
         draw_gray_circle()
