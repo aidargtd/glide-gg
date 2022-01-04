@@ -90,7 +90,7 @@ def nullify_coins(l_id):
 
 
 def pay_coins(coins, user_id=1):
-    cash = select_one_with_aspect(USERS,ID, user_id, COINS_AMOUNT)[0]
+    cash = select_one_with_aspect(USERS, ID, user_id, COINS_AMOUNT)[0]
     update_aspect(USERS, COINS_AMOUNT, coins + cash, ID, user_id)
 
 

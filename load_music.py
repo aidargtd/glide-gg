@@ -2,6 +2,9 @@ import pygame
 import pyttsx3
 from deep_translator import GoogleTranslator
 import requests
+from gtts import gTTS
+
+from playsound import playsound
 
 
 def quote_to_speech():
@@ -9,9 +12,11 @@ def quote_to_speech():
     r = requests.get(url_for_quote)
     quote = r.json()
     text = GoogleTranslator(source='en', target='ru').translate(quote['content'])
-    engine = pyttsx3.init()
-    engine.say(text)
-    engine.runAndWait()
+    language = 'ru'
+    obj = gTTS(text=text, lang=language, slow=False)
+    obj.save("Music/Quotes/quote38.ogg")
+    playsound("Music/Quotes/quote38.ogg")
+
 
 
 def sound(name, on):
@@ -24,11 +29,10 @@ def sound(name, on):
 
 
 def sound_effects(name, on):
-    effect = pygame.mixer.Sound(name)
+    effect = pygame.mixer.Sound(f'Music/{name}')
     effect.set_volume(0.2)
     if on:
         pygame.mixer.Sound.play(effect)
-
 
 # sound_collision = pygame.mixer.Sound('Samples/3816133910831170.ogg')
 # sound_click = pygame.mixer.Sound('Samples/zapsplat_multimedia_button_click_005_68777.mp3')

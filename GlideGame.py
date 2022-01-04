@@ -177,6 +177,7 @@ def draw_traces_obstacles(flag, traces):
 
 
 def game_cycle(l_id):
+    sound_effects(f'Quotes/quote{l_id}.ogg', True)
     sound('Music/1679007940657971.ogg', select_table('settings', 'music')[0][0])
     sound(select_one_with_aspect('Levels', 'id', l_id, 'music_level')[0],
           select_table('settings', 'music')[0][0])
@@ -221,7 +222,6 @@ def game_cycle(l_id):
 
 def next_level(level_id):
     game = True
-
     coins_amount = get_bank(level_id)
     nullify_coins(level_id)
     pay_coins(coins_amount)
@@ -229,9 +229,7 @@ def next_level(level_id):
     coin_group = pygame.sprite.Group()
     coin = AnimatedSprite(load_image(COINS_SHEET), 10, 1, 437, 338)
     coin.add(coin_group)
-
     counter = 0
-
     while game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -240,7 +238,6 @@ def next_level(level_id):
         press_key(red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
         coin_group.update()
         screen.fill(BLACK_COLOR)
-
 
         print_text(screen, LEVEL_COMPLITED, 150, 270, 40)
         print_text(screen, f'Вы получаете: {coins_amount} монет', 110, 350, 40)
@@ -257,6 +254,7 @@ def next_level(level_id):
         pygame.display.update()
         fps_clock.tick(FPS)
         counter += 1
+
 
 if __name__ == '__main__':
     start_game(SIZE)
