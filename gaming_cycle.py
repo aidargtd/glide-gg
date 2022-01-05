@@ -1,4 +1,7 @@
 import pygame
+
+from background.background_center_squares import BackgroundCenterSquares
+from background.whirlpool import Whirlpool
 from parametres import *
 import circle_movement
 from general_functions import *
@@ -170,6 +173,13 @@ def draw_traces_obstacles(flag, traces):
             w_trace.draw_trace(screen)
 
 
+def get_random_background(screen):
+    rand = random.randint(0, 1)
+    if rand == 1:
+        return Whirlpool(screen)
+    return BackgroundCenterSquares(screen, -0.3, 1.02)
+
+
 def game_cycle(l_id):
     sound_effects(f'{SAME_LINK_FOR_QUOTES}{l_id}{FORMAT_OGG}', select_table(SETTINGS, VOICE)[0][0])
     sound(MENU_MUSIC, select_table(SETTINGS, MUSIC)[0][0])
@@ -182,6 +192,8 @@ def game_cycle(l_id):
     traces_wall = []
     bank_amount = get_bank(l_id)
 
+    background = get_random_background(screen)
+
     while game:
         loc_walls_group = get_loc_walls_gr(walls_group)
         traces_wall = get_traces_arr(loc_walls_group, traces_wall)
@@ -192,7 +204,8 @@ def game_cycle(l_id):
                 quit()
         press_key(red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
 
-        if any([red_circle.check_collision(screen, walls_group), blue_circle.check_collision(screen, walls_group)]):
+        if any([red_circle.check_collision(screen, walls_group),
+                blue_circle.check_collision(screen, walls_group)]):
             sound_effects(SOUND_COLLUSION,
                           select_table(SETTINGS, SOUND_EFFECTS)[0][0])
             return game_over(walls_group, l_id, red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
@@ -200,6 +213,8 @@ def game_cycle(l_id):
         print_text(screen, f'{DODGED_MESS} {get_dodged(walls_group)}', 10, 10, FONT_TWENTY_SIZE)
         print_text(screen, f'{BANK_MESSAGE} {bank_amount} {COIN_MESSAGE}', 10, 30, FONT_TWENTY_SIZE)
         print_level_number(screen, l_id)
+
+        background.render()
 
         draw_gray_circle()
         draw_traces_for_circles(select_table(SETTINGS, EFFECTS)[0][0], circle_movement.traces)
@@ -234,7 +249,8 @@ def next_level(level_id):
         screen.fill(BLACK_COLOR)
 
         print_text(screen, LEVEL_COMPLITED, 150, 270, FONT_FORTY_SIZE)
-        print_text(screen, f'{BANK_MESSAGE} {coins_amount} {COIN_MESSAGE}', 110, 350, FONT_FORTY_SIZE)
+        print_text(screen, f'{BANK_MESSAGE} {coins_amount} {COIN_MESSAGE}', 110, 350,
+                   FONT_FORTY_SIZE)
         draw_gray_circle()
         coin_group.draw(screen)
         draw_traces_for_circles(select_table(SETTINGS, EFFECTS)[0][0], circle_movement.traces)
