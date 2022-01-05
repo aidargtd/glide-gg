@@ -40,8 +40,8 @@ COL_STEP_WALL_TRACES = 15
 
 # NAMES OF IMAGES
 ICON_IMG = 'icon.jpg'
-RED_CIRCLE_IMG = 'red_circle.png'
-BLUE_CIRCLE_IMG = 'blue_circle.png'
+RED_CIRCLE_IMG = 'circles_skins/red_circle.png'
+BLUE_CIRCLE_IMG = 'circles_skins/blue_circle.png'
 COINS_SHEET = "animation-coins.png"
 MENU_IMG = "menu.png"
 MOUSE_PNG = 'mouse.png'
@@ -208,7 +208,7 @@ MUSIC = 'music'
 MUSIC_LEVEL = 'music_level'
 VOICE = 'voice'
 SOUND_EFFECTS = 'sound_effects'
-PICTURES = 'pictures'
+PICTURES = 'pictures/'
 INF_LEVELS = 'Infinity_level_scores'
 SCORE = 'score'
 NAME_PLAYER = 'name_player'
@@ -311,6 +311,7 @@ BTN_PLAY_TEXT = 'играть'
 BTN_ITEM_SHOP_TEXT = 'магазин'
 BTN_RACE_TEXT = 'гонка'
 BTN_PLOT_TEXT = 'сюжет'
+BTN_START_RACE = 'начать гонку'
 
 # BUTTONS LEVELS
 BTN_FIRST_LEVEL = ' I '

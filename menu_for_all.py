@@ -36,15 +36,16 @@ class Menu():
     def plots_menu(self):
         self.menu = MenuPlotsPage(self.screen)
         self.menu.add_item(BTN_PLOT_TEXT, (50, 100), self.open_plots_levels)
-        self.menu.add_item(BTN_RACE_TEXT, (50, 200), self.infinity_game)
+        self.menu.add_item(BTN_RACE_TEXT, (50, 200), self.start_infinity_game)
         self.menu.add_item(BTN_BACK_TEXT, (50, 300), self.main_menu)
 
     def shop_menu(self):
         self.menu = MenuShopPage(self.screen)
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.main_menu)
 
-    def infinity_game(self):
+    def start_infinity_game(self):
         self.menu = BeforeInfinityLevel(self.screen)
+        self.menu.add_item(BTN_START_RACE, (30, 270), None, font_size=40, color=DEEP_GRAY)
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.plots_menu)
 
     def open_plots_levels(self):

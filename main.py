@@ -1,9 +1,9 @@
-from menu_for_all import *
+import menu_for_all
 from parametres import *
 
 
 def start_game(screen_size=SIZE):
-    Menu(screen_size)
+    menu_for_all.Menu(screen_size)
 
 
 if __name__ == '__main__':

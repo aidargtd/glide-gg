@@ -5,13 +5,13 @@ from background.whirlpool import Whirlpool
 from parametres import *
 import circle_movement
 from general_functions import *
-from Button import *
+from Button import Button
 from walls import *
-from menu_for_all import *
-from mouse_cursor import *
+import menu_for_all
+from mouse_cursor import Mouse
 from load_music import *
 from cut_sheet import *
-from main import start_game
+import main
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
@@ -26,6 +26,7 @@ all_sprites = pygame.sprite.Group()
 mouse = Mouse()
 all_sprites.add(mouse)
 scores = 0
+counter_quotes = 0
 paused = True
 
 red_circle = circle_movement.Circles(
@@ -113,7 +114,7 @@ def pause():
         print_text(screen, message=PAUSE_ACTIONS, x=40, y=300, font_type=FONT_DROID)
         keys = pygame.key.get_pressed()
         btn_resume_game.draw(325, 290, BTN_CONTINUE_TEXT, off_pause, FONT_THIRTY_SIZE)
-        btn_leave_hub.draw(320, 350, BTN_LEAVE_TEXT, start_game, FONT_THIRTY_SIZE, id=SIZE)
+        btn_leave_hub.draw(320, 350, BTN_LEAVE_TEXT, menu_for_all.Menu, FONT_THIRTY_SIZE, id=SIZE)
 
         if keys[pygame.K_RETURN]:
             paused = False
@@ -181,7 +182,10 @@ def get_random_background(screen):
 
 
 def game_cycle(l_id):
-    sound_effects(f'{SAME_LINK_FOR_QUOTES}{l_id}{FORMAT_OGG}', select_table(SETTINGS, VOICE)[0][0])
+    global counter_quotes
+    if counter_quotes % 10 == 0:
+        sound_effects(f'{SAME_LINK_FOR_QUOTES}{l_id}{FORMAT_OGG}', select_table(SETTINGS, VOICE)[0][0])
+    counter_quotes += 1
     sound(MENU_MUSIC, select_table(SETTINGS, MUSIC)[0][0])
     sound(select_one_with_aspect(LEVELS, ID, l_id, MUSIC_LEVEL)[0],
           select_table(SETTINGS, MUSIC)[0][0])
@@ -226,6 +230,7 @@ def game_cycle(l_id):
         pygame.display.update()
         fps_clock.tick(FPS_SIXTY)
         if check_level_complited(walls_group):
+            counter_quotes = 0
             next_level(l_id)
 
 
