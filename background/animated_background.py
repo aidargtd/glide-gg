@@ -1,6 +1,7 @@
 from abc import abstractmethod
 import pygame
 
+
 class AnimatedBackground:
     def __init__(self, screen):
         self.screen = screen

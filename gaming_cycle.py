@@ -101,6 +101,10 @@ def changing_speed(red, blue, speed, flag, angle_stop_red=None, angle_stop_blue=
             blue.update(abs(speed))
 
 
+def call_menu():
+    return menu_for_all.Menu(SIZE)
+
+
 def pause():
     global paused
     btn_resume_game = Button(screen, BTN_RESUME_X, BTN_RESUME_Y)
@@ -114,7 +118,7 @@ def pause():
         print_text(screen, message=PAUSE_ACTIONS, x=40, y=300, font_type=FONT_DROID)
         keys = pygame.key.get_pressed()
         btn_resume_game.draw(325, 290, BTN_CONTINUE_TEXT, off_pause, FONT_THIRTY_SIZE)
-        btn_leave_hub.draw(320, 350, BTN_LEAVE_TEXT, menu_for_all.Menu, FONT_THIRTY_SIZE, id=SIZE)
+        btn_leave_hub.draw(320, 350, BTN_LEAVE_TEXT, call_menu, FONT_THIRTY_SIZE)
 
         if keys[pygame.K_RETURN]:
             paused = False
@@ -264,6 +268,8 @@ def next_level(level_id):
         if counter >= 250:
             screen.fill(BLACK_COLOR)
         if counter == 300:
+            if level_id == 66:
+                call_menu()
             game_cycle(ALL_LEVELS[ALL_LEVELS.index(level_id) + 1])
 
         pygame.display.update()
