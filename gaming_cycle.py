@@ -12,6 +12,7 @@ from mouse_cursor import Mouse
 from load_music import *
 from cut_sheet import *
 import main
+import gif
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
@@ -27,6 +28,7 @@ mouse = Mouse()
 all_sprites.add(mouse)
 scores = 0
 counter_quotes = 0
+gifFrameList = gif.loadGIF(f"gifs/top_gif_{1}.gif")
 paused = True
 
 red_circle = circle_movement.Circles(
@@ -65,12 +67,13 @@ def game_over(walls_group, l_id, red, blue, speed=None):
                 quit()
         if max(list(map(lambda x: x.rect.y, walls_group))) < -350:
             game = False
-        draw_pause()
         for w_trace in traces_wall:
             w_trace.draw_trace(screen)
         for i in walls_group:
             i.speed_y -= 1.5
         changing_speed(red, blue, speed, True, RED_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_ANGLE)
+        gif_background(screen)
+        # draw_pause()
         draw_gray_circle()
         walls_group.update()
         all_circles.draw(screen)
@@ -185,6 +188,18 @@ def get_random_background(screen):
     return BackgroundCenterSquares(screen, -0.3, 1.02)
 
 
+def gif_background(scr):
+    rect = gifFrameList[gif.currentFrame].get_rect()
+    scr.blit(gifFrameList[gif.currentFrame], rect)
+    gif.currentFrame = (gif.currentFrame + 1) % len(gifFrameList)
+
+
+def update_gif():
+    global gifFrameList
+    num = random.randint(1, 7)
+    gifFrameList = gif.loadGIF(f"gifs/top_gif_{num}.gif")
+
+
 def game_cycle(l_id):
     global counter_quotes
     if counter_quotes % 10 == 0:
@@ -200,8 +215,7 @@ def game_cycle(l_id):
     traces_wall = []
     bank_amount = get_bank(l_id)
 
-    background = get_random_background(screen)
-
+    # background = get_random_background(screen)
     while game:
         loc_walls_group = get_loc_walls_gr(walls_group)
         traces_wall = get_traces_arr(loc_walls_group, traces_wall)
@@ -210,6 +224,7 @@ def game_cycle(l_id):
             if event.type == pygame.QUIT:
                 game = False
                 quit()
+        gif_background(screen)
         press_key(red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
 
         if any([red_circle.check_collision(screen, walls_group),
@@ -217,13 +232,13 @@ def game_cycle(l_id):
             sound_effects(SOUND_COLLUSION,
                           select_table(SETTINGS, SOUND_EFFECTS)[0][0])
             return game_over(walls_group, l_id, red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
-        draw_pause()
+
+        # draw_pause()
         print_text(screen, f'{DODGED_MESS} {get_dodged(walls_group)}', 10, 10, FONT_TWENTY_SIZE)
         print_text(screen, f'{BANK_MESSAGE} {bank_amount} {COIN_MESSAGE}', 10, 30, FONT_TWENTY_SIZE)
         print_level_number(screen, l_id)
 
-        background.render()
-
+        # background.render()
         draw_gray_circle()
         draw_traces_for_circles(select_table(SETTINGS, EFFECTS)[0][0], circle_movement.traces)
         draw_traces_obstacles(select_table(SETTINGS, EFFECTS)[0][0], traces_wall)
@@ -248,14 +263,15 @@ def next_level(level_id):
     coin = AnimatedSprite(load_image(COINS_SHEET), 10, 1, 437, 338)
     coin.add(coin_group)
     counter = 0
+    update_gif()
     while game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game = False
                 quit()
+        gif_background(screen)
         press_key(red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
         coin_group.update()
-        screen.fill(BLACK_COLOR)
 
         print_text(screen, LEVEL_COMPLITED, 150, 270, FONT_FORTY_SIZE)
         print_text(screen, f'{BANK_MESSAGE} {coins_amount} {COIN_MESSAGE}', 110, 350,
@@ -266,7 +282,7 @@ def next_level(level_id):
         all_circles.draw(screen)
 
         if counter >= 250:
-            screen.fill(BLACK_COLOR)
+            gif_background(screen)
         if counter == 300:
             if level_id == 66:
                 call_menu()
