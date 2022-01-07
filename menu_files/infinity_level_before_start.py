@@ -17,10 +17,10 @@ class BeforeInfinityLevel(MenuPage):
         max_score = select_max_elem('score', )[0]
         name_player = \
             select_one_with_aspect(INF_LEVELS, SCORE, select_max_elem(SCORE, )[0], NAME_PLAYER)[0]
-        print_text(screen, f'{name_player}  {max_score}', 350, 50, FONT_FORTY_SIZE, DEEP_GRAY,
+        print_text(screen, f'{name_player}  {max_score}', 350, 50, FONT_FORTY_SIZE, DEEP_GRAY_COLOR_1,
                    font_type=FONT_ROB_THIN)
 
-        print_text(screen, MESSAGE_BEFORE_START_GAME, 20, 130, FONT_FORTY_SIZE, DEEP_GRAY,
+        print_text(screen, MESSAGE_BEFORE_START_GAME, 20, 130, FONT_FORTY_SIZE, DEEP_GRAY_COLOR_1,
                    font_type=FONT_ROB_THIN)
         self.player_name_input.update()
         self.player_name_input.draw(screen)

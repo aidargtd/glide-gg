@@ -1,7 +1,4 @@
 import pygame
-
-from background.background_center_squares import BackgroundCenterSquares
-from background.whirlpool import Whirlpool
 from parametres import *
 import circle_movement
 from general_functions import *
@@ -43,13 +40,12 @@ def off_pause():
 
 
 def draw_pause():
-    screen.fill(BLACK_COLOR)
-    btn_pause = Button(screen, 30, 30)
+    btn_pause = Button(screen, 30, 30, inactive_col=None)
     btn_pause.draw(560, 0, PAUSE_BTN_TEXT, pause, 30)
 
 
 def draw_gray_circle():
-    pygame.draw.circle(screen, DEEP_GRAY, GRAY_CIRCLE_POSITION,
+    pygame.draw.circle(screen, DEEP_GRAY_COLOR_1, GRAY_CIRCLE_POSITION,
                        GRAY_CIRCLE_RADIUS, GRAY_CIRCLE_WIDTH)
 
 
@@ -73,7 +69,7 @@ def game_over(walls_group, l_id, red, blue, speed=None):
             i.speed_y -= 1.5
         changing_speed(red, blue, speed, True, RED_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_ANGLE)
         gif_background(screen)
-        # draw_pause()
+        draw_pause()
         draw_gray_circle()
         walls_group.update()
         all_circles.draw(screen)
@@ -181,13 +177,6 @@ def draw_traces_obstacles(flag, traces):
             w_trace.draw_trace(screen)
 
 
-def get_random_background(screen):
-    rand = random.randint(0, 1)
-    if rand == 1:
-        return Whirlpool(screen)
-    return BackgroundCenterSquares(screen, -0.3, 1.02)
-
-
 def gif_background(scr):
     rect = gifFrameList[gif.currentFrame].get_rect()
     scr.blit(gifFrameList[gif.currentFrame], rect)
@@ -215,7 +204,6 @@ def game_cycle(l_id):
     traces_wall = []
     bank_amount = get_bank(l_id)
 
-    # background = get_random_background(screen)
     while game:
         loc_walls_group = get_loc_walls_gr(walls_group)
         traces_wall = get_traces_arr(loc_walls_group, traces_wall)
@@ -233,12 +221,11 @@ def game_cycle(l_id):
                           select_table(SETTINGS, SOUND_EFFECTS)[0][0])
             return game_over(walls_group, l_id, red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
 
-        # draw_pause()
+        draw_pause()
         print_text(screen, f'{DODGED_MESS} {get_dodged(walls_group)}', 10, 10, FONT_TWENTY_SIZE)
         print_text(screen, f'{BANK_MESSAGE} {bank_amount} {COIN_MESSAGE}', 10, 30, FONT_TWENTY_SIZE)
         print_level_number(screen, l_id)
 
-        # background.render()
         draw_gray_circle()
         draw_traces_for_circles(select_table(SETTINGS, EFFECTS)[0][0], circle_movement.traces)
         draw_traces_obstacles(select_table(SETTINGS, EFFECTS)[0][0], traces_wall)
@@ -250,6 +237,7 @@ def game_cycle(l_id):
         fps_clock.tick(FPS_SIXTY)
         if check_level_complited(walls_group):
             counter_quotes = 0
+            gif.currentFrame = 0
             next_level(l_id)
 
 
@@ -270,6 +258,7 @@ def next_level(level_id):
                 game = False
                 quit()
         gif_background(screen)
+        draw_pause()
         press_key(red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
         coin_group.update()
 

@@ -49,13 +49,13 @@ class Menu():
 
     def start_infinity_game(self):
         self.menu = BeforeInfinityLevel(self.screen)
-        self.menu.add_item(BTN_START_RACE, (30, 270), None, font_size=40, color=DEEP_GRAY)
+        self.menu.add_item(BTN_START_RACE, (30, 270), None, font_size=40, color=DEEP_GRAY_COLOR_1)
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.plots_menu)
 
     def open_plots_levels(self):
         self.menu = MenuLevelsPage(self.screen)
         self.menu.add_item(BTN_BACK_TEXT, (490, 740), self.plots_menu)
-        self.menu.add_item(BTN_NEXT_PAGE_TEXT, (270, 640), self.open_next_page_levels, color=DEEP_GRAY)
+        self.menu.add_item(BTN_NEXT_PAGE_TEXT, (270, 640), self.open_next_page_levels, color=DEEP_GRAY_COLOR_1)
 
     def open_next_page_levels(self):
         self.menu = MenuNextLevelsPage(self.screen)
@@ -99,7 +99,7 @@ class Menu():
 
     def settings_menu(self):
         self.menu = MenuSettingsPage(self.screen)
-        self.menu.add_item(BTN_SOUND_TEXT, (50, 450), self.sound_condition, color=DEEP_GRAY, font_size=50)
+        self.menu.add_item(BTN_SOUND_TEXT, (50, 450), self.sound_condition, color=DEEP_GRAY_COLOR_1, font_size=50)
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.main_menu)
         if select_table(SETTINGS, EFFECTS)[0][0]:
             self.menu.add_item(BTN_ON_TEXT, (50, 370), self.check_on_eff, BLUE_TRAIL_COLOR_3)

@@ -11,7 +11,7 @@ from load_music import *
 
 class MenuNextLevelsPage(MenuPage):
     def render_extra(self, screen):
-        print_text(screen, HOPE_TITLE, 50, 100, FONT_FORTY_SIZE, font_type=FONT_ROB_THIN, font_color=DEEP_GRAY)
+        print_text(screen, HOPE_TITLE, 50, 100, FONT_FORTY_SIZE, font_type=FONT_ROB_THIN, font_color=DEEP_GRAY_COLOR_1)
         # КНОПКИ УРОВНЕЙ ПЯТОГО СЮЖЕТА
         btn_first_lvl3 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
         btn_first_lvl3.draw(50, 150, BTN_FIRST_LEVEL, gaming_cycle.game_cycle, FONT_SIZE_FIFTY, id=51)
@@ -31,7 +31,7 @@ class MenuNextLevelsPage(MenuPage):
         btn_six_lvl6 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
         btn_six_lvl6.draw(170, 210, BTN_SIXTH_LEVEL, gaming_cycle.game_cycle, FONT_SIZE_FIFTY, id=56)
 
-        print_text(screen, ACCEPTANCE_TITLE, 50, 270, FONT_FORTY_SIZE, font_type=FONT_ROB_THIN, font_color=DEEP_GRAY)
+        print_text(screen, ACCEPTANCE_TITLE, 50, 270, FONT_FORTY_SIZE, font_type=FONT_ROB_THIN, font_color=DEEP_GRAY_COLOR_1)
         # КНОПКИ УРОВНЕЙ ШЕСТОГО СЮЖЕТА
         btn_first_lvl3 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
         btn_first_lvl3.draw(50, 320, BTN_FIRST_LEVEL, gaming_cycle.game_cycle, FONT_SIZE_FIFTY, id=61)
