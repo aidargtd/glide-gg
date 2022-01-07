@@ -196,7 +196,7 @@ def gif_background(scr):
 
 def update_gif():
     global gifFrameList
-    num = random.randint(1, 7)
+    num = random.randint(1, 5)
     gifFrameList = gif.loadGIF(f"gifs/top_gif_{num}.gif")
 
 
@@ -286,7 +286,7 @@ def next_level(level_id):
         if counter == 300:
             if level_id == 66:
                 call_menu()
-            game_cycle(ALL_LEVELS[ALL_LEVELS.index(level_id) + 1])
+            game_cycle(ALL_LEVELS[ALL_LEVELS.index(level_id + 1)])
 
         pygame.display.update()
         fps_clock.tick(FPS_SIXTY)

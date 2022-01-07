@@ -12,6 +12,10 @@ from parametres import *
 from load_music import *
 from Button import Button
 from db_functions import *
+from general_functions import *
+
+icon = load_image(ICON_IMG)
+pygame.display.set_icon(icon)
 
 
 class Menu():
