@@ -45,13 +45,13 @@ class MenuLevelsPage(MenuPage):
         btn_third_lvl2.draw(170, 320, BTN_THIRD_LEVEL, gaming_cycle.game_cycle, FONT_SIZE_FIFTY, id=23)
 
         btn_fourth_lvl2 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
-        btn_fourth_lvl2.draw(50, 370, BTN_FOURTH_LEVEL, gaming_cycle.game_cycle, FONT_SIZE_FIFTY, id=14)
+        btn_fourth_lvl2.draw(50, 370, BTN_FOURTH_LEVEL, gaming_cycle.game_cycle, FONT_SIZE_FIFTY, id=24)
 
         btn_five_lvl2 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
-        btn_five_lvl2.draw(110, 370, BTN_FIFTH_LEVEL, gaming_cycle.game_cycle, FONT_SIZE_FIFTY, id=15)
+        btn_five_lvl2.draw(110, 370, BTN_FIFTH_LEVEL, gaming_cycle.game_cycle, FONT_SIZE_FIFTY, id=25)
 
         btn_six_lvl2 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
-        btn_six_lvl2.draw(170, 370, BTN_SIXTH_LEVEL, gaming_cycle.game_cycle, FONT_SIZE_FIFTY, id=16)
+        btn_six_lvl2.draw(170, 370, BTN_SIXTH_LEVEL, gaming_cycle.game_cycle, FONT_SIZE_FIFTY, id=26)
 
         print_text(screen, ANGER_TITLE, 50, 430, 40, font_type=FONT_ROB_THIN, font_color=DEEP_GRAY)
         # КНОПКИ УРОВНЕЙ ТРЕТЬЕГО СЮЖЕТА
