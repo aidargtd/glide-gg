@@ -286,7 +286,7 @@ def next_level(level_id):
         if counter == 300:
             if level_id == 66:
                 call_menu()
-            game_cycle(ALL_LEVELS[ALL_LEVELS.index(level_id + 1)])
+            game_cycle(ALL_LEVELS[ALL_LEVELS.index(level_id) + 1])
 
         pygame.display.update()
         fps_clock.tick(FPS_SIXTY)
