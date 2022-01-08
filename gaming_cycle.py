@@ -11,6 +11,7 @@ from load_music import *
 from cut_sheet import *
 import main
 import gif
+
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption(TITLE)
@@ -23,8 +24,11 @@ fps_clock = pygame.time.Clock()
 all_sprites = pygame.sprite.Group()
 mouse = Mouse()
 all_sprites.add(mouse)
+
 scores = 0
 counter_quotes = 0
+currentFrame = 0
+
 gifFrameList = gif.loadGIF(f"gifs/top_gif_{1}.gif")
 paused = True
 
@@ -40,8 +44,7 @@ def off_pause():
 
 
 def draw_pause():
-    screen.fill(BLACK_COLOR)
-    btn_pause = Button(screen, 30, 30)
+    btn_pause = Button(screen, 30, 30, inactive_col=None)
     btn_pause.draw(560, 0, PAUSE_BTN_TEXT, pause, 30)
 
 
@@ -70,7 +73,7 @@ def game_over(walls_group, l_id, red, blue, speed=None):
             i.speed_y -= 1.5
         changing_speed(red, blue, speed, True, RED_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_ANGLE)
         gif_background(screen)
-        # draw_pause()
+        draw_pause()
         draw_gray_circle()
         walls_group.update()
         all_circles.draw(screen)
@@ -179,9 +182,10 @@ def draw_traces_obstacles(flag, traces):
 
 
 def gif_background(scr):
-    rect = gifFrameList[gif.currentFrame].get_rect()
-    scr.blit(gifFrameList[gif.currentFrame], rect)
-    gif.currentFrame = (gif.currentFrame + 1) % len(gifFrameList)
+    global currentFrame
+    rect = gifFrameList[currentFrame].get_rect()
+    scr.blit(gifFrameList[currentFrame], rect)
+    currentFrame = (currentFrame + 1) % len(gifFrameList)
 
 
 def update_gif():
@@ -191,6 +195,7 @@ def update_gif():
 
 
 def game_cycle(l_id):
+    global currentFrame
     global counter_quotes
     if counter_quotes % 10 == 0:
         sound_effects(f'{SAME_LINK_FOR_QUOTES}{l_id}{FORMAT_OGG}', select_table(SETTINGS, VOICE)[0][0])
@@ -222,7 +227,7 @@ def game_cycle(l_id):
                           select_table(SETTINGS, SOUND_EFFECTS)[0][0])
             return game_over(walls_group, l_id, red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
 
-        # draw_pause()
+        draw_pause()
         print_text(screen, f'{DODGED_MESS} {get_dodged(walls_group)}', 10, 10, FONT_TWENTY_SIZE)
         print_text(screen, f'{BANK_MESSAGE} {bank_amount} {COIN_MESSAGE}', 10, 30, FONT_TWENTY_SIZE)
         print_level_number(screen, l_id)
@@ -238,7 +243,7 @@ def game_cycle(l_id):
         fps_clock.tick(FPS_SIXTY)
         if check_level_complited(walls_group):
             counter_quotes = 0
-            gif.currentFrame = 0
+            currentFrame = 0
             next_level(l_id)
 
 

@@ -21,8 +21,3 @@ def loadGIF(filename):
         pygameImage = cv2ImageToSurface(cv2Image)
         frames.append(pygameImage)
     return frames
-
-pygame.init()
-window = pygame.display.set_mode((600, 800))
-clock = pygame.time.Clock()
-currentFrame = 0

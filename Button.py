@@ -9,8 +9,8 @@ class Button:
     def __init__(self, screen, width, height, inactive_col=BLACK_COLOR, active_col=DEEP_GRAY):
         self.width = width
         self.height = height
-        self.inactive_col = BLACK_COLOR
-        self.active_col = DEEP_GRAY
+        self.inactive_col = inactive_col
+        self.active_col = active_col
         self.text_color = WHITE_COLOR
         self.border_color = WHITE_COLOR
         self.screen = screen
@@ -33,6 +33,7 @@ class Button:
                     else:
                         action()
         else:
-            pygame.draw.rect(self.screen, self.inactive_col, (x, y, self.width, self.height))
+            if self.inactive_col:
+                pygame.draw.rect(self.screen, self.inactive_col, (x, y, self.width, self.height))
 
         print_text(self.screen, message=message, x=x + 10, y=y + 10, font_size=font_size, font_type=font_type)
