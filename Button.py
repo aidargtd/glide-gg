@@ -25,9 +25,9 @@ class Button:
                               select_table(SETTINGS, SOUND_EFFECTS)[0][0])
                 pygame.time.delay(DELAY_THREE_OO)
                 if action is not None:
-                    if action == quit:
+                    if action == quit_game:
                         pygame.quit()
-                        quit()
+                        quit_game()
                     elif id is not None:
                         action(id)
                     else:

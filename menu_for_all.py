@@ -32,7 +32,7 @@ class Menu():
 
     def main_menu(self):
         self.menu = MenuMainPage(self.screen)
-        self.menu.add_item(BTN_LEAVE_TEXT, (50, -100), quit, font_size=FONT_SIZE_FIFTY)
+        self.menu.add_item(BTN_LEAVE_TEXT, (50, -100), quit_game, font_size=FONT_SIZE_FIFTY)
         self.menu.add_item(BTN_SETTINGS_TEXT, (50, -200), self.settings_menu, font_size=FONT_SIZE_FIFTY)
         self.menu.add_item(BTN_ITEM_SHOP_TEXT, (50, -300), self.shop_menu, font_size=FONT_SIZE_FIFTY)
         self.menu.add_item(BTN_PLAY_TEXT, (50, -400), self.plots_menu, font_size=FONT_SIZE_FIFTY)
@@ -110,7 +110,7 @@ class Menu():
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    quit()
+                    quit_game()
                 elif event.type == pygame.MOUSEMOTION:
                     self.menu.hover(*event.pos)
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
