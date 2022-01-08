@@ -1,5 +1,4 @@
 import menu_for_all
-from parametres import *
 from general_functions import *
 
 

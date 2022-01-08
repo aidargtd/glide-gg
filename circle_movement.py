@@ -1,6 +1,5 @@
 import math
 import random
-from parametres import *
 from general_functions import *
 
 

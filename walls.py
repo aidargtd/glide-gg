@@ -1,8 +1,3 @@
-import os
-import sys
-import pygame
-import random
-from parametres import *
 from general_functions import *
 
 pygame.init()

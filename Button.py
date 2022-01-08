@@ -1,8 +1,5 @@
 from general_functions import *
-from pygame.draw import lines
 from load_music import *
-from load_music import *
-import db_functions
 
 
 class Button:

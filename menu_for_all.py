@@ -1,5 +1,3 @@
-import pygame
-from menu_files.menu_page import MenuPage
 from menu_files.menu_settings_page import MenuSettingsPage
 from menu_files.menu_plots_page import MenuPlotsPage
 from menu_files.menu_shop_page import MenuShopPage
@@ -8,10 +6,7 @@ from menu_files.menu_levels import MenuLevelsPage
 from menu_files.main_menu import MenuMainPage
 from menu_files.menu_next_page_levels import MenuNextLevelsPage
 from menu_files.infinity_level_before_start import *
-from parametres import *
 from load_music import *
-from Button import Button
-from db_functions import *
 from general_functions import *
 
 icon = load_image(ICON_IMG)
@@ -34,7 +29,7 @@ class Menu():
         self.menu = MenuMainPage(self.screen)
         self.menu.add_item(BTN_LEAVE_TEXT, (50, -100), quit_game, font_size=FONT_SIZE_FIFTY)
         self.menu.add_item(BTN_SETTINGS_TEXT, (50, -200), self.settings_menu, font_size=FONT_SIZE_FIFTY)
-        self.menu.add_item(BTN_ITEM_SHOP_TEXT, (50, -300), self.shop_menu, font_size=FONT_SIZE_FIFTY)
+        self.menu.add_item(BTN_LOCKER_TEXT, (50, -300), self.shop_menu, font_size=FONT_SIZE_FIFTY)
         self.menu.add_item(BTN_PLAY_TEXT, (50, -400), self.plots_menu, font_size=FONT_SIZE_FIFTY)
 
     def plots_menu(self):
@@ -45,6 +40,8 @@ class Menu():
 
     def shop_menu(self):
         self.menu = MenuShopPage(self.screen)
+        self.menu.add_item(BTN_ITEM_SHOP_TEXT, (50, 350), None, color=DEEP_GRAY)
+        self.menu.add_item(BTN_LOCKER_TEXT, (50, 250), None, color=DEEP_GRAY)
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.main_menu)
 
     def start_infinity_game(self):

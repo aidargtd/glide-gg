@@ -1,16 +1,12 @@
-import pygame
-
-from parametres import *
 import circle_movement
-from general_functions import *
 from Button import Button
 from walls import *
 import menu_for_all
 from mouse_cursor import Mouse
 from load_music import *
 from cut_sheet import *
-import main
 import gif
+import random
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE)

@@ -1,6 +1,5 @@
 from general_functions import print_text
 from menu_files.menu_page import MenuPage
-from parametres import *
 from db_functions import *
 import pygame as pg
 from input_box import InputBox

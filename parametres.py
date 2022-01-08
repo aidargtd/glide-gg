@@ -308,10 +308,11 @@ BTN_OFF_TEXT = 'выкл'
 BTN_NEXT_PAGE_TEXT = 'следующая страница'
 BTN_SETTINGS_TEXT = 'настройки'
 BTN_PLAY_TEXT = 'играть'
-BTN_ITEM_SHOP_TEXT = 'магазин'
+BTN_ITEM_SHOP_TEXT = 'магазин скинов'
 BTN_RACE_TEXT = 'гонка'
 BTN_PLOT_TEXT = 'сюжет'
 BTN_START_RACE = 'начать гонку'
+BTN_LOCKER_TEXT = 'шкафчик'
 
 # BUTTONS LEVELS
 BTN_FIRST_LEVEL = ' I '
@@ -325,5 +326,3 @@ BTN_SIXTH_LEVEL = 'VI'
 PADDING_DIST = 20
 BORDER_WIDTH = 4
 BORDER_LENGTH = 8
-
-# CONSTS FOR INPUT PLAYER NAME

@@ -1,12 +1,9 @@
 from pygame import Surface
 from menu_files.menu_item import MenuItem
-from general_functions import *
 from load_m_bg import kosmo_imgs
 from load_music import *
 
 img_counter = 0
-
-import pygame as pg
 
 
 class MenuPage:
