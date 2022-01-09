@@ -40,13 +40,16 @@ class MenuPage:
     def render_extra(self, surface):
         pass
 
-    def render_background(self, screen):
-        global img_counter
-        screen.fill(BLACK_COLOR)
-        if img_counter == 78:
-            img_counter = 0
-        screen.blit(kosmo_imgs[img_counter // 2], (0, 0))
-        img_counter += 1
+    def render_background(self, screen, pos=True):
+        if pos:
+            global img_counter
+            screen.fill(BLACK_COLOR)
+            if img_counter == 78:
+                img_counter = 0
+            screen.blit(kosmo_imgs[img_counter // 2], (0, 0))
+            img_counter += 1
+        else:
+            screen.fill(BLACK_COLOR)
 
     def render_items(self, surface):
         for item in self.items:
@@ -55,6 +58,9 @@ class MenuPage:
     def hover(self, x, y):
         for item in self.items:
             item.hover(x, y)
+
+    def render_image(self, surface):
+        pass
 
     def click(self, x, y):
         for item in self.items:

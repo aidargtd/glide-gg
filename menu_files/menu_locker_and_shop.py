@@ -3,7 +3,7 @@ from menu_files.menu_page import MenuPage
 from parametres import *
 
 
-class MenuShopPage(MenuPage):
+class MenuShopAndLockerPage(MenuPage):
     def render_extra(self, screen):
         x = 50
         print_text(screen, 'Вы можете посмотреть новые скины,', x, 50, FONT_THIRTY_SIZE, font_type=FONT_ROB_THIN)

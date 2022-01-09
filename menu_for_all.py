@@ -1,11 +1,13 @@
 from menu_files.menu_settings_page import MenuSettingsPage
 from menu_files.menu_plots_page import MenuPlotsPage
-from menu_files.menu_shop_page import MenuShopPage
+from menu_files.menu_locker_and_shop import MenuShopAndLockerPage
 from menu_files.menu_sound_settings import MenuSoundPage
 from menu_files.menu_levels import MenuLevelsPage
 from menu_files.main_menu import MenuMainPage
 from menu_files.menu_next_page_levels import MenuNextLevelsPage
 from menu_files.infinity_level_before_start import *
+from menu_files.menu_locker import MenuLockerPage
+from menu_files.menu_item_shop import MenuItemShopPage
 from load_music import *
 from general_functions import *
 
@@ -29,7 +31,7 @@ class Menu():
         self.menu = MenuMainPage(self.screen)
         self.menu.add_item(BTN_LEAVE_TEXT, (50, -100), quit_game, font_size=FONT_SIZE_FIFTY)
         self.menu.add_item(BTN_SETTINGS_TEXT, (50, -200), self.settings_menu, font_size=FONT_SIZE_FIFTY)
-        self.menu.add_item(BTN_LOCKER_TEXT, (50, -300), self.shop_menu, font_size=FONT_SIZE_FIFTY)
+        self.menu.add_item(BTN_LOCKER_TEXT, (50, -300), self.menu_locker_shop, font_size=FONT_SIZE_FIFTY)
         self.menu.add_item(BTN_PLAY_TEXT, (50, -400), self.plots_menu, font_size=FONT_SIZE_FIFTY)
 
     def plots_menu(self):
@@ -38,11 +40,19 @@ class Menu():
         self.menu.add_item(BTN_RACE_TEXT, (50, 200), self.start_infinity_game)
         self.menu.add_item(BTN_BACK_TEXT, (50, 300), self.main_menu)
 
-    def shop_menu(self):
-        self.menu = MenuShopPage(self.screen)
-        self.menu.add_item(BTN_ITEM_SHOP_TEXT, (50, 350), None, color=DEEP_GRAY)
-        self.menu.add_item(BTN_LOCKER_TEXT, (50, 250), None, color=DEEP_GRAY)
+    def menu_locker_shop(self):
+        self.menu = MenuShopAndLockerPage(self.screen)
+        self.menu.add_item(BTN_ITEM_SHOP_TEXT, (50, 350), self.open_item_shop, color=DEEP_GRAY)
+        self.menu.add_item(BTN_LOCKER_TEXT, (50, 250), self.open_locker, color=DEEP_GRAY)
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.main_menu)
+
+    def open_item_shop(self):
+        self.menu = MenuItemShopPage(self.screen)
+        self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.menu_locker_shop)
+
+    def open_locker(self):
+        self.menu = MenuLockerPage(self.screen)
+        self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.menu_locker_shop)
 
     def start_infinity_game(self):
         self.menu = BeforeInfinityLevel(self.screen)
