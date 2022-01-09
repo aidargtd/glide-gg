@@ -11,7 +11,6 @@ from menu_files.menu_locker import MenuLockerPage
 from menu_files.menu_item_shop import MenuItemShopPage
 from load_music import *
 from general_functions import *
-
 icon = load_image(ICON_IMG)
 pygame.display.set_icon(icon)
 

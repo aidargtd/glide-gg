@@ -7,7 +7,7 @@ from load_music import *
 from cut_sheet import *
 import gif
 import random
-
+from click_anim import draw_click
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption(TITLE)
@@ -24,7 +24,6 @@ all_sprites.add(mouse)
 scores = 0
 counter_quotes = 0
 currentFrame = 0
-
 gifFrameList = gif.loadGIF(f"{PATH_GIF}{1}{GIF}")
 paused = True
 
@@ -82,7 +81,7 @@ def game_over(walls_group, red, blue, speed=None):
         all_circles.draw(screen)
         draw_traces_for_circles(select_table(SETTINGS, EFFECTS)[0][0], circle_movement.traces)
         loc_walls_group.draw(screen)
-
+        draw_click(screen)
         pygame.display.update()
         fps_clock.tick(FPS_SIXTY)
 
@@ -131,7 +130,7 @@ def pause():
 
         if keys[pygame.K_RETURN]:
             paused = False
-
+        draw_click(screen)
         pygame.display.update()
         fps_clock.tick(FPS_FIFTEEN)
 
@@ -276,7 +275,7 @@ def infinity_cycle(player_name, speed=1, score=0, lives=INFINITY_LEVEL_LIVES, le
         walls_group.update()
         loc_walls_group.draw(screen)
         all_circles.draw(screen)
-
+        draw_click(screen)
         pygame.display.update()
         fps_clock.tick(FPS_SIXTY)
         dodged_removed += remove_passed_sprites(walls_group)
@@ -323,7 +322,6 @@ def game_cycle(l_id):
         print_text(screen, f'{DODGED_MESS} {get_dodged(walls_group)}', x=10, y=10, font_size=FONT_TWENTY_SIZE)
         print_text(screen, f'{BANK_MESSAGE} {bank_amount} {COIN_MESSAGE}', x=10, y=30, font_size=FONT_TWENTY_SIZE)
         print_level_number(screen, l_id)
-
         draw_gray_circle()
         draw_traces_for_circles(select_table(SETTINGS, EFFECTS)[GET_ZERO_VALUES][GET_ZERO_VALUES],
                                 circle_movement.traces)
@@ -331,7 +329,7 @@ def game_cycle(l_id):
         walls_group.update()
         loc_walls_group.draw(screen)
         all_circles.draw(screen)
-
+        draw_click(screen)
         pygame.display.update()
         fps_clock.tick(FPS_SIXTY)
         if check_level_complited(walls_group):
@@ -374,7 +372,7 @@ def next_level(level_id):
             if level_id == MAX_LEVEL:
                 call_menu()
             game_cycle(ALL_LEVELS[ALL_LEVELS.index(level_id) + INCREASE_LEVELS])
-
+        draw_click(screen)
         pygame.display.update()
         fps_clock.tick(FPS_SIXTY)
         counter += INCREASE_LEVELS
