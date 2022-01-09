@@ -67,19 +67,21 @@ class Menu():
             if select_one_with_aspect(LOCKERS_DB, ID, 2, AVAILABILITY)[0]:
                 self.menu.add_item(SELECTED_ITEM, (300, 500), None, GREEN_COLOR)
             else:
-                self.menu.add_item(SELECT_ITEM, (300, 500), self.change_equip, DEEP_GRAY)
+                self.menu.add_item(SELECT_ITEM, (300, 500), self.change_equip_sec, DEEP_GRAY)
 
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.menu_locker_shop)
 
     def change_equip(self):
-        pass
+        update_availability_item_in_locker(False, 2)
+        update_availability_item_in_locker(True, 1)
+        self.open_locker()
 
     def add_item_to_locker(self):
         items = select_table(ITEM_SHOP_DB, SELECT_ALL)
         balance = select_one_with_aspect(USERS, ID, 1, COINS_AMOUNT)[0]
         price = items[0][3]
         if balance - price >= 0:
-            update_availability_item()
+            update_availability_item_in_shop()
             upd_balance(balance - price)
             insert_to_locker(2, items[0][1], 0, items[0][4])
         self.open_item_shop()
@@ -88,9 +90,6 @@ class Menu():
         self.menu = BeforeInfinityLevel(self.screen)
         self.menu.add_item(BTN_START_RACE, (30, 270), None, font_size=40, color=DEEP_GRAY)
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.plots_menu)
-
-    def change_equip_sec(self):
-        pass
 
     def open_plots_levels(self):
         self.menu = MenuLevelsPage(self.screen)
@@ -124,6 +123,11 @@ class Menu():
     def check_on_music(self):
         update_settings_value(not select_table(SETTINGS, MUSIC)[0][0])
         self.sound_condition()
+
+    def change_equip_sec(self):
+        update_availability_item_in_locker(False, 1)
+        update_availability_item_in_locker(True, 2)
+        self.open_locker()
 
     def check_on_voice(self):
         upd_settings_voice(not select_table(SETTINGS, VOICE)[0][0])

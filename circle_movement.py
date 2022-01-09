@@ -53,6 +53,7 @@ class Circles(pygame.sprite.Sprite):
         self.rect.y = start_y
         self.flag_traces = flag_traces
         self.color = color
+        self.arr_for_trace = []
 
     def update(self, speed_move):
         self.init_angle += speed_move
@@ -61,11 +62,14 @@ class Circles(pygame.sprite.Sprite):
         self.rect.y = (CONVERT_ANGLE_TO_SIDE * math.sin(angle)) + CHANGE_Y_COORD
         if speed_move != IMPOSSIBLE_SPEED and self.flag_traces:
             if self.color == RED:
-                traces.append(CreateTrace((self.rect.x, self.rect.y), random.choice(
-                    [RED_TRAIL_COLOR_1, RED_TRAIL_COLOR_2, RED_TRAIL_COLOR_3])))
+                self.arr_for_trace = [RED_TRAIL_COLOR_1, RED_TRAIL_COLOR_2, RED_TRAIL_COLOR_3]
+            elif self.color == GOL:
+                self.arr_for_trace = [TURQUOISE_TRACE_COLOR1, TURQUOISE_TRACE_COLOR2, TURQUOISE_TRACE_COLOR3]
+            elif self.color == IZUMRUD:
+                self.arr_for_trace = [DARK_GREEN_TRACE_COLOR1, DARK_GREEN_TRACE_COLOR2, DARK_GREEN_TRACE_COLOR3]
             else:
-                traces.append(CreateTrace((self.rect.x, self.rect.y), random.choice(
-                    [BLUE_TRAIL_COLOR_1, BLUE_TRAIL_COLOR_2, BLUE_TRAIL_COLOR_3])))
+                self.arr_for_trace = [BLUE_TRAIL_COLOR_1, BLUE_TRAIL_COLOR_2, BLUE_TRAIL_COLOR_3]
+            traces.append(CreateTrace((self.rect.x, self.rect.y), random.choice(self.arr_for_trace)))
 
     def check_collision(self, screen, arr_with_sprites):
         for i in arr_with_sprites:

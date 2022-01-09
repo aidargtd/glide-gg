@@ -22,6 +22,8 @@ FONT_SIZE_ONE_H_TWENTY = 120
 # CONST (NAMES BALLS)
 RED = 'red'
 BLUE = 'blue'
+GOL = 'gol'
+IZUMRUD = 'izumrud'
 # COLORS (RGB)
 BLACK_COLOR = (0, 0, 0)
 RED_COLOR = (255, 0, 0)
@@ -39,11 +41,24 @@ START_WALL_TRACE_COLOR = [90, 90, 90]
 GREEN_COLOR = (0, 200, 100)
 COL_STEP_WALL_TRACES = 15
 
+TURQUOISE_COLOR = (143, 294, 201)
+DARK_TURQUOISE_COLOR = (71, 129, 137)
+DARK_GREEN = (40, 69, 71)
+
+TURQUOISE_TRACE_COLOR1 = (120, 230, 190)
+TURQUOISE_TRACE_COLOR2 = (100, 240, 230)
+TURQUOISE_TRACE_COLOR3 = (150, 200, 220)
+
+DARK_GREEN_TRACE_COLOR1 = (86, 157, 167)
+DARK_GREEN_TRACE_COLOR2 = (104, 168, 170)
+DARK_GREEN_TRACE_COLOR3 = (72, 132, 140)
 # NAMES OF IMAGES
 ITEM_SHOP = "Items/item_shop1.png"
 ICON_IMG = 'icon.jpg'
 RED_CIRCLE_IMG = 'circles_skins/red_circle.png'
 BLUE_CIRCLE_IMG = 'circles_skins/blue_circle.png'
+GOLUB_CIRCLE_IMG = 'circles_skins/goluboi_circle.png'
+IZUMRUD_CIRCLE_IMG = 'circles_skins/izumrud_circle.png'
 COINS_SHEET = "animation-coins.png"
 MENU_IMG = "menu.png"
 MOUSE_PNG = 'mouse.png'
@@ -331,7 +346,6 @@ BTN_BUY_EQUIPMENT = 'Купить экипировку'
 BTN_PURCHASED_TEXT = 'Куплено'
 SELECT_ITEM = 'Выбрать'
 SELECTED_ITEM = 'Выбрано'
-
 
 # BUTTONS LEVELS
 BTN_FIRST_LEVEL = ' I '

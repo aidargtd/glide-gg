@@ -55,9 +55,15 @@ def update_aspect(table_name, field, value_field, parametr, value_parametr):
     con.commit()
 
 
-def update_availability_item():
+def update_availability_item_in_shop():
     cur.execute(
         """UPDATE ITEM_SHOP SET Availability=?""", (False,))
+    con.commit()
+
+
+def update_availability_item_in_locker(value, id):
+    cur.execute(
+        """UPDATE LOCKER SET availability=? WHERE id=?""", (value, id,))
     con.commit()
 
 

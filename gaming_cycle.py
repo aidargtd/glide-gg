@@ -28,10 +28,17 @@ currentFrame = 0
 gifFrameList = gif.loadGIF(f"gifs/top_gif_{1}.gif")
 paused = True
 
-red_circle = circle_movement.Circles(
-    RED_CIRCLE_IMG, RED_CIRCLE_START_ANGLE, RED_CIRCLE_START_X, RED_CIRCLE_START_Y, RED)
-blue_circle = circle_movement.Circles(
-    BLUE_CIRCLE_IMG, BLUE_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_X, BLUE_CIRCLE_START_Y, BLUE)
+id_colors = select_one_with_aspect(LOCKERS_DB, AVAILABILITY, 1, ID)[0]
+if id_colors == 1:
+    circle1 = circle_movement.Circles(
+        RED_CIRCLE_IMG, RED_CIRCLE_START_ANGLE, RED_CIRCLE_START_X, RED_CIRCLE_START_Y, RED)
+    circle2 = circle_movement.Circles(
+        BLUE_CIRCLE_IMG, BLUE_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_X, BLUE_CIRCLE_START_Y, BLUE)
+else:
+    circle1 = circle_movement.Circles(
+        GOLUB_CIRCLE_IMG, RED_CIRCLE_START_ANGLE, RED_CIRCLE_START_X, RED_CIRCLE_START_Y, GOL)
+    circle2 = circle_movement.Circles(
+        IZUMRUD_CIRCLE_IMG, BLUE_CIRCLE_START_ANGLE, BLUE_CIRCLE_START_X, BLUE_CIRCLE_START_Y, IZUMRUD)
 
 
 def off_pause():
@@ -199,8 +206,8 @@ def game_cycle(l_id):
     sound(MENU_MUSIC, select_table(SETTINGS, MUSIC)[0][0])
     sound(select_one_with_aspect(LEVELS, ID, l_id, MUSIC_LEVEL)[0],
           select_table(SETTINGS, MUSIC)[0][0])
-    all_circles.add(red_circle, blue_circle)
-    all_circles.add(red_circle, blue_circle)
+    all_circles.add(circle1, circle2)
+    all_circles.add(circle1, circle2)
     game = True
     walls_group = create_obst_group(l_id)
     traces_wall = []
@@ -215,13 +222,13 @@ def game_cycle(l_id):
                 game = False
                 quit_game()
         gif_background(screen)
-        press_key(red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
+        press_key(circle1, circle2, speed=SPEED_MOVEMENT_TRUE)
 
-        if any([red_circle.check_collision(screen, walls_group),
-                blue_circle.check_collision(screen, walls_group)]):
+        if any([circle1.check_collision(screen, walls_group),
+                circle2.check_collision(screen, walls_group)]):
             sound_effects(SOUND_COLLUSION,
                           select_table(SETTINGS, SOUND_EFFECTS)[0][0])
-            return game_over(walls_group, l_id, red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
+            return game_over(walls_group, l_id, circle1, circle2, speed=SPEED_MOVEMENT_TRUE)
 
         draw_pause()
         print_text(screen, f'{DODGED_MESS} {get_dodged(walls_group)}', 10, 10, FONT_TWENTY_SIZE)
@@ -260,7 +267,7 @@ def next_level(level_id):
                 game = False
                 quit_game()
         gif_background(screen)
-        press_key(red_circle, blue_circle, speed=SPEED_MOVEMENT_TRUE)
+        press_key(circle1, circle2, speed=SPEED_MOVEMENT_TRUE)
         coin_group.update()
 
         print_text(screen, LEVEL_COMPLITED, 150, 270, FONT_FORTY_SIZE)
