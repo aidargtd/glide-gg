@@ -36,9 +36,11 @@ BLUE_TRAIL_COLOR_2 = (15, 135, 255)
 BLUE_TRAIL_COLOR_3 = (0, 190, 255)
 DELETE_WALL_TRACE_COLOR = [30, 30, 30]
 START_WALL_TRACE_COLOR = [90, 90, 90]
+GREEN_COLOR = (0, 200, 100)
 COL_STEP_WALL_TRACES = 15
 
 # NAMES OF IMAGES
+ITEM_SHOP = "Items/item_shop1.png"
 ICON_IMG = 'icon.jpg'
 RED_CIRCLE_IMG = 'circles_skins/red_circle.png'
 BLUE_CIRCLE_IMG = 'circles_skins/blue_circle.png'
@@ -171,6 +173,8 @@ LEVELS = 'Levels'
 LF_DOWN_OBSTACLES = 'LfDownObstacles'
 SIDE_OBSTACLES = 'SideObstacles'
 TWIST_OBSTACLES = 'TwistObstacles'
+ITEM_SHOP_DB = 'ITEM_SHOP'
+AVAILABILITY = 'availability'
 
 ID = 'id'
 NAME = 'name'
@@ -212,6 +216,7 @@ PICTURES = 'pictures/'
 INF_LEVELS = 'Infinity_level_scores'
 SCORE = 'score'
 NAME_PLAYER = 'name_player'
+LOCKERS_DB = 'LOCKER'
 
 TABLES = {
     IMAGES: [ID,
@@ -244,6 +249,8 @@ TABLES = {
                       ANGLE_MOVE]
 
 }
+
+SELECT_ALL = '*'
 
 # INDEXES FOR GET LEVEL'S OBSTACLES
 INX_ID_LEVEL = 0
@@ -289,6 +296,13 @@ VOICE_SETTINGS = 'речь - '
 SOUND_EFF_SETTINGS = 'звуковые эффекты - '
 MESSAGE_BEFORE_START_GAME = f'Введите свое имя, чтобы начать игру'
 TOP_PLAYER = 'Топ игрок(результат): '
+BALANCE_TEXT = 'баланс: '
+LOCKER_TEXT = 'Шкафчик'
+ITEM_SHOP_TEXT = 'Магазин скинов'
+LEVEL_TEXT = 'Уровень: '
+PLOT_TEXT = 'Сюжет: '
+ITEM_NAME_TEXT = 'Название экипировки:'
+ITEM_PRICE_TEXT = 'Стоимость:'
 # BUTTONS SIZE
 BTN_RESUME_X = 150
 BTN_RESUME_Y = 50
@@ -313,6 +327,11 @@ BTN_RACE_TEXT = 'гонка'
 BTN_PLOT_TEXT = 'сюжет'
 BTN_START_RACE = 'начать гонку'
 BTN_LOCKER_TEXT = 'шкафчик'
+BTN_BUY_EQUIPMENT = 'Купить экипировку'
+BTN_PURCHASED_TEXT = 'Куплено'
+SELECT_ITEM = 'Выбрать'
+SELECTED_ITEM = 'Выбрано'
+
 
 # BUTTONS LEVELS
 BTN_FIRST_LEVEL = ' I '

@@ -47,17 +47,50 @@ class Menu():
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.main_menu)
 
     def open_item_shop(self):
+        items = select_table(ITEM_SHOP_DB, SELECT_ALL)
         self.menu = MenuItemShopPage(self.screen)
+        if items[0][2] == 1:
+            self.menu.add_item(BTN_BUY_EQUIPMENT, (50, 300), self.add_item_to_locker, color=DEEP_GRAY)
+        else:
+            self.menu.add_item(BTN_PURCHASED_TEXT, (50, 300), None, color=GREEN_COLOR)
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.menu_locker_shop)
 
     def open_locker(self):
         self.menu = MenuLockerPage(self.screen)
+        items = select_table(LOCKERS_DB, SELECT_ALL)
+        if len(items) == 2:
+            if select_one_with_aspect(LOCKERS_DB, ID, 1, AVAILABILITY)[0]:
+                self.menu.add_item(SELECTED_ITEM, (300, 250), None, GREEN_COLOR)
+            else:
+                self.menu.add_item(SELECT_ITEM, (300, 250), self.change_equip, DEEP_GRAY)
+
+            if select_one_with_aspect(LOCKERS_DB, ID, 2, AVAILABILITY)[0]:
+                self.menu.add_item(SELECTED_ITEM, (300, 500), None, GREEN_COLOR)
+            else:
+                self.menu.add_item(SELECT_ITEM, (300, 500), self.change_equip, DEEP_GRAY)
+
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.menu_locker_shop)
+
+    def change_equip(self):
+        pass
+
+    def add_item_to_locker(self):
+        items = select_table(ITEM_SHOP_DB, SELECT_ALL)
+        balance = select_one_with_aspect(USERS, ID, 1, COINS_AMOUNT)[0]
+        price = items[0][3]
+        if balance - price >= 0:
+            update_availability_item()
+            upd_balance(balance - price)
+            insert_to_locker(2, items[0][1], 0, items[0][4])
+        self.open_item_shop()
 
     def start_infinity_game(self):
         self.menu = BeforeInfinityLevel(self.screen)
         self.menu.add_item(BTN_START_RACE, (30, 270), None, font_size=40, color=DEEP_GRAY)
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.plots_menu)
+
+    def change_equip_sec(self):
+        pass
 
     def open_plots_levels(self):
         self.menu = MenuLevelsPage(self.screen)

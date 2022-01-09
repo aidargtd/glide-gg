@@ -53,3 +53,21 @@ def update_aspect(table_name, field, value_field, parametr, value_parametr):
     value = f'''UPDATE {table_name} SET {field}=? WHERE {parametr} = ?'''
     cur.execute(value, (value_field, value_parametr,))
     con.commit()
+
+
+def update_availability_item():
+    cur.execute(
+        """UPDATE ITEM_SHOP SET Availability=?""", (False,))
+    con.commit()
+
+
+def upd_balance(value):
+    cur.execute(
+        """UPDATE USERS SET coins_amount=?""", (value,))
+    con.commit()
+
+
+def insert_to_locker(*values):
+    cur.execute("""INSERT INTO LOCKER(id, path_image, availability, name) 
+                        VALUES(?, ?, ?, ?)""", values)
+    con.commit()

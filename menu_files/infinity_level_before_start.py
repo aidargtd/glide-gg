@@ -12,15 +12,15 @@ class BeforeInfinityLevel(MenuPage):
 
     def render_extra(self, screen):
         x = 10
-        print_text(screen, TOP_PLAYER, x, 50, FONT_FORTY_SIZE, WHITE_COLOR, font_type=FONT_ROB_THIN)
-        max_score = select_max_elem('score', )[0]
+        print_text(screen, TOP_PLAYER, x, 50, FONT_FORTY_SIZE, WHITE_COLOR, FONT_ROB_THIN)
+        max_score = select_max_elem(SCORE, )[0]
         name_player = \
             select_one_with_aspect(INF_LEVELS, SCORE, select_max_elem(SCORE, )[0], NAME_PLAYER)[0]
         print_text(screen, f'{name_player}  {max_score}', 350, 50, FONT_FORTY_SIZE, DEEP_GRAY,
-                   font_type=FONT_ROB_THIN)
+                   FONT_ROB_THIN)
 
         print_text(screen, MESSAGE_BEFORE_START_GAME, 20, 130, FONT_FORTY_SIZE, DEEP_GRAY,
-                   font_type=FONT_ROB_THIN)
+                   FONT_ROB_THIN)
         self.player_name_input.update()
         self.player_name_input.draw(screen)
 

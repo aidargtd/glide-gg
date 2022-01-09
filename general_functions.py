@@ -30,7 +30,7 @@ def quit_game():
     sys.exit()
 
 
-def print_text(screen, message, x, y, font_size=30, font_color=WHITE_COLOR, font_type=FONT_ROB_LIGHT):
+def print_text(screen, message, x, y, font_size=FONT_THIRTY_SIZE, font_color=WHITE_COLOR, font_type=FONT_ROB_LIGHT):
     font_type = pygame.font.Font(match_font(font_type), font_size)
     text = font_type.render(message, True, font_color)
     screen.blit(text, (x, y))
@@ -95,5 +95,5 @@ def pay_coins(coins, user_id=1):
 
 
 def print_level_number(sc, l_id):
-    print_text(sc, f'Сюжет:  {l_id // 10}', 490, 10, 20)
-    print_text(sc, f'Уровень: {l_id % 10}', 490, 25, 20)
+    print_text(sc, f'{PLOT_TEXT}  {l_id // 10}', 490, 10, FONT_TWENTY_SIZE)
+    print_text(sc, f'{LEVEL_TEXT} {l_id % 10}', 490, 25, FONT_TWENTY_SIZE)
