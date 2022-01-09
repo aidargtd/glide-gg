@@ -10,6 +10,7 @@ from load_music import *
 
 
 class MenuLevelsPage(MenuPage):
+    # Цифры это координаты кнопок, PYGAME)
     def render_extra(self, screen):
         print_text(screen, PLOT_TITLE, 250, 50, FONT_SIZE_FIFTY, font_type=FONT_ROB_THIN)
         print_text(screen, IGNORANCE_TITLE,
@@ -92,4 +93,3 @@ class MenuLevelsPage(MenuPage):
 
         btn_six_lvl6 = Button(screen, BTN_LEVELS_X, BTN_LEVELS_Y)
         btn_six_lvl6.draw(170, 690, BTN_SIXTH_LEVEL, gaming_cycle.game_cycle, FONT_SIZE_FIFTY, id=46)
-

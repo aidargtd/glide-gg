@@ -6,7 +6,7 @@ from parametres import *
 
 class MenuItem:
     def __init__(self, message, left_top, onclick=None, text_color=WHITE_COLOR, font_size=40,
-                 font_name='font/Roboto-Thin.ttf'):
+                 font_name=FONT_ROB_THIN):
         self.message = message
         self.padding = PADDING_DIST  # расстояние от текста до рамки
         self.font_name = font_name

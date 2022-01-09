@@ -23,7 +23,7 @@ class Menu():
         self.screen = pygame.display.set_mode(screen_size)
         self.menu = None
         self.scroll_y = 0
-        sound(MENU_MUSIC, select_table(SETTINGS, MUSIC)[0][0])
+        sound(MENU_MUSIC, select_table(SETTINGS, MUSIC)[GET_ZERO_VALUES][GET_ZERO_VALUES])
         self.main_menu()
         self.event_loop()
 
@@ -49,7 +49,7 @@ class Menu():
     def open_item_shop(self):
         items = select_table(ITEM_SHOP_DB, SELECT_ALL)
         self.menu = MenuItemShopPage(self.screen)
-        if items[0][2] == 1:
+        if items[GET_ZERO_VALUES][GET_SEC_VALUE]:
             self.menu.add_item(BTN_BUY_EQUIPMENT, (50, 300), self.add_item_to_locker, color=DEEP_GRAY)
         else:
             self.menu.add_item(BTN_PURCHASED_TEXT, (50, 300), None, color=GREEN_COLOR)
@@ -59,12 +59,12 @@ class Menu():
         self.menu = MenuLockerPage(self.screen)
         items = select_table(LOCKERS_DB, SELECT_ALL)
         if len(items) == 2:
-            if select_one_with_aspect(LOCKERS_DB, ID, 1, AVAILABILITY)[0]:
+            if select_one_with_aspect(LOCKERS_DB, ID, FIRST_ITEM, AVAILABILITY)[GET_ZERO_VALUES]:
                 self.menu.add_item(SELECTED_ITEM, (300, 250), None, GREEN_COLOR)
             else:
                 self.menu.add_item(SELECT_ITEM, (300, 250), self.change_equip, DEEP_GRAY)
 
-            if select_one_with_aspect(LOCKERS_DB, ID, 2, AVAILABILITY)[0]:
+            if select_one_with_aspect(LOCKERS_DB, ID, SEC_ITEM, AVAILABILITY)[GET_ZERO_VALUES]:
                 self.menu.add_item(SELECTED_ITEM, (300, 500), None, GREEN_COLOR)
             else:
                 self.menu.add_item(SELECT_ITEM, (300, 500), self.change_equip_sec, DEEP_GRAY)
@@ -72,23 +72,23 @@ class Menu():
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.menu_locker_shop)
 
     def change_equip(self):
-        update_availability_item_in_locker(False, 2)
-        update_availability_item_in_locker(True, 1)
+        update_availability_item_in_locker(False, SEC_ITEM)
+        update_availability_item_in_locker(True, FIRST_ITEM)
         self.open_locker()
 
     def add_item_to_locker(self):
         items = select_table(ITEM_SHOP_DB, SELECT_ALL)
-        balance = select_one_with_aspect(USERS, ID, 1, COINS_AMOUNT)[0]
-        price = items[0][3]
-        if balance - price >= 0:
+        balance = select_one_with_aspect(USERS, ID, FIRST_ITEM, COINS_AMOUNT)[GET_ZERO_VALUES]
+        price = items[GET_ZERO_VALUES][GET_THIRD_VALUE]
+        if balance - price >= BALANCE_MIN:
             update_availability_item_in_shop()
             upd_balance(balance - price)
-            insert_to_locker(2, items[0][1], 0, items[0][4])
+            insert_to_locker(SEC_ITEM, items[GET_ZERO_VALUES][GET_FIRST_VALUES], GET_ZERO_VALUES, items[0][4])
         self.open_item_shop()
 
     def start_infinity_game(self):
         self.menu = BeforeInfinityLevel(self.screen)
-        self.menu.add_item(BTN_START_RACE, (30, 270), None, font_size=40, color=DEEP_GRAY)
+        self.menu.add_item(BTN_START_RACE, (30, 270), None, font_size=FONT_FORTY_SIZE, color=DEEP_GRAY)
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.plots_menu)
 
     def open_plots_levels(self):
@@ -102,50 +102,50 @@ class Menu():
 
     def sound_condition(self):
         self.menu = MenuSoundPage(self.screen)
-        if select_table(SETTINGS, MUSIC)[0][0]:
+        if select_table(SETTINGS, MUSIC)[GET_ZERO_VALUES][GET_ZERO_VALUES]:
             self.menu.add_item(BTN_ON_TEXT, (110, 100), self.check_on_music, BLUE_TRAIL_COLOR_3)
             sound(MENU_MUSIC, True)
         else:
             self.menu.add_item(BTN_OFF_TEXT, (110, 100), self.check_on_music, RED_TRAIL_COLOR_3)
             sound(MENU_MUSIC, False)
 
-        if select_table(SETTINGS, VOICE)[0][0]:
+        if select_table(SETTINGS, VOICE)[GET_ZERO_VALUES][GET_ZERO_VALUES]:
             self.menu.add_item(BTN_ON_TEXT, (80, 200), self.check_on_voice, BLUE_TRAIL_COLOR_3)
         else:
             self.menu.add_item(BTN_OFF_TEXT, (80, 200), self.check_on_voice, RED_TRAIL_COLOR_3)
 
-        if select_table(SETTINGS, SOUND_EFFECTS)[0][0]:
+        if select_table(SETTINGS, SOUND_EFFECTS)[GET_ZERO_VALUES][GET_ZERO_VALUES]:
             self.menu.add_item(BTN_ON_TEXT, (230, 300), self.check_on_sounds_eff, BLUE_TRAIL_COLOR_3)
         else:
             self.menu.add_item(BTN_OFF_TEXT, (230, 300), self.check_on_sounds_eff, RED_TRAIL_COLOR_3)
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.settings_menu)
 
     def check_on_music(self):
-        update_settings_value(not select_table(SETTINGS, MUSIC)[0][0])
+        update_settings_value(not select_table(SETTINGS, MUSIC)[GET_ZERO_VALUES][GET_ZERO_VALUES])
         self.sound_condition()
 
     def change_equip_sec(self):
-        update_availability_item_in_locker(False, 1)
-        update_availability_item_in_locker(True, 2)
+        update_availability_item_in_locker(False, FIRST_ITEM)
+        update_availability_item_in_locker(True, SEC_ITEM)
         self.open_locker()
 
     def check_on_voice(self):
-        upd_settings_voice(not select_table(SETTINGS, VOICE)[0][0])
+        upd_settings_voice(not select_table(SETTINGS, VOICE)[GET_ZERO_VALUES][GET_ZERO_VALUES])
         self.sound_condition()
 
     def check_on_sounds_eff(self):
-        upd_settings_sound_effects(not select_table(SETTINGS, SOUND_EFFECTS)[0][0])
+        upd_settings_sound_effects(not select_table(SETTINGS, SOUND_EFFECTS)[GET_ZERO_VALUES][GET_ZERO_VALUES])
         self.sound_condition()
 
     def check_on_eff(self):
-        upd_settings_val_effects(not select_table(SETTINGS, EFFECTS)[0][0])
+        upd_settings_val_effects(not select_table(SETTINGS, EFFECTS)[GET_ZERO_VALUES][GET_ZERO_VALUES])
         self.settings_menu()
 
     def settings_menu(self):
         self.menu = MenuSettingsPage(self.screen)
-        self.menu.add_item(BTN_SOUND_TEXT, (50, 450), self.sound_condition, color=DEEP_GRAY, font_size=50)
+        self.menu.add_item(BTN_SOUND_TEXT, (50, 450), self.sound_condition, color=DEEP_GRAY, font_size=FONT_SIZE_FIFTY)
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.main_menu)
-        if select_table(SETTINGS, EFFECTS)[0][0]:
+        if select_table(SETTINGS, EFFECTS)[GET_ZERO_VALUES][GET_ZERO_VALUES]:
             self.menu.add_item(BTN_ON_TEXT, (50, 370), self.check_on_eff, BLUE_TRAIL_COLOR_3)
         else:
             self.menu.add_item(BTN_OFF_TEXT, (50, 370), self.check_on_eff, RED_TRAIL_COLOR_3)
@@ -159,7 +159,7 @@ class Menu():
                     self.menu.hover(*event.pos)
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     sound_effects(SOUND_CLICK,
-                                  select_table(SETTINGS, SOUND_EFFECTS)[0][0])
+                                  select_table(SETTINGS, SOUND_EFFECTS)[GET_ZERO_VALUES][GET_ZERO_VALUES])
                     self.menu.click(*event.pos)
                 self.menu.extra_event_handler(event)
             self.check_on_music

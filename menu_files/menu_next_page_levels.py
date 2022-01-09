@@ -10,6 +10,7 @@ from load_music import *
 
 
 class MenuNextLevelsPage(MenuPage):
+    # Цифры это координаты кнопок, PYGAME)
     def render_extra(self, screen):
         print_text(screen, HOPE_TITLE, 50, 100, FONT_FORTY_SIZE, font_type=FONT_ROB_THIN, font_color=DEEP_GRAY)
         # КНОПКИ УРОВНЕЙ ПЯТОГО СЮЖЕТА
