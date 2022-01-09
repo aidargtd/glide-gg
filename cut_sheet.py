@@ -1,5 +1,5 @@
 import pygame
-
+from parametres import *
 pygame.init()
 
 
@@ -13,7 +13,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
         self.rect = self.rect.move(x, y)
 
     def cut_sheet(self, sheet, columns, rows):
-        self.rect = pygame.Rect(0, 0, sheet.get_width() // columns,
+        self.rect = pygame.Rect(FRAME_X, FRAME_Y, sheet.get_width() // columns,
                                 sheet.get_height() // rows)
         for j in range(rows):
             for i in range(columns):
@@ -22,5 +22,5 @@ class AnimatedSprite(pygame.sprite.Sprite):
                     frame_location, self.rect.size)))
 
     def update(self):
-        self.cur_frame = (self.cur_frame + 1) % len(self.frames)
+        self.cur_frame = (self.cur_frame + INCREASE_FRAME) % len(self.frames)
         self.image = self.frames[self.cur_frame]

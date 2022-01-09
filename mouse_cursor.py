@@ -9,5 +9,5 @@ class Mouse(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
     def update(self, pos):
-        self.rect.x = pos[0]
-        self.rect.y = pos[1]
+        self.rect.x = pos[GET_ZERO_VALUES]
+        self.rect.y = pos[GET_FIRST_VALUES]

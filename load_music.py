@@ -32,8 +32,3 @@ def sound_effects(name, on, volume=USING_VOLUME):
     effect.set_volume(volume)
     if on:
         pygame.mixer.Sound.play(effect)
-
-# sound_collision = pygame.mixer.Sound('Samples/3816133910831170.ogg')
-# sound_click = pygame.mixer.Sound('Samples/zapsplat_multimedia_button_click_005_68777.mp3')
-# sound_click.set_volume(0.3)
-# sound_restart = pygame.mixer.Sound('Samples/8476647490550829.ogg')

@@ -10,7 +10,8 @@ class ParticleTrace:
         self.y += CONNECT_CIRCLE_WTH_TRC
         self.color = color
         self.change_fact_x, self.change_fact_y = \
-            random.randint(-2, 2), random.randint(-10, 0) * .1
+            random.randint(MIN_TRACE_SPEED_X, MAX_TRACE_SPEED_X), random.randint(MIN_TRACE_SPEED_Y,
+                                                                                 MAX_TRACE_SPEED_Y) * .1
         self.radius = START_TRACE_RADIUS
 
     def draw(self, screen):
@@ -19,7 +20,8 @@ class ParticleTrace:
     def update(self):
         self.x += self.change_fact_x
         self.y += self.change_fact_y
-        if random.randint(0, 100) < NUM_FOR_DECREASE_RADIUS:
+        if random.randint(TER_VER_DECR_R_MIN, TER_VER_FOR_DECR_MAX) \
+                < NUM_FOR_DECREASE_RADIUS:
             self.radius -= DECREASE_TRACE_RADIUS
 
 
