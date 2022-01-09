@@ -1,3 +1,4 @@
+from menu_files.menu_race_score import MenuRaceScore
 from menu_files.menu_settings_page import MenuSettingsPage
 from menu_files.menu_plots_page import MenuPlotsPage
 from menu_files.menu_locker_and_shop import MenuShopAndLockerPage
@@ -24,8 +25,6 @@ class Menu():
         self.menu = None
         self.scroll_y = 0
         sound(MENU_MUSIC, select_table(SETTINGS, MUSIC)[GET_ZERO_VALUES][GET_ZERO_VALUES])
-        self.main_menu()
-        self.event_loop()
 
     def main_menu(self):
         self.menu = MenuMainPage(self.screen)
@@ -33,6 +32,7 @@ class Menu():
         self.menu.add_item(BTN_SETTINGS_TEXT, (50, -200), self.settings_menu, font_size=FONT_SIZE_FIFTY)
         self.menu.add_item(BTN_LOCKER_TEXT, (50, -300), self.menu_locker_shop, font_size=FONT_SIZE_FIFTY)
         self.menu.add_item(BTN_PLAY_TEXT, (50, -400), self.plots_menu, font_size=FONT_SIZE_FIFTY)
+        return self
 
     def plots_menu(self):
         self.menu = MenuPlotsPage(self.screen)
@@ -88,7 +88,7 @@ class Menu():
 
     def start_infinity_game(self):
         self.menu = BeforeInfinityLevel(self.screen)
-        self.menu.add_item(BTN_START_RACE, (30, 270), None, font_size=FONT_FORTY_SIZE, color=DEEP_GRAY)
+        self.menu.add_item(BTN_START_RACE, (30, 300), self.menu.check_name, font_size=FONT_FORTY_SIZE, color=DEEP_GRAY)
         self.menu.add_item(BTN_BACK_TEXT, (100, -100), self.plots_menu)
 
     def open_plots_levels(self):
@@ -149,6 +149,11 @@ class Menu():
             self.menu.add_item(BTN_ON_TEXT, (50, 370), self.check_on_eff, BLUE_TRAIL_COLOR_3)
         else:
             self.menu.add_item(BTN_OFF_TEXT, (50, 370), self.check_on_eff, RED_TRAIL_COLOR_3)
+
+    def race_score_menu(self, name, score):
+        self.menu = MenuRaceScore(self.screen, name, score)
+        self.menu.add_item(BTN_MAIN_MENU_TEXT, (50, -100), self.main_menu)
+        return self
 
     def event_loop(self):
         while True:

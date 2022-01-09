@@ -72,6 +72,24 @@ def get_dodged(walls_group):
     return counter
 
 
+def increase_wall_speed(wall, speed):
+    wall[INX_X_SPEED] *= speed
+    wall[INX_Y_SPEED] *= speed
+    return wall
+
+
+def increase_speed(walls_group, speed):
+    return map(lambda walls: map(lambda wall: increase_wall_speed(wall, speed), walls), walls_group)
+
+
+def remove_passed_sprites(walls_group):
+    num_removed = 0
+    for wall in walls_group:
+        if wall.rect.y > MAX_RECT_Y_IN_LEVEL:
+            wall.kill()
+            num_removed += 1
+    return num_removed
+
 def check_level_complited(walls_group):
     flag = True
     for wall in walls_group:

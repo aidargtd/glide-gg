@@ -44,6 +44,25 @@ def upd_settings_voice(value):
     con.commit()
 
 
+def save_infinity_score(player_name, score):
+    if select_one_with_aspect(INF_LEVELS, 'name_player', player_name, ID) is None:
+        cur.execute(
+            f'INSERT INTO {INF_LEVELS} (name_player, score) VALUES(?, ?)',
+            (player_name, score,)
+        )
+    else:
+        cur.execute(
+            f'UPDATE {INF_LEVELS} SET score = ? WHERE name_player = ? AND score < ?',
+            (score, player_name, score,)
+        )
+    con.commit()
+
+
+def select_top_score():
+    sql = 'SELECT name_player, score FROM Infinity_level_scores ORDER BY score DESC LIMIT 1'
+    return cur.execute(sql).fetchone()
+
+
 def select_max_elem(field):
     value = f"""SELECT MAX({field}) FROM Infinity_level_scores"""
     return cur.execute(value).fetchone()

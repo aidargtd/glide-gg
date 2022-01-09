@@ -56,7 +56,7 @@ def draw_gray_circle():
                        GRAY_CIRCLE_RADIUS, GRAY_CIRCLE_WIDTH)
 
 
-def game_over(walls_group, l_id, red, blue, speed=None):
+def game_over(walls_group, red, blue, speed=None):
     game = True
     traces_wall = []
     sound_effects(SOUND_RESTART,
@@ -85,7 +85,6 @@ def game_over(walls_group, l_id, red, blue, speed=None):
 
         pygame.display.update()
         fps_clock.tick(FPS_SIXTY)
-    game_cycle(l_id)
 
 
 def changing_speed(red, blue, speed, flag, angle_stop_red=None, angle_stop_blue=None):
@@ -108,7 +107,11 @@ def changing_speed(red, blue, speed, flag, angle_stop_red=None, angle_stop_blue=
 
 
 def call_menu():
-    return menu_for_all.Menu(SIZE)
+    return menu_for_all.Menu(SIZE).main_menu().event_loop()
+
+
+def race_score_menu(name, score):
+    return menu_for_all.Menu(SIZE).race_score_menu(name, score).event_loop()
 
 
 def pause():
@@ -131,6 +134,28 @@ def pause():
 
         pygame.display.update()
         fps_clock.tick(FPS_FIFTEEN)
+
+
+def get_walls(lev_id):
+    return [
+        get_obstacles(lev_id, TWIST_OBSTACLES),
+        get_obstacles(lev_id, LF_DOWN_OBSTACLES),
+        get_obstacles(lev_id, SIDE_OBSTACLES)
+    ]
+
+
+def add_walls_to_group(group, twist_walls, lf_walls, side_walls):
+    for wall in twist_walls:
+        wall_sprite = TwistObstacle(*wall)
+        wall_sprite.add(group)
+
+    for wall in lf_walls:
+        wall_sprite = LfDownObstacle(*wall)
+        wall_sprite.add(group)
+
+    for wall in side_walls:
+        wall_sprite = SlideSideObstacle(*wall)
+        wall_sprite.add(group)
 
 
 def create_obst_group(lev_id):
@@ -197,6 +222,69 @@ def update_gif():
     gifFrameList = gif.loadGIF(f"gifs/top_gif_{num}.gif")
 
 
+def infinity_cycle(player_name, speed=1, score=0, lives=INFINITY_LEVEL_LIVES, level_id=INFINITY_LEVEL_ID):
+    global currentFrame
+    global counter_quotes
+    if counter_quotes % 10 == 0:
+        sound_effects(f'{SAME_LINK_FOR_QUOTES}{level_id}{FORMAT_OGG}', select_table(SETTINGS, VOICE)[0][0])
+    counter_quotes += 1
+    sound(MENU_MUSIC, select_table(SETTINGS, MUSIC)[0][0])
+    sound(select_one_with_aspect(LEVELS, ID, level_id, MUSIC_LEVEL)[0],
+          select_table(SETTINGS, MUSIC)[0][0])
+    all_circles.add(circle1, circle2)
+    all_circles.add(circle1, circle2)
+    game = True
+    walls = get_walls(level_id)
+    walls_group = pygame.sprite.Group()
+    add_walls_to_group(walls_group, *walls)
+    traces_wall = []
+    bank_amount = get_bank(level_id)
+    dodged_removed = score
+
+    while game:
+        loc_walls_group = get_loc_walls_gr(walls_group)
+        traces_wall = get_traces_arr(loc_walls_group, traces_wall)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game = False
+                quit_game()
+        gif_background(screen)
+        press_key(circle1, circle2, speed=SPEED_MOVEMENT_TRUE)
+        dodged = dodged_removed + get_dodged(walls_group)
+
+        if any([circle1.check_collision(screen, walls_group),
+                circle2.check_collision(screen, walls_group)]):
+            sound_effects(SOUND_COLLUSION,
+                          select_table(SETTINGS, SOUND_EFFECTS)[0][0])
+            if lives <= 1:
+                save_infinity_score(player_name, dodged)
+                return race_score_menu(player_name, dodged)
+            else:
+                game_over(walls_group, circle1, circle2, SPEED_MOVEMENT_TRUE)
+                return infinity_cycle(player_name, speed, dodged, lives - 1)
+
+        draw_pause()
+        print_text(screen, f'{DODGED_MESS} {dodged}', 10, 10, FONT_TWENTY_SIZE)
+        print_text(screen, f'{BANK_MESSAGE} {bank_amount} {COIN_MESSAGE}', 10, 30, FONT_TWENTY_SIZE)
+        print_text(screen, f'{LIVES_TEXT} {lives}', 490, 10, FONT_TWENTY_SIZE)
+        print_text(screen, f'{SPEED_TEXT} {int(100 * speed)}%', 490, 25, FONT_TWENTY_SIZE)
+
+        draw_gray_circle()
+        draw_traces_for_circles(select_table(SETTINGS, EFFECTS)[0][0], circle_movement.traces)
+        draw_traces_obstacles(select_table(SETTINGS, EFFECTS)[0][0], traces_wall)
+        walls_group.update()
+        loc_walls_group.draw(screen)
+        all_circles.draw(screen)
+
+        pygame.display.update()
+        fps_clock.tick(FPS_SIXTY)
+        dodged_removed += remove_passed_sprites(walls_group)
+        if len(walls_group) <= 1:
+            speed *= INF_SPEED_MUL
+            add_walls_to_group(walls_group, *increase_speed(walls, speed))
+
+
 def game_cycle(l_id):
     global currentFrame
     global counter_quotes
@@ -228,7 +316,8 @@ def game_cycle(l_id):
                 circle2.check_collision(screen, walls_group)]):
             sound_effects(SOUND_COLLUSION,
                           select_table(SETTINGS, SOUND_EFFECTS)[GET_ZERO_VALUES][GET_ZERO_VALUES])
-            return game_over(walls_group, l_id, circle1, circle2, speed=SPEED_MOVEMENT_TRUE)
+            game_over(walls_group, circle1, circle2, speed=SPEED_MOVEMENT_TRUE)
+            return game_cycle(l_id)
 
         draw_pause()
         print_text(screen, f'{DODGED_MESS} {get_dodged(walls_group)}', x=10, y=10, font_size=FONT_TWENTY_SIZE)

@@ -203,6 +203,9 @@ TWIST_OBSTACLES = 'TwistObstacles'
 ITEM_SHOP_DB = 'ITEM_SHOP'
 AVAILABILITY = 'availability'
 
+# Speed multipliers for the Race level
+INF_SPEED_MUL = 1.5
+
 ID = 'id'
 NAME = 'name'
 
@@ -324,6 +327,7 @@ MUSIC_SETTINGS = 'музыка - '
 VOICE_SETTINGS = 'речь - '
 SOUND_EFF_SETTINGS = 'звуковые эффекты - '
 MESSAGE_BEFORE_START_GAME = f'Введите свое имя, чтобы начать игру'
+ERROR_NAME_IS_EMPTY = 'Имя не задано'
 TOP_PLAYER = 'Топ игрок(результат): '
 BALANCE_TEXT = 'баланс: '
 LOCKER_TEXT = 'Шкафчик'
@@ -332,6 +336,9 @@ LEVEL_TEXT = 'Уровень: '
 PLOT_TEXT = 'Сюжет: '
 ITEM_NAME_TEXT = 'Название экипировки:'
 ITEM_PRICE_TEXT = 'Стоимость:'
+LIVES_TEXT = 'Lives:'
+SPEED_TEXT = 'Speed:'
+
 # BUTTONS SIZE
 BTN_RESUME_X = 150
 BTN_RESUME_Y = 50
@@ -361,6 +368,7 @@ BTN_BUY_EQUIPMENT = 'Купить экипировку'
 BTN_PURCHASED_TEXT = 'Куплено'
 SELECT_ITEM = 'Выбрать'
 SELECTED_ITEM = 'Выбрано'
+BTN_MAIN_MENU_TEXT = 'главное меню'
 
 # BUTTONS LEVELS
 BTN_FIRST_LEVEL = ' I '
@@ -374,6 +382,9 @@ BTN_SIXTH_LEVEL = 'VI'
 PADDING_DIST = 20
 BORDER_WIDTH = 4
 BORDER_LENGTH = 8
+
+INFINITY_LEVEL_ID = 1
+INFINITY_LEVEL_LIVES = 3
 
 # CONSTS FOR BUTTONS
 CLICK_TRUE = 1
