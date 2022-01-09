@@ -232,7 +232,6 @@ def infinity_cycle(player_name, speed=1, score=0, lives=INFINITY_LEVEL_LIVES, le
     sound(select_one_with_aspect(LEVELS, ID, level_id, MUSIC_LEVEL)[0],
           select_table(SETTINGS, MUSIC)[0][0])
     all_circles.add(circle1, circle2)
-    all_circles.add(circle1, circle2)
     game = True
     walls = get_walls(level_id)
     walls_group = pygame.sprite.Group()
@@ -257,7 +256,7 @@ def infinity_cycle(player_name, speed=1, score=0, lives=INFINITY_LEVEL_LIVES, le
                 circle2.check_collision(screen, walls_group)]):
             sound_effects(SOUND_COLLUSION,
                           select_table(SETTINGS, SOUND_EFFECTS)[0][0])
-            if lives <= 1:
+            if lives <= FIRST_ITEM:
                 save_infinity_score(player_name, dodged)
                 return race_score_menu(player_name, dodged)
             else:
@@ -265,14 +264,15 @@ def infinity_cycle(player_name, speed=1, score=0, lives=INFINITY_LEVEL_LIVES, le
                 return infinity_cycle(player_name, speed, dodged, lives - 1)
 
         draw_pause()
-        print_text(screen, f'{DODGED_MESS} {dodged}', 10, 10, FONT_TWENTY_SIZE)
-        print_text(screen, f'{BANK_MESSAGE} {bank_amount} {COIN_MESSAGE}', 10, 30, FONT_TWENTY_SIZE)
-        print_text(screen, f'{LIVES_TEXT} {lives}', 490, 10, FONT_TWENTY_SIZE)
-        print_text(screen, f'{SPEED_TEXT} {int(100 * speed)}%', 490, 25, FONT_TWENTY_SIZE)
+        print_text(screen, f'{DODGED_MESS} {dodged}', x=10, y=10, font_size=FONT_TWENTY_SIZE)
+        print_text(screen, f'{BANK_MESSAGE} {bank_amount} {COIN_MESSAGE}', x=10, y=30, font_size=FONT_TWENTY_SIZE)
+        print_text(screen, f'{LIVES_TEXT} {lives}', x=490, y=10, font_size=FONT_TWENTY_SIZE)
+        print_text(screen, f'{SPEED_TEXT} {int(100 * speed)}%', x=490, y=25, font_size=FONT_TWENTY_SIZE)
 
         draw_gray_circle()
-        draw_traces_for_circles(select_table(SETTINGS, EFFECTS)[0][0], circle_movement.traces)
-        draw_traces_obstacles(select_table(SETTINGS, EFFECTS)[0][0], traces_wall)
+        draw_traces_for_circles(select_table(SETTINGS, EFFECTS)[GET_ZERO_VALUES][GET_ZERO_VALUES],
+                                circle_movement.traces)
+        draw_traces_obstacles(select_table(SETTINGS, EFFECTS)[GET_ZERO_VALUES][GET_ZERO_VALUES], traces_wall)
         walls_group.update()
         loc_walls_group.draw(screen)
         all_circles.draw(screen)
@@ -280,7 +280,7 @@ def infinity_cycle(player_name, speed=1, score=0, lives=INFINITY_LEVEL_LIVES, le
         pygame.display.update()
         fps_clock.tick(FPS_SIXTY)
         dodged_removed += remove_passed_sprites(walls_group)
-        if len(walls_group) <= 1:
+        if len(walls_group) <= FIRST_ITEM:
             speed *= INF_SPEED_MUL
             add_walls_to_group(walls_group, *increase_speed(walls, speed))
 
@@ -290,7 +290,7 @@ def game_cycle(l_id):
     global counter_quotes
     if counter_quotes % PLAY_EVERY_TEN_TIMES == CHECK_PLAY_QUOTE:
         sound_effects(f'{SAME_LINK_FOR_QUOTES}{l_id}{FORMAT_OGG}', select_table(SETTINGS, VOICE)[0][0])
-    counter_quotes += 1
+    counter_quotes += FIRST_ITEM
     sound(MENU_MUSIC, select_table(SETTINGS, MUSIC)[GET_ZERO_VALUES][GET_ZERO_VALUES])
     sound(select_one_with_aspect(LEVELS, ID, l_id, MUSIC_LEVEL)[GET_ZERO_VALUES],
           select_table(SETTINGS, MUSIC)[GET_ZERO_VALUES][GET_ZERO_VALUES])
