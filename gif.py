@@ -5,7 +5,7 @@ from parametres import *
 
 
 def cv2ImageToSurface(cv2Image):
-    size = cv2Image.shape[CUT_LAST_FRAME::CUT_FIRST_FRAME]
+    size = cv2Image.shape[CUT_FIRST_FRAME::CUT_LAST_FRAME]
     format = RGBA if cv2Image.shape[GET_SEC_VALUE] == COUNT_FRAMES else RGB
     cv2Image[:, :, [GET_ZERO_VALUES, GET_SEC_VALUE]] = cv2Image[:, :, [GET_SEC_VALUE, GET_ZERO_VALUES]]
     surface = pygame.image.frombuffer(cv2Image.flatten(), size, format)
