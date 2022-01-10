@@ -11,6 +11,8 @@ class MenuLockerPage(MenuPage):
 
     def render_extra(self, screen):
         x = 50
+        print_text(screen, CHANGE_EQUIP_TEXT, x=x, y=600, font_size=FONT_THIRTY_SIZE,
+                   font_color=DEEP_GRAY, font_type=FONT_ROB_THIN)
         print_text(screen, LOCKER_TEXT, x, 40, FONT_FORTY_SIZE, DEEP_GRAY, FONT_ROB_THIN)
         items = select_table(LOCKERS_DB, SELECT_ALL)
         start_x_items = 100

@@ -338,7 +338,7 @@ ITEM_NAME_TEXT = 'Название экипировки:'
 ITEM_PRICE_TEXT = 'Стоимость:'
 LIVES_TEXT = 'Lives:'
 SPEED_TEXT = 'Speed:'
-
+CHANGE_EQUIP_TEXT = 'Экипировка поменяется после перезахода в игру'
 # BUTTONS SIZE
 BTN_RESUME_X = 150
 BTN_RESUME_Y = 50
