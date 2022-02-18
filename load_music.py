@@ -4,18 +4,17 @@ from deep_translator import GoogleTranslator
 import requests
 from gtts import gTTS
 from parametres import *
-from playsound import playsound
 
 
-def quote_to_speech(l_id):
-    url_for_quote = URL_FOR_QUOTE
-    r = requests.get(url_for_quote)
-    quote = r.json()
-    text = GoogleTranslator(source=EN, target=RU).translate(quote[GET_QUOTE])
-    language = RU
-    obj = gTTS(text=text, lang=language, slow=False)
-    obj.save(f"{PATH_FOR_CREATE_QUOTES}{l_id}{FORMAT_OGG}")
-    playsound(f"{PATH_FOR_CREATE_QUOTES}{l_id}{FORMAT_OGG}")
+# def quote_to_speech(l_id):
+#     url_for_quote = URL_FOR_QUOTE
+#     r = requests.get(url_for_quote)
+#     quote = r.json()
+#     text = GoogleTranslator(source=EN, target=RU).translate(quote[GET_QUOTE])
+#     language = RU
+#     obj = gTTS(text=text, lang=language, slow=False)
+#     obj.save(f"{PATH_FOR_CREATE_QUOTES}{l_id}{FORMAT_OGG}")
+#     playsound(f"{PATH_FOR_CREATE_QUOTES}{l_id}{FORMAT_OGG}")
 
 
 def sound(name, on, volume=USING_VOLUME):
